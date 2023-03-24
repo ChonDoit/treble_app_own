@@ -3,7 +3,6 @@ package me.phh.treble.app
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.AudioSystem
 import android.net.Uri
 import android.os.SystemProperties
 import android.os.UserHandle
@@ -12,25 +11,6 @@ import dalvik.system.PathClassLoader
 import kotlin.concurrent.thread
 
 class QtiAudio: EntryStartup {
-    val cbA = object: vendor.qti.hardware.radio.am.V1_0.IQcRilAudioCallback.Stub() {
-        override fun getParameters(str: String): String {
-            return AudioSystem.getParameters(str)
-        }
-
-        override fun setParameters(str: String): Int {
-            return AudioSystem.setParameters(str)
-        }
-    }
-    val cbB = object: vendor.qti.qcril.am.V1_0.IQcRilAudioCallback.Stub() {
-        override fun getParameters(str: String?): String {
-            return AudioSystem.getParameters(str)
-        }
-
-        override fun setParameters(str: String?): Int {
-            return AudioSystem.setParameters(str)
-        }
-    }
-
     fun handleDynIms(ctxt: Context, pkgName: String, property: String) {
             Log.d("PHH", "Checking IMS status $pkgName $property")
             val installed = ctxt.packageManager.getInstalledPackages(0).find { it.packageName == pkgName } != null
@@ -55,16 +35,16 @@ class QtiAudio: EntryStartup {
             for(slot in listOf("slot1", "slot2", "default")) {
                 try {
                     val svc = vendor.qti.hardware.radio.am.V1_0.IQcRilAudio.getService(slot)
-                    svc.setCallback(cbA)
                     isQualcommDevice = true
+                    Log.d("PHH", "isQualcommDevice set by vendor.qti.hardware.radio.am HIDL")
                 } catch (e: Exception) {
                     Log.d("PHH", "Failed setting vendor.qti.hardware.radio.am $slot cb $e")
                 }
 
                 try {
                     val svc = vendor.qti.qcril.am.V1_0.IQcRilAudio.getService(slot)
-                    svc.setCallback(cbB)
                     isQualcommDevice = true
+                    Log.d("PHH", "isQualcommDevice set by vendor.qti.qcril.am HIDL")
                 } catch (e: Exception) {
                     Log.d("PHH", "Failed setting vendor.qti.hardware.radio.am $slot cb $e")
                 }
