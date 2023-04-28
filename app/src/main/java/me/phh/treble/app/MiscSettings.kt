@@ -27,7 +27,7 @@ object MiscSettings : Settings {
     val remotectl = "key_misc_remotectl"
     val disableAudioEffects = "key_misc_disable_audio_effects"
     val cameraTimestampOverride = "key_misc_camera_timestamp"
-    val forceA2dpOffloadDisable = "key_misc_force_a2dp_offload_disable"
+    val sysbta = "key_misc_dynamic_sysbta"
     val noHwcomposer = "key_misc_no_hwcomposer"
     val storageFUSE = "key_misc_storage_fuse"
     val backlightScale = "key_misc_backlight_scale"

@@ -211,9 +211,9 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_audio_effects", if (value) "1" else "0")
             }
-            MiscSettings.forceA2dpOffloadDisable -> {
+            MiscSettings.sysbta -> {
                 val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.sys.phh.disable_a2dp_offload", if (value) "1" else "0")
+                SystemProperties.set("persist.bluetooth.system_audio_hal.enabled", if (value) "1" else "0")
             }
             MiscSettings.noHwcomposer -> {
                 val value = sp.getBoolean(key, false)
@@ -280,6 +280,7 @@ object Misc: EntryStartup {
         spListener.onSharedPreferenceChanged(sp, MiscSettings.headsetFix)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.bluetooth)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.displayFps)
+        spListener.onSharedPreferenceChanged(sp, MiscSettings.sysbta)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.noHwcomposer)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.storageFUSE)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.dt2w)
