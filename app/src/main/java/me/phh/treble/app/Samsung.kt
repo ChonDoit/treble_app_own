@@ -91,6 +91,10 @@ class Samsung: EntryStartup {
                 val value = sp.getString(key, "1")
                 SystemProperties.set("persist.sys.phh.flash_strength", value)
             }
+            SamsungSettings.disableBackMic -> {
+                val value = if(sp.getBoolean(key, false)) "true" else " false"
+                SystemProperties.set("persist.sys.phh.disable_back_mic", value)
+            }
         }
     }
 
