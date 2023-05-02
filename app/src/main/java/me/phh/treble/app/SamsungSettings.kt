@@ -15,6 +15,7 @@ object SamsungSettings : Settings {
     val escoTransportUnitSize = "key_samsung_esco_transport_unit_size"
     val fodSingleClick = "key_samsung_fod_single_click"
     val flashStrength = "key_samsung_flash_strength"
+    val disableBackMic = "key_samsung_disable_back_mic"
 
     override fun enabled() = Tools.vendorFpLow.startsWith("samsung/")
 }
