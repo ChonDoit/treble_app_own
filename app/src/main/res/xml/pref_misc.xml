@@ -117,7 +117,7 @@
     	    android:key="key_misc_max_aspect_ratio_pre_o"
     	    android:title="Compatibility max aspect ratio" />
 		<CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="key_misc_dynamic_sysbta"
             android:title="Use System Wide BT HAL" />
 		<CheckBoxPreference
