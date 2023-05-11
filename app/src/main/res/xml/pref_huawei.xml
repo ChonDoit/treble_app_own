@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Fingerprint">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_fingerprint_gestures"
             android:title="Enable Fingerprint gestures" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Display">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_touchscreen_glove_mode"
             android:title="Enable touchscreen glove mode" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_no_hwcomposer"
             android:title="Enable graphic issues workaround (recommended if ui is blurry)" />
