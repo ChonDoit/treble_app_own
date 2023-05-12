@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Touchscreen">
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
             android:key="nubia_double_tap_to_wake"
             android:title="Enable DT2W" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
@@ -23,7 +23,7 @@
 		    android:title="FAN speed" />
     </PreferenceCategory>
     <PreferenceCategory android:title="LEDs">
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
@@ -37,19 +37,19 @@
 		    android:title="REDMAGIC RGB" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Boosts">
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
             android:key="nubia_boost_cpu"
             android:title="Boost CPU" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
             android:key="nubia_boost_cache"
             android:title="Boost caches" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"

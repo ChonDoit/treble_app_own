@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Audio">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_alternate_audio_policy"
             android:title="Use alternate audio policy" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_audio_stereo"
             android:title="Enable stereo audio mode" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_disable_back_mic"
             android:title="Disable Built-In Back Mic"
@@ -22,29 +22,29 @@
             android:title="Set eSCO transport unit size" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Screen">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_high_brightness"
             android:title="Enable extended brightness range" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_glove_mode"
             android:title="Enable glove mode" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Misc">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_wireless_charging_transmit"
             android:title="Enable reversed wireless charging(If applicable)" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_double_tap_to_wake"
             android:title="Enable double tap to wake" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_fod_single_click"
             android:title="Clicking fingerprint turns device on" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_camera_ids"
             android:title="Enable access to all cameras"
@@ -57,15 +57,15 @@
 	        android:inputType="number" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Workarounds">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_extra_sensors"
             android:title="Enable extra sensors" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_colorspace"
             android:title="Enable workaround for white-ish screen" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_broken_fingerprint"
             android:title="Enable workaround for broken fingerprint" />

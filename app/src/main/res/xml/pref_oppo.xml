@@ -2,13 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="Touchscreen">
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
             android:key="key_oppo_double_tap_to_wake"
             android:title="Enable DT2W" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
@@ -16,11 +16,11 @@
             android:title="Enable game mode" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Other">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_oppo_usb_otg"
             android:title="Enable USB OTG" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="key_oppo_dc_diming"
             android:title="Enable DC Diming" />

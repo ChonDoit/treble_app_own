@@ -5,11 +5,11 @@
         android:key="key_ims_create_apn" />
     <Preference android:title="Download and install IMS APK"
         android:key="key_ims_install_apn" />
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:key="key_ims_request_network"
         android:title="Request IMS network" />
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:key="key_ims_force_enable_setting"
         android:title="Force the presence of 4G Calling setting" />
