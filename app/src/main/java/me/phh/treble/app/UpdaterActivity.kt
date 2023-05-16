@@ -222,8 +222,8 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun isMagiskInstalled() {
-        val magiskDir = File("/sbin/.magisk")
-        if (magiskDir.exists()) {
+        val magiskBin = File("/system/bin/magisk")
+        if (magiskBin.exists()) {
             Log.e("PHH", "Magisk is installed")
             val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.warning_dialog_title))
