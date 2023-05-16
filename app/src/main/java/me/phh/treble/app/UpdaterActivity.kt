@@ -125,11 +125,20 @@ class UpdaterActivity : PreferenceActivity() {
                 }
                 override fun onResponse(call: Call, response: Response) {
                     Log.e("PHH", "Got response")
-                    otaJson = JSONTokener(response.body?.string()).nextValue() as JSONObject
-                    runOnUiThread(Runnable {
-                        hasUpdate = existsUpdate()
-                        updateUiElements(false)
-                    })
+                    if ((response.code == 200 || response.code == 304) && response.body != null) {
+                        Log.e("PHH", "Response body: " + response.body.string())
+                        otaJson = JSONTokener(response.body?.string()).nextValue() as JSONObject
+                        runOnUiThread(Runnable {
+                            hasUpdate = existsUpdate()
+                            updateUiElements(false)
+                        })
+                    } else {
+                        Log.e("PHH", "Invalid HTTP response or body. Code: " + response.code)
+                        runOnUiThread(Runnable {
+                            hasUpdate = false
+                            updateUiElements(false)
+                        })
+                    }
                 }
             })
         } else {
