@@ -126,7 +126,7 @@ class UpdaterActivity : PreferenceActivity() {
                 override fun onResponse(call: Call, response: Response) {
                     Log.e("PHH", "Got response")
                     if ((response.code == 200 || response.code == 304) && response.body != null) {
-                        Log.e("PHH", "Response body: " + response.body.string())
+                        Log.e("PHH", "Response body: " + response.body?.string())
                         otaJson = JSONTokener(response.body?.string()).nextValue() as JSONObject
                         runOnUiThread(Runnable {
                             hasUpdate = existsUpdate()
