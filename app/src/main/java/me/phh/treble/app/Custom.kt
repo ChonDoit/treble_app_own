@@ -3,6 +3,7 @@ package me.phh.treble.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.SystemProperties
 import android.preference.PreferenceManager
 import java.lang.ref.WeakReference
 
@@ -13,6 +14,11 @@ object Custom: EntryStartup {
         val c = ctxt.get()
         if(c == null) return@OnSharedPreferenceChangeListener
         when(key) {
+            CustomSettings.pointerType -> {
+                val value = sp.getString(key, "mouse")
+                val newValue = if (value == "pen") "true" else "false"
+                SystemProperties.set("persist.sys.overlay.spen_pointer", newValue)
+            }
             CustomSettings.accentColor -> {
                 val value = sp.getString(key, "")
                 val accentColorOverlays = OverlayPicker.getThemeOverlays(OverlayPicker.ThemeOverlay.AccentColor)

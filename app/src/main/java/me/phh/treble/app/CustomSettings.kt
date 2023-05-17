@@ -9,6 +9,7 @@ object CustomSettings : Settings {
     val iconShape = "key_custom_icon_shape"
     val fontFamily = "key_custom_font_family"
     val iconPack = "key_custom_icon_pack"
+    val pointerType = "key_custom_pointer_type"
 
     override fun enabled() = true
 }
