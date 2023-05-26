@@ -40,6 +40,7 @@ object MiscSettings : Settings {
     val fodColor = "key_misc_fod_color"
     val escoTransportUnitSize = "key_misc_esco_transport_unit_size"
     val dynamicsuperuser = "key_misc_dynamic_superuser"
+    val launcher3 = "key_misc_launcher3"
     val mtkTouchHintIsRotate = "key_misc_mediatek_touch_hint_rotate"
 
     override fun enabled() = true

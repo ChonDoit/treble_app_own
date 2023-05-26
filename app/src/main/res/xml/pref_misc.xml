@@ -161,6 +161,12 @@
 
 	<PreferenceCategory android:title="MISCELLANEOUS">
 		<SwitchPreference
+			android:defaultValue="0"
+			android:key="key_misc_launcher3"
+			android:title="Set Launcher3 as recent provider"
+			android:summaryOn="Enabled"
+			android:summaryOff="Requires a reboot" />
+		<SwitchPreference
 			android:defaultValue="false"
 			android:key="key_misc_dt2w"
 			android:title="Double tap to wake"
