@@ -261,6 +261,10 @@ object Misc: EntryStartup {
                 val value = sp.getString(key, "16")
                 SystemProperties.set("persist.sys.bt.esco_transport_unit_size", value)
             }
+	    MiscSettings.dynamicsuperuser -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.dynamic_superuser", if (value) "1" else "0")
+            }
             MiscSettings.mtkTouchHintIsRotate -> {
                 val value = sp.getBoolean(key, false)
                 if(value) {
@@ -296,5 +300,6 @@ object Misc: EntryStartup {
         spListener.onSharedPreferenceChanged(sp, MiscSettings.noHwcomposer)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.storageFUSE)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.dt2w)
+        spListener.onSharedPreferenceChanged(sp, MiscSettings.dynamicsuperuser)
     }
 }

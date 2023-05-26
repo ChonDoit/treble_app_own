@@ -39,6 +39,7 @@ object MiscSettings : Settings {
     val restartSystemUI = "key_misc_restart_systemui"
     val fodColor = "key_misc_fod_color"
     val escoTransportUnitSize = "key_misc_esco_transport_unit_size"
+    val dynamicsuperuser = "key_misc_dynamic_superuser"
     val mtkTouchHintIsRotate = "key_misc_mediatek_touch_hint_rotate"
 
     override fun enabled() = true
