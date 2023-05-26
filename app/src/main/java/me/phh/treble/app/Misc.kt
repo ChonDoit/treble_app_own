@@ -269,6 +269,10 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.launcher3", if (value) "true" else "false")
             }
+	    MiscSettings.biometricstrong -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.biometricstrong", if (value) "true" else "false")
+            }
             MiscSettings.mtkTouchHintIsRotate -> {
                 val value = sp.getBoolean(key, false)
                 if(value) {

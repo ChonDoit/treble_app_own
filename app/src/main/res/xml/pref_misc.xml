@@ -29,6 +29,12 @@
 			android:entryValues="@array/pref_misc_fod_color_values"
 			android:key="key_misc_fod_color"
 			android:title="Under-display fp color" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_biometricstrong"
+			android:title="Set BIOMETRIC_STRONG"
+			android:summaryOn="Current: 0:2:15"
+			android:summaryOff="Current: Default" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="MOBILE NETWORK">
