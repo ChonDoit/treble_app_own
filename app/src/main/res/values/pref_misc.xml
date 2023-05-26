@@ -58,24 +58,39 @@
     </array>
 
     <array name="pref_misc_camera_timestamp">
-      <item>"Don't override"</item>
-      <item>"Clock monotonic"</item>
-      <item>"Clock boottime"</item>
+	    <item>"Don't override"</item>
+	    <item>"Clock monotonic"</item>
+	    <item>"Clock boottime"</item>
     </array>
     <array name="pref_misc_camera_timestamp_values">
-      <item>"-1"</item>
-      <item>"0"</item>
-      <item>"1"</item>
+	    <item>"-1"</item>
+	    <item>"0"</item>
+	    <item>"1"</item>
     </array>
 
     <array name="pref_misc_fod_color">
-      <item>"Green"</item>
-      <item>"Cyan"</item>
-      <item>"White"</item>
+	    <item>"Green"</item>
+	    <item>"Cyan"</item>
+	    <item>"White"</item>
     </array>
     <array name="pref_misc_fod_color_values">
-      <item>"00ff00"</item>
-      <item>"00ffff"</item>
-      <item>"ffffff"</item>
+	    <item>"00ff00"</item>
+	    <item>"00ffff"</item>
+	    <item>"ffffff"</item>
     </array>
+
+    <array name="pref_misc_transport_size">
+	    <item>"0"</item>
+	    <item>"8"</item>
+	    <item>"16 (default)"</item>
+	    <item>"24"</item>
+	    <item>"32"</item>
+    </array>
+    <array name="pref_misc_transport_size_values">
+	    <item>"0"</item>
+	    <item>"8"</item>
+	    <item>"16"</item>
+	    <item>"24"</item>
+	    <item>"32"</item>
+     </array>
 </resources>

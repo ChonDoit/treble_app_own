@@ -14,12 +14,6 @@
             android:key="key_samsung_disable_back_mic"
             android:title="Disable Built-In Back Mic"
             android:summary="May fix broken mic on video recording" />
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/pref_samsung_transport_size"
-            android:entryValues="@array/pref_samsung_transport_size_values"
-            android:key="key_samsung_esco_transport_unit_size"
-            android:title="Set eSCO transport unit size" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Screen">
         <SwitchPreference

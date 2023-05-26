@@ -28,6 +28,12 @@
 			android:defaultValue="false"
 			android:key="key_misc_disable_audio_effects"
 			android:title="Disable audio effects" />
+		<ListPreference
+			android:defaultValue="16"
+			android:entries="@array/pref_misc_transport_size"
+			android:entryValues="@array/pref_misc_transport_size_values"
+			android:key="key_misc_esco_transport_unit_size"
+			android:title="Set eSCO transport unit size" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Display">
 		<EditTextPreference

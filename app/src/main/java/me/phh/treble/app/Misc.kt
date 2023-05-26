@@ -257,6 +257,10 @@ object Misc: EntryStartup {
                 val value = sp.getString(key, "00ff00")
                 SystemProperties.set("persist.sys.phh.fod_color", value)
             }
+	    MiscSettings.escoTransportUnitSize -> {
+                val value = sp.getString(key, "16")
+                SystemProperties.set("persist.sys.bt.esco_transport_unit_size", value)
+            }
             MiscSettings.mtkTouchHintIsRotate -> {
                 val value = sp.getBoolean(key, false)
                 if(value) {
