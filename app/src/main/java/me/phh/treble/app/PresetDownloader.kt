@@ -36,7 +36,14 @@ class PresetDownloader {
                     val ctxt = ctxtWp?.get() ?: return
                     if (alreadyDownloaded) return
 
-                    val connection = URL("https://raw.githubusercontent.com/phhusson/treble_presets/master/infos.json").openConnection() as? HttpURLConnection
+                    var presetsUrl = "https://raw.githubusercontent.com/phhusson/treble_presets/master/infos.json"
+                    val presetsProp = SystemProperties.get("ro.system.treble.presets", "")
+                    if (presetsProp.trim() != "") {
+                        presetsUrl = presetsProp
+                    }
+
+                    Log.d("PHH-Presets", "URL: $presetsUrl")
+                    val connection = URL(presetsUrl).openConnection() as? HttpURLConnection
                             ?: return
                     if (connection.responseCode != 200) {
                         val error = connection.errorStream.bufferedReader().use { it.readText() }
