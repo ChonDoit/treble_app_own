@@ -127,15 +127,18 @@ class PresetDownloader {
                             val value = prefs.get(key)
                             Log.d("PHH-Presets", " => $value")
                             Log.d("PHH-Presets", "$key has type ${value.javaClass}")
-                            when (value.javaClass) {
-                                Int::class.java -> spEdit.putInt(key, value as Int)
-                                Boolean::class.java -> spEdit.putBoolean(key, value as Boolean)
-                                String::class.java -> {
+                            when (value) {
+                                is Int -> spEdit.putInt(key, value as Int)
+                                is Boolean -> spEdit.putBoolean(key, value as Boolean)
+                                is String -> {
                                     if(value == "true" || value == "false") {
                                         spEdit.putBoolean(key, value == "true")
                                     } else {
                                         spEdit.putString(key, value as String)
                                     }
+                                }
+                                else -> {
+                                    Log.d("PHH-Presets", "Unknown key type. Ignoring...")
                                 }
                             }
                         }
