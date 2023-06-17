@@ -257,6 +257,14 @@ object Misc: EntryStartup {
                 val value = sp.getString(key, "00ff00")
                 SystemProperties.set("persist.sys.phh.fod_color", value)
             }
+            MiscSettings.mtkTouchHintIsRotate -> {
+                val value = sp.getBoolean(key, false)
+                if(value) {
+                    SystemProperties.set("persist.sys.phh.touch_hint", "rotate")
+                } else {
+                    SystemProperties.set("persist.sys.phh.touch_hint", "touch")
+                }
+            }
         }
     }
 

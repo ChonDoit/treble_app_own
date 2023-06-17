@@ -38,6 +38,7 @@ object MiscSettings : Settings {
     val dt2w = "key_misc_dt2w"
     val restartSystemUI = "key_misc_restart_systemui"
     val fodColor = "key_misc_fod_color"
+    val mtkTouchHintIsRotate = "key_misc_mediatek_touch_hint_rotate"
 
     override fun enabled() = true
 }
