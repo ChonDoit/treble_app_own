@@ -4,14 +4,24 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
+import java.lang.Exception
+
+import vendor.ims.zenmotion.V1_0.IZenMotion
 
 object Asus: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
             AsusSettings.dt2w -> {
-                val b = sp.getBoolean(key, false)
-                val value = if(b) "1" else "0"
-                Misc.safeSetprop("persist.sys.phh.asus.dt2w", value)
+                val value = sp.getBoolean(key, false)
+
+                // persist.asus.dclick prop method
+                Misc.safeSetprop("persist.sys.phh.asus.dt2w", if(value) "1" else "0")
+
+                // zenmotion method
+                val asusSvc = try { IZenMotion.getService() } catch(e: Exception) { null }
+                if(asusSvc != null) {
+                    asusSvc.setDclickEnable(if(value) 1 else 0)
+                }
             }
         }
     }
