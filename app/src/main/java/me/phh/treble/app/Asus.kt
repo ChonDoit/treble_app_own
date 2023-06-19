@@ -23,6 +23,10 @@ object Asus: EntryStartup {
                     asusSvc.setDclickEnable(if(value) 1 else 0)
                 }
             }
+            AsusSettings.gloveMode -> {
+                val value = sp.getBoolean(key, false)
+                Misc.safeSetprop("persist.asus.glove", if(value) "1" else "0")
+            }
         }
     }
 

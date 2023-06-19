@@ -3,8 +3,11 @@
     <PreferenceCategory android:title="Display">
         <SwitchPreference
             android:defaultValue="false"
+            android:key="key_asus_glove_mode"
+            android:title="Enable glove mode" />
+        <SwitchPreference
+            android:defaultValue="false"
             android:key="key_asus_dt2w"
             android:title="Enable double tap to wake" />
     </PreferenceCategory>
-
 </PreferenceScreen>
