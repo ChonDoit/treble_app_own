@@ -27,6 +27,10 @@ object Asus: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 Misc.safeSetprop("persist.asus.glove", if(value) "1" else "0")
             }
+            AsusSettings.fpWake -> {
+                val value = sp.getBoolean(key, false)
+                Misc.safeSetprop("persist.asus.fp.wakeup", if(value) "true" else "false")
+            }
         }
     }
 

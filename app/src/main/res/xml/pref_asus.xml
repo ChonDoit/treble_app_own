@@ -10,4 +10,10 @@
             android:key="key_asus_dt2w"
             android:title="Enable double tap to wake" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Other">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="key_asus_fp_wake"
+            android:title="Enable fingerprint wake" />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -5,6 +5,7 @@ import android.os.Bundle
 object AsusSettings : Settings {
     val dt2w = "key_asus_dt2w"
     val gloveMode = "key_asus_glove_mode"
+    val fpWake = "key_asus_fp_wake"
 
     override fun enabled() = Tools.vendorFp.startsWith("asus/") 
 }
