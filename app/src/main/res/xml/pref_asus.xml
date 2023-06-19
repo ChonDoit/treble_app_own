@@ -15,5 +15,12 @@
             android:defaultValue="true"
             android:key="key_asus_fp_wake"
             android:title="Enable fingerprint wake" />
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_asus_usb_port_picker"
+            android:entryValues="@array/pref_asus_usb_port_picker_values"
+            android:key="key_asus_usb_port_picker"
+            android:summary="Requires a reboot"
+            android:title="USB port picker" />
     </PreferenceCategory>
 </PreferenceScreen>
