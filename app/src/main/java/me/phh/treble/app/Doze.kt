@@ -111,7 +111,23 @@ object Doze: EntryStartup {
             try {
                 cameraManager.setTorchMode(torchCameraId, !flashLightStatus)
                 flashLightStatus = !flashLightStatus
-                vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.EFFECT_DOUBLE_CLICK))
+
+                //save current Timestamp
+                val timestamp = System.currentTimeMillis()
+                flashLightChangedSinceWait = timestamp
+
+
+                //wait a minute and turn of flashlight if its still on
+                if(!flashLightStatus) return
+                dozeHandler.postDelayed(fun(){
+                    if(flashLightChangedSinceWait != timestamp) return
+
+                    cameraManager.setTorchMode(torchCameraId, false)
+                    flashLightStatus = false
+                    vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.EFFECT_HEAVY_CLICK))
+
+                },1000 * 60 * 10)
             } catch (e: CameraAccessException) {
                 Log.d("PHH", "ChopChop couldn't toggle FlashLight", e)
             }
@@ -123,6 +139,7 @@ object Doze: EntryStartup {
     var pocketEnabled = false
     var chopchopEnabled = false
     var flashLightStatus = false
+    var flashLightChangedSinceWait = System.currentTimeMillis()
     var torchCameraId = ""
     lateinit var cameraManager: CameraManager
     lateinit var vibrator: Vibrator
