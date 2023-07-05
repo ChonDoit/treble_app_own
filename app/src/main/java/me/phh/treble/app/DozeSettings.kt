@@ -26,10 +26,11 @@ class DozeSettingsFragment : SettingsFragment() {
         val chopchopPref = findPreference<SwitchPreference>(DozeSettings.chopchopkey)
         var chopchopSensor: Sensor? = null
         try {
-            chopchopSensor = Doze.sensorManager.getSensorList(Sensor.TYPE_ALL).first { it.stringType == "com.motorola.sensor.chopchop" }
+            chopchopSensor = Doze.sensorManager.getSensorList(Sensor.TYPE_ALL).first { it.stringType == "com.motorola.sensor.chpchop" }
 
         } catch (e: Exception){
             // Disabeling ChopChop Preference
+            chopchopPref!!.isVisible = false
             chopchopPref!!.isEnabled = false
             chopchopPref!!.isChecked = false
             val sp = PreferenceManager.getDefaultSharedPreferences(activity)
