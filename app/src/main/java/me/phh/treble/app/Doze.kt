@@ -7,10 +7,15 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraManager.TorchCallback
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.UserHandle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.preference.PreferenceManager
 import android.util.Log
 import java.util.*
@@ -99,33 +104,80 @@ object Doze: EntryStartup {
         }
     }
 
+    class ChopChop {
+        fun trigger(){
+            Log.d("PHH", "ChopChop got Triggered")
+
+            try {
+                cameraManager.setTorchMode(torchCameraId, !flashLightStatus)
+                flashLightStatus = !flashLightStatus
+                vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.EFFECT_DOUBLE_CLICK))
+
+                //save current Timestamp
+                val timestamp = System.currentTimeMillis()
+                flashLightChangedSinceWait = timestamp
+
+
+                //wait a minute and turn of flashlight if its still on
+                if(!flashLightStatus) return
+                dozeHandler.postDelayed(fun(){
+                    if(flashLightChangedSinceWait != timestamp) return
+
+                    cameraManager.setTorchMode(torchCameraId, false)
+                    flashLightStatus = false
+                    vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.EFFECT_HEAVY_CLICK))
+
+                },1000 * 60 * 10)
+            } catch (e: CameraAccessException) {
+                Log.d("PHH", "ChopChop couldn't toggle FlashLight", e)
+            }
+        }
+    }
+
     var enabled: Boolean = false
     var handwaveEnabled = false
     var pocketEnabled = false
+    var chopchopEnabled = false
+    var flashLightStatus = false
+    var flashLightChangedSinceWait = System.currentTimeMillis()
+    var torchCameraId = ""
+    lateinit var cameraManager: CameraManager
+    lateinit var vibrator: Vibrator
     lateinit var sensorManager: SensorManager
     lateinit var proximitySensor: Sensor
     lateinit var accelerometerSensor: Sensor
+    lateinit var chopchopSensor: Sensor
     var pocket: Pocket? = null
+    var chopchop: ChopChop? = null
     var accelerometer: AccelerometerListener? = null
 
-    fun updateState(handwave: Boolean, pocket: Boolean) {
+    fun updateState(handwave: Boolean, pocket: Boolean, chopchop: Boolean) {
         handwaveEnabled = handwave
         pocketEnabled = pocket
+        chopchopEnabled = chopchop
 
-        val newState = if(handwave || pocket) true else false
-        if(newState && !enabled) {
-            Log.d("PHH", "Starting Doze service")
+        unregisterListeners()
+        this.pocket = null
+        this.chopchop = null
+
+        if(!(handwave || pocket || chopchop)) return
+
+        Log.d("PHH", "Starting Doze service")
+        Log.d("PHH", "handwave: $handwave pocket: $pocket chopchop $chopchop")
+
+        if(pocket || handwave){
             this.pocket = Pocket()
-            registerListeners()
+            registerPocketListeners()
         }
-        if(enabled && !newState) {
-            unregisterListeners()
-            this.pocket = null
+
+        if(chopchop){
+            this.chopchop = ChopChop()
+            registerChopchopListeners()
         }
-        enabled = newState
+
     }
 
-    val sensorListener = object: SensorEventListener {
+    val pocketSensorListener = object: SensorEventListener {
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         }
 
@@ -134,21 +186,49 @@ object Doze: EntryStartup {
         }
     }
 
-    fun registerListeners() {
+    val chopchopSensorListener = object : SensorEventListener {
+
+        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+        }
+
+        override fun onSensorChanged(event: SensorEvent) {
+            chopchop?.trigger()
+        }
+    }
+
+    val torchStateListener = object : TorchCallback() {
+        override fun onTorchModeChanged(cameraId: String, enabled: Boolean) {
+            super.onTorchModeChanged(cameraId, enabled)
+            flashLightStatus = if(cameraId == torchCameraId) enabled else flashLightStatus
+        }
+    }
+
+    fun registerPocketListeners() {
         //Request for once every 1000s, we only want updates anyway
-        sensorManager.registerListener(sensorListener, proximitySensor, 1000*1000*1000)
+        sensorManager.registerListener(pocketSensorListener, proximitySensor, 1000*1000*1000)
+    }
+    fun registerChopchopListeners() {
+        //Request update every 100ms should work just fine
+        sensorManager.registerListener(chopchopSensorListener, chopchopSensor, 1000*100)
+        cameraManager.registerTorchCallback(torchStateListener, dozeHandler)
     }
 
     fun unregisterListeners() {
-        sensorManager.unregisterListener(sensorListener)
+        //Pocket
+        sensorManager.unregisterListener(pocketSensorListener)
+        //ChopChop
+        sensorManager.unregisterListener(chopchopSensorListener)
+        cameraManager.unregisterTorchCallback(torchStateListener)
     }
 
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
-            DozeSettings.handwaveKey, DozeSettings.pocketKey -> {
+            DozeSettings.handwaveKey, DozeSettings.pocketKey, DozeSettings.chopchopkey -> {
                 updateState(
                         sp.getBoolean(DozeSettings.handwaveKey, false),
-                        sp.getBoolean(DozeSettings.pocketKey, false))
+                        sp.getBoolean(DozeSettings.pocketKey, false),
+                        sp.getBoolean(DozeSettings.chopchopkey, false)
+                )
             }
         }
     }
@@ -159,12 +239,24 @@ object Doze: EntryStartup {
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, true)
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false)
 
+        try {
+            chopchopSensor = Doze.sensorManager.getSensorList(Sensor.TYPE_ALL).first { it.stringType == "com.motorola.sensor.chopchop" }
+            Log.d("PHH", "Found ChopChop Sensor, Initalizing needed Services")
+            cameraManager = ctxt.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            torchCameraId = cameraManager.cameraIdList[0]
+            vibrator = ctxt.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        } catch (e: Exception){}
+
+
+
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
         //Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, DozeSettings.handwaveKey)
         spListener.onSharedPreferenceChanged(sp, DozeSettings.pocketKey)
+        spListener.onSharedPreferenceChanged(sp, DozeSettings.chopchopkey)
         accelerometer = AccelerometerListener()
     }
 
