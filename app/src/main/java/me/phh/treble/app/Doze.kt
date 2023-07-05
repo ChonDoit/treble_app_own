@@ -113,7 +113,7 @@ object Doze: EntryStartup {
                 flashLightStatus = !flashLightStatus
                 vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE))
             } catch (e: CameraAccessException) {
-                Log.d("PHH", "ChopChop couldn't change FlashLight because of: $e")
+                Log.d("PHH", "ChopChop couldn't toggle FlashLight", e)
             }
         }
     }
