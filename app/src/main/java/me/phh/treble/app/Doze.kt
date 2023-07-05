@@ -139,25 +139,25 @@ object Doze: EntryStartup {
         pocketEnabled = pocket
         chopchopEnabled = chopchop
 
-        val newState = handwave || pocket || chopchop
-        if(newState && !enabled) {
-            Log.d("PHH", "Starting Doze service")
-            Log.d("PHH", "handwave: $handwave pocket: $pocket chopchop $chopchop")
-            if(pocket){
-                this.pocket = Pocket()
-                registerPocketListeners()
-            }
-            if(chopchop){
-                this.chopchop = ChopChop()
-                registerChopchopListeners()
-            }
+        unregisterListeners()
+        this.pocket = null
+        this.chopchop = null
+
+        if(!(handwave || pocket || chopchop)) return
+
+        Log.d("PHH", "Starting Doze service")
+        Log.d("PHH", "handwave: $handwave pocket: $pocket chopchop $chopchop")
+
+        if(pocket || handwave){
+            this.pocket = Pocket()
+            registerPocketListeners()
         }
-        if(enabled && !newState) {
-            unregisterListeners()
-            this.pocket = null
-            this.chopchop = null
+
+        if(chopchop){
+            this.chopchop = ChopChop()
+            registerChopchopListeners()
         }
-        enabled = newState
+
     }
 
     val pocketSensorListener = object: SensorEventListener {
