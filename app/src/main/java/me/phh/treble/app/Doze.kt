@@ -193,7 +193,7 @@ object Doze: EntryStartup {
     fun registerChopchopListeners() {
         //Request update every 100ms should work just fine
         sensorManager.registerListener(chopchopSensorListener, chopchopSensor, 1000*100)
-        cameraManager.registerTorchCallback(torchStateListener, null)
+        cameraManager.registerTorchCallback(torchStateListener, dozeHandler)
     }
 
     fun unregisterListeners() {
@@ -218,13 +218,20 @@ object Doze: EntryStartup {
 
     override fun startup(ctxt: Context) {
         Log.d("PHH", "Starting Doze service")
-        cameraManager = ctxt.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        torchCameraId = cameraManager.cameraIdList[0]
-        vibrator = ctxt.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         sensorManager = ctxt.getSystemService(SensorManager::class.java)
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, true)
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false)
-        chopchopSensor = sensorManager.getSensorList(Sensor.TYPE_ALL).first { it.stringType == "com.motorola.sensor.chopchop" }
+
+        try {
+            chopchopSensor = Doze.sensorManager.getSensorList(Sensor.TYPE_ALL).first { it.stringType == "com.motorola.sensor.chopchop" }
+            Log.d("PHH", "Found ChopChop Sensor, Initalizing needed Services")
+            cameraManager = ctxt.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            torchCameraId = cameraManager.cameraIdList[0]
+            vibrator = ctxt.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        } catch (e: Exception){}
+
+
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
