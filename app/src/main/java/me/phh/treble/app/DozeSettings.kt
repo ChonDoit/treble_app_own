@@ -3,6 +3,7 @@ package me.phh.treble.app
 object DozeSettings : Settings {
     val handwaveKey = "key_doze_handwave"
     val pocketKey = "key_doze_pocket"
+    val chopchopkey = "key_doze_chopchop"
 
     override fun enabled(): Boolean {
         //TODO: Check if sensors are available and respond to interrupts
