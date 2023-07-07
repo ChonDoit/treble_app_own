@@ -157,13 +157,19 @@ class UpdaterActivity : PreferenceActivity() {
 
         val update_title = findViewById(R.id.txt_update_title) as TextView
         val update_description = findViewById(R.id.txt_update_description) as TextView
-        var update_description_text = "Android version: " + getAndroidVersion() + "\n"
-        update_description_text += "GSI variant: " + getVariant() + "\n"
+
+        var update_description_text = getGSIName() + "\n\n"
+        update_description_text += "Android version: " + getAndroidVersion() + "\n"
+        update_description_text += "Build variant: " + getVariant() + "\n"
         update_description_text += "Security patch: " + getPatchDate() + "\n\n"
 
         if (hasUpdate) {
-            update_description_text += "Update version: " + getUpdateVersion() + "\n"
-            update_description_text += "Download size: " + getUpdateSize()
+            update_description_text += "••••••••••••••• \n\n"
+            update_description_text += "Update available: " + getUpdateVersion() + "\n"
+            update_description_text += "Build variant: " + getBuildVariant() + "\n"
+            update_description_text += "Download size: " + getUpdateSize() + "\n\n"
+            update_description_text += "CHANGELOG: \n" + getChangelogUrl() + "\n"
+
             update_title.text = getString(R.string.update_found_title)
             btn_update.text = getString(R.string.update_found_button)
         } else if (!wasUpdated) {
@@ -182,6 +188,34 @@ class UpdaterActivity : PreferenceActivity() {
         Log.e("PHH", "Security patch date: " + patchDate)
         val localDate = LocalDate.parse(patchDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         return localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
+    }
+
+    private fun getGSIName() : String {
+        if (otaJson.length() > 0) {
+            return otaJson.getString("gsi")
+        }
+        Log.e("PHH", "OTA json is empty")
+        return ""
+    }
+
+    private fun getChangelogUrl() : String {
+        if (otaJson.length() > 0) {
+            return otaJson.getString("changelog")
+        }
+        Log.e("PHH", "OTA json is empty")
+        return ""
+    }
+
+    private fun getBuildVariant() : String {
+        if (otaJson.length() > 0) {
+            var otaVariants = otaJson.getJSONArray("variants")
+            for (i in 0 until otaVariants.length()) {
+                val otaVariant = otaVariants.get(i) as JSONObject
+                return otaVariant.getString("name")
+            }
+        }
+        Log.e("PHH", "OTA json is empty")
+        return ""
     }
 
     private fun getUpdateVersion() : String {
