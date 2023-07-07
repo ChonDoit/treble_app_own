@@ -32,4 +32,6 @@
     <string name="toast_download_fail">Failed downloading OTA package</string>
     <string name="toast_install_done">OTA image successfully installed</string>
     <string name="toast_install_fail">Failed installing OTA image</string>
+    <string name="toast_delete_cache">Packages cache deleted</string>
+    <string name="toast_reboot">Reboot your device right now</string>
 </resources>

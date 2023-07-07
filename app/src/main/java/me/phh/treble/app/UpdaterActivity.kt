@@ -191,6 +191,18 @@ class UpdaterActivity : PreferenceActivity() {
         return localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
     }
 
+    private fun deletePackageCache() {
+        val PackageCache = File("/data/system/package_cache")
+        try {
+            PackageCache.deleteRecursively()
+            Log.d("PHH", "Deleted package_cache successfully.")
+            Toast.makeText(this, R.string.toast_delete_cache, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_reboot, Toast.LENGTH_SHORT).show();
+        } catch (e: Exception) {
+            Log.e("PHH", "Failed deleting package_cache. Error: " + e.toString(), e)
+        }
+    }
+
     private fun getGSIName() : String {
         if (otaJson.length() > 0) {
             return otaJson.getString("gsi")
@@ -365,6 +377,7 @@ class UpdaterActivity : PreferenceActivity() {
                             Log.e("PHH", "Slot switch made")
                             Log.e("PHH", "OTA image install finished")
                             hasSuccess = true
+                            deletePackageCache()
                         } catch (e: Exception) {
                             Log.e("PHH", "Failed applying OTA image. Error: " + e.toString(), e)
                         }
