@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -372,11 +373,13 @@ class UpdaterActivity : PreferenceActivity() {
                             if (hasSuccess) {
                                 builder.setTitle(getString(R.string.title_activity_updater))
                                 builder.setMessage(getString(R.string.success_install_message))
+                                Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_SHORT).show();
                             } else {
                                 progress_bar.setVisibility(View.GONE)
                                 progress_text.setVisibility(View.GONE)
                                 builder.setTitle(getString(R.string.error_dialog_title))
                                 builder.setMessage(getString(R.string.failed_install_message))
+                                Toast.makeText(this, R.string.toast_install_fail, Toast.LENGTH_SHORT).show();
                             }
                             builder.setPositiveButton(android.R.string.ok) { _, _ -> }
                             builder.show()
@@ -388,6 +391,7 @@ class UpdaterActivity : PreferenceActivity() {
                 }
             } catch (e: Exception) {
                 Log.e("PHH", "Failed downloading OTA image. Error: " + e.toString(), e)
+                Toast.makeText(this, R.string.toast_download_fail, Toast.LENGTH_SHORT).show();
                 progress_bar.setVisibility(View.GONE)
                 progress_text.setVisibility(View.GONE)
                 val builder = AlertDialog.Builder(this)
@@ -431,6 +435,7 @@ class UpdaterActivity : PreferenceActivity() {
         val update_title = findViewById(R.id.txt_update_title) as TextView
 
         runOnUiThread(Runnable {
+            Toast.makeText(this, R.string.toast_download_start, Toast.LENGTH_SHORT).show();
             update_title.text = getString(R.string.downloading_update_title)
             progress_bar.setIndeterminate(false)
             progress_bar.setProgress(0)
@@ -513,6 +518,7 @@ class UpdaterActivity : PreferenceActivity() {
         val update_title = findViewById(R.id.txt_update_title) as TextView
 
         runOnUiThread(Runnable {
+            Toast.makeText(this, R.string.toast_download_finished, Toast.LENGTH_SHORT).show();
             update_title.text = getString(R.string.applying_update_title)
             progress_text.text = "Switching slot..."
             progress_bar.setVisibility(View.VISIBLE)
