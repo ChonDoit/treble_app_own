@@ -222,9 +222,13 @@ class UpdaterActivity : PreferenceActivity() {
     private fun getBuildVariant() : String {
         if (otaJson.length() > 0) {
             var otaVariants = otaJson.getJSONArray("variants")
+            Log.e("PHH", "OTA variants found: " + otaVariants.length())
             for (i in 0 until otaVariants.length()) {
                 val otaVariant = otaVariants.get(i) as JSONObject
-                return otaVariant.getString("name")
+                val otaVariantName = otaVariant.getString("name")
+                if (otaVariantName == getVariant()) {
+                    return otaVariantName;
+                }
             }
         }
         Log.e("PHH", "OTA json is empty")
@@ -377,16 +381,16 @@ class UpdaterActivity : PreferenceActivity() {
                             Log.e("PHH", "Slot switch made")
                             Log.e("PHH", "OTA image install finished")
                             hasSuccess = true
-                            deletePackageCache()
                         } catch (e: Exception) {
                             Log.e("PHH", "Failed applying OTA image. Error: " + e.toString(), e)
                         }
                         runOnUiThread(Runnable {
                             val builder = AlertDialog.Builder(this)
                             if (hasSuccess) {
+                                Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_SHORT).show();
                                 builder.setTitle(getString(R.string.title_activity_updater))
                                 builder.setMessage(getString(R.string.success_install_message))
-                                Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_SHORT).show();
+                                deletePackageCache()
                             } else {
                                 progress_bar.setVisibility(View.GONE)
                                 progress_text.setVisibility(View.GONE)
