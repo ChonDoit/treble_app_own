@@ -50,6 +50,11 @@
 			android:title="Automatically restart RIL" />
 		<Preference android:title="@string/remove_telephony_subsystem"
 			android:key="key_misc_removetelephony" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_allow_binder_thread_on_incoming_calls"
+			android:summary="Workaround for 4G calling\nRequires a reboot"
+			android:title="Allow binder thread on incoming calls" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Audio">

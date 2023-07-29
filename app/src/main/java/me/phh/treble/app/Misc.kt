@@ -281,6 +281,10 @@ object Misc: EntryStartup {
                     SystemProperties.set("persist.sys.phh.touch_hint", "touch")
                 }
             }
+	    MiscSettings.allowBinderThread -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.allow_binder_thread_on_incoming_calls", if(value) "1" else "0")
+            }
         }
     }
 
