@@ -18,7 +18,6 @@ object MiscSettings : Settings {
     val headsetFix = "key_huawei_headset_fix"
     val roundedCorners = "key_misc_rounded_corners"
     val roundedCornersOverlay = "key_misc_rounded_corners_overlay"
-    val linearBrightness = "key_misc_linear_brightness"
     val disableButtonsBacklight = "key_misc_disable_buttons_backlight"
     val forceNavbarOff = "key_misc_force_navbar_off"
     val bluetooth = "key_misc_bluetooth"
@@ -47,6 +46,7 @@ object MiscSettings : Settings {
     val statusbarpaddingtop = "key_misc_sb_padding_top"
     val statusbarpaddingstart = "key_misc_sb_padding_start"
     val statusbarpaddingend = "key_misc_sb_padding_end"
+    val LowGammaBrightness = "key_misc_low_gamma_brightness"
 
     override fun enabled() = true
 }

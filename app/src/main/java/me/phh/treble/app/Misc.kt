@@ -156,10 +156,6 @@ object Misc: EntryStartup {
                     Settings.Secure.putFloat(c.contentResolver, "sysui_rounded_size", value)
                 }
             }
-            MiscSettings.linearBrightness -> {
-                val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.sys.phh.linear_brightness", if (value) "true" else "false")
-            }
             MiscSettings.disableButtonsBacklight -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_buttons_light", if (value) "true" else "false")
@@ -310,6 +306,10 @@ object Misc: EntryStartup {
                 } else {
                     SystemProperties.set("persist.sys.phh.status_bar_padding_end", null)
                 }
+            }
+	    MiscSettings.LowGammaBrightness -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.low_gamma_brightness", if (value) "true" else "false")
             }
         }
     }
