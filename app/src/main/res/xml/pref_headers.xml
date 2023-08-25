@@ -42,9 +42,6 @@
         android:fragment="me.phh.treble.app.ImsSettingsFragment"
         android:title="IMS features" />
     <header
-        android:fragment="me.phh.treble.app.CustomSettingsFragment"
-        android:title="Customization features" />
-    <header
         android:id="@+id/updater"
         android:title="Updater">
         <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
