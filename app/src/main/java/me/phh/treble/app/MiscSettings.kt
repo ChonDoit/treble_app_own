@@ -44,6 +44,9 @@ object MiscSettings : Settings {
     val biometricstrong = "key_misc_biometricstrong"
     val mtkTouchHintIsRotate = "key_misc_mediatek_touch_hint_rotate"
     val allowBinderThread = "key_misc_allow_binder_thread_on_incoming_calls"
+    val statusbarpaddingtop = "key_misc_sb_padding_top"
+    val statusbarpaddingstart = "key_misc_sb_padding_start"
+    val statusbarpaddingend = "key_misc_sb_padding_end"
 
     override fun enabled() = true
 }
