@@ -211,7 +211,7 @@ object Misc: EntryStartup {
             }
             MiscSettings.sysbta -> {
                 val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.bluetooth.system_audio_hal.enabled", if (value) "1" else "0")
+                SystemProperties.set("persist.bluetooth.system_audio_hal.enabled", if (value) "true" else "false")
             }
             MiscSettings.noHwcomposer -> {
                 val value = sp.getBoolean(key, false)
