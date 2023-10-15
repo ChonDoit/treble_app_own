@@ -71,7 +71,7 @@
 			android:key="key_misc_disable_audio_effects"
 			android:title="Disable audio effects" />
 		<ListPreference
-			android:defaultValue="-1"
+			android:defaultValue="0"
 			android:entries="@array/pref_misc_bluetooth"
 			android:entryValues="@array/pref_misc_bluetooth_values"
 			android:key="key_misc_bluetooth"
