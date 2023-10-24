@@ -55,6 +55,11 @@
 			android:key="key_misc_allow_binder_thread_on_incoming_calls"
 			android:summary="Workaround for 4G calling\nRequires a reboot"
 			android:title="Allow binder thread on incoming calls" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_force_display_5g"
+			android:title="Force display 5G network"
+			android:summary="Displays 5G as an option for the preferred network type\nRequires a reboot" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Audio">

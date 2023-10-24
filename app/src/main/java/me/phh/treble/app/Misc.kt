@@ -316,6 +316,10 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.low_gamma_brightness", if (value) "true" else "false")
             }
+	    MiscSettings.forceDisplay5g -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.force_display_5g", if(value) "1" else "0")
+            }
         }
     }
 
