@@ -75,6 +75,10 @@
 			android:defaultValue="false"
 			android:key="key_misc_disable_audio_effects"
 			android:title="Disable audio effects" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_disable_fast_audio"
+			android:title="Disable fast audio" />
 		<ListPreference
 			android:defaultValue="0"
 			android:entries="@array/pref_misc_bluetooth"
@@ -162,8 +166,11 @@
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="key_misc_low_gamma_brightness"
-			android:title="Set alternative brightness curve"
-			android:summary="Requires reboot"/>
+			android:title="Set alternative brightness curve" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_linear_brightness"
+			android:title="Set linear brightness curve" />
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="key_misc_backlight_scale"

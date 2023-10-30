@@ -214,6 +214,10 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_audio_effects", if (value) "1" else "0")
             }
+	    MiscSettings.disableFastAudio -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.disable_fast_audio", if (value) "1" else "0")
+            }
             MiscSettings.sysbta -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.bluetooth.system_audio_hal.enabled", if (value) "true" else "false")
@@ -319,6 +323,10 @@ object Misc: EntryStartup {
 	    MiscSettings.forceDisplay5g -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.force_display_5g", if(value) "1" else "0")
+            }
+	    MiscSettings.linearBrightness -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.linear_brightness", if(value) "1" else "0")
             }
         }
     }
