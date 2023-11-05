@@ -316,7 +316,7 @@ object Misc: EntryStartup {
                     SystemProperties.set("persist.sys.phh.status_bar_padding_end", null)
                 }
             }
-	    MiscSettings.LowGammaBrightness -> {
+	    MiscSettings.lowGammaBrightness -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.low_gamma_brightness", if (value) "true" else "false")
             }

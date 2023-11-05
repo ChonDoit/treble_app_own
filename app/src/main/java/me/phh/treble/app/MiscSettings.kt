@@ -47,7 +47,7 @@ object MiscSettings : Settings {
     val statusbarpaddingtop = "key_misc_sb_padding_top"
     val statusbarpaddingstart = "key_misc_sb_padding_start"
     val statusbarpaddingend = "key_misc_sb_padding_end"
-    val LowGammaBrightness = "key_misc_low_gamma_brightness"
+    val lowGammaBrightness = "key_misc_low_gamma_brightness"
     val linearBrightness = "key_misc_linear_brightness"
     val forceDisplay5g = "key_misc_force_display_5g"
 
