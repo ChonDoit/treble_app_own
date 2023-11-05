@@ -95,6 +95,11 @@
 			android:defaultValue="false"
 			android:key="key_huawei_headset_fix"
 			android:title="Force headset switch (Huawei default)" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_disable_voice_call_in"
+			android:title="Disable &quot;Voice Call In&quot; route"
+			android:summary="May fix echo or non-working audio on calls\nRequires a reboot" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="USER INTERFACE">
