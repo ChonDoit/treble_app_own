@@ -102,6 +102,11 @@ object Ims: EntryStartup {
             gotFloss -> "me.phh.treble.overlay.flossims_telephony"
             else -> null
         }
+        if (gotFloss) {
+            Misc.safeSetprop("persist.sys.phh.ims.floss", "true")
+        } else {
+            Misc.safeSetprop("persist.sys.phh.ims.floss", "false")
+        }
         if(selectOverlay != null) {
             allOverlays
                     .filter { it != selectOverlay }
