@@ -16,7 +16,7 @@ object SamsungSettings : Settings {
     val flashStrength = "key_samsung_flash_strength"
     val disableBackMic = "key_samsung_disable_back_mic"
 
-    override fun enabled() = Tools.vendorFpLow.startsWith("samsung/")
+    override fun enabled() = Tools.vendorFpLow.startsWith("samsung/") || Tools.vendorFpLow.startsWith("kddi/scv41_")
 }
 
 class SamsungSettingsFragment : SettingsFragment() {
