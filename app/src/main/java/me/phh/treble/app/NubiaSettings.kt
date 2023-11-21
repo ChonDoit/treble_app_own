@@ -15,9 +15,12 @@ object NubiaSettings : Settings {
     val boostGpu = "nubia_boost_gpu"
     val boostCache = "nubia_boost_cache"
     val boostUfs = "nubia_boost_ufs"
+    val shoulderBtn = "nubia_shoulder_btn"
 
     override fun enabled() = Tools.vendorFp.toLowerCase().startsWith("nubia/")
     fun is6Series() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx669")
+    fun is5GLite() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx651")
+    fun is5G5S() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx659")
 
 }
 

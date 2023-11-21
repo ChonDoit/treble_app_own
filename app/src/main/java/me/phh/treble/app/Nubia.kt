@@ -87,6 +87,23 @@ object Nubia : EntryStartup {
                 val b = sp.getBoolean(key, false)
                 SystemProperties.set("nubia.perf.ufs", if(b) "1" else "0")
             }
+            NubiaSettings.shoulderBtn -> {
+                val i = if(sp.getBoolean(key, false)) "1" else "0"
+                if (NubiaSettings.is6Series()){
+                    // Right
+                    writeToFileNofail("/sys/devices/platform/soc/a88000.i2c/i2c-3/3-0010/mode", i)
+                    // Left
+                    writeToFileNofail("/sys/devices/platform/soc/998000.i2c/i2c-1/1-0010/mode", i)
+                } else if (NubiaSettings.is5GLite()){
+                    // both right and left
+                    writeToFileNofail("/sys/devices/platform/soc/880000.i2c/i2c-0/0-0010/mode", i)
+                } else if (NubiaSettings.is5G5S()){
+                    // Right
+                    writeToFileNofail("/sys/devices/platform/soc/988000.i2c/i2c-1/1-0010/mode", i)
+                    // Left
+                    writeToFileNofail("/sys/devices/platform/soc/990000.i2c/i2c-2/2-0010/mode", i)
+                }
+            }
         }
     }
 
@@ -99,6 +116,7 @@ object Nubia : EntryStartup {
         //Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.dt2w)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.tsGameMode)
+        spListener.onSharedPreferenceChanged(sp, NubiaSettings.shoulderBtn)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.bypassCharger)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.highTouchScreenSampleRate)
 

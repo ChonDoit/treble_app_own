@@ -36,6 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
+            android:key="nubia_shoulder_btn"
+            android:title="Enable shoulder buttons"
+            app:summary="Shoulder buttons/triggers" />
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
             android:key="nubia_bypass_charger"
             android:title="Enable bypass charger"
             app:summaryOff="Charger -> Battery -> Phone"
