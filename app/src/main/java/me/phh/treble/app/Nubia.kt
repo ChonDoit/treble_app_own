@@ -143,6 +143,14 @@ object Nubia : EntryStartup {
                 ctxt,
                 NubiaGameModeTilesService::class.java
             ), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0)
+        if (NubiaSettings.is5G5S() || NubiaSettings.is6Series() || NubiaSettings.is5GLite()) {
+            // Enable shoulder triggers quick setting tile
+            ctxt.packageManager.setComponentEnabledSetting(
+                ComponentName(
+                    ctxt,
+                    NubiaShoulderBtnTilesService::class.java
+                ), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0)
 
+        }
     }
 }

@@ -124,3 +124,49 @@ class NubiaFanControlTilesService: TileService() {
         super.onTileRemoved()
     }
 }
+
+
+class NubiaShoulderBtnTilesService: TileService() {
+    private lateinit var sp: SharedPreferences
+
+    override fun onCreate() {
+        this.sp = PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
+    // Called when the user adds your tile.
+    override fun onTileAdded() {
+        super.onTileAdded()
+    }
+    // Called when your app can update your tile.
+    override fun onStartListening() {
+        super.onStartListening()
+        val shouldBtnEnabled: Boolean = sp.getBoolean(NubiaSettings.shoulderBtn, false)
+        qsTile.contentDescription = if (shouldBtnEnabled) "On" else "Off"
+        qsTile.state = if (shouldBtnEnabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        qsTile.updateTile()
+
+    }
+
+    // Called when your app can no longer update your tile.
+    override fun onStopListening() {
+        super.onStopListening()
+    }
+
+    // Called when the user taps on your tile in an active or inactive state.
+    override fun onClick() {
+        super.onClick()
+        val shouldBtnEnabled: Boolean = sp.getBoolean(NubiaSettings.shoulderBtn, false)
+        with (sp.edit()) {
+            putBoolean(NubiaSettings.shoulderBtn, !shouldBtnEnabled)
+            apply()
+        }
+        qsTile.state = if (shouldBtnEnabled) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE
+        qsTile.contentDescription = if (shouldBtnEnabled) "Off" else "On"
+        qsTile.updateTile()
+    }
+    // Called when the user removes your tile.
+    override fun onTileRemoved() {
+        super.onTileRemoved()
+    }
+
+}
