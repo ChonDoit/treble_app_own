@@ -94,12 +94,12 @@ object Ims: EntryStartup {
 
         val allOverlays = listOf("me.phh.treble.overlay.mtkims_telephony", "me.phh.treble.overlay.cafims_telephony", "me.phh.treble.overlay.hwims_telephony")
         val selectOverlay = when {
+            gotFloss -> "me.phh.treble.overlay.flossims_telephony"
             gotMtkP || gotMtkQ || gotMtkR || gotMtkS -> "me.phh.treble.overlay.mtkims_telephony"
             gotQcomHidl || gotQcomAidl -> "me.phh.treble.overlay.cafims_telephony"
             gotSLSI -> "me.phh.treble.overlay.slsiims_telephony"
             gotSPRD -> "me.phh.treble.overlay.sprdims_telephony"
             gotHW -> "me.phh.treble.overlay.hwims_telephony"
-            gotFloss -> "me.phh.treble.overlay.flossims_telephony"
             else -> null
         }
         if (gotFloss) {
