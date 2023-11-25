@@ -332,6 +332,10 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_voice_call_in", if (value) "true" else "false")
             }
+            MiscSettings.mtkGedKpi -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.mtk_ged_kpi", if (value) "1" else "0")
+            }
         }
     }
 
