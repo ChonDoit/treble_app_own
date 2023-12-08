@@ -170,7 +170,7 @@ class ImsSettingsFragment : SettingsFragment() {
                                     this@ImsSettingsFragment.activity,
                                     1,
                                     Intent("me.phh.treble.app.ImsInstalled"),
-                                    PendingIntent.FLAG_ONE_SHOT).intentSender)
+                                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE).intentSender)
                     activity.unregisterReceiver(this)
                 }
 
