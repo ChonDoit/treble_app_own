@@ -65,6 +65,10 @@ object Lid: EntryStartup {
                         sleepy(ctxt)
                     } else {
                         waky(ctxt)
+                        val displayToken =
+                            SurfaceControl::class.java.getMethod("getPhysicalDisplayToken", Long::class.java)
+                                .invoke(null, 1)
+                        SurfaceControl::class.java.getMethod("setDisplayPowerMode", IBinder::class.java, Int::class.java).invoke(null, displayToken, 0)
                     }
                 } catch (e: Exception) {
                     Log.d("PHH", "Failed parsing uevent", e)
