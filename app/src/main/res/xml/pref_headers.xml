@@ -21,6 +21,9 @@
         android:fragment="me.phh.treble.app.SamsungSettingsFragment"
         android:title="Samsung features" />
     <header
+        android:fragment="me.phh.treble.app.TranssionSettingsFragment"
+        android:title="Transsion features" />
+    <header
         android:fragment="me.phh.treble.app.LenovoSettingsFragment"
         android:title="Lenovo features" />
     <header
