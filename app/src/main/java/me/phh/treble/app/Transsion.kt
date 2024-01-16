@@ -15,6 +15,11 @@ object Transsion: EntryStartup {
                 val value = if(b) "1" else "0"
                 Misc.safeSetprop("persist.sys.phh.transsion.usbotg", value)
             }
+            TranssionSettings.dt2w -> {
+                val b = sp.getBoolean(key, false)
+                val value = if(b) "1" else "2"
+                Misc.safeSetprop("persist.sys.phh.transsion.dt2w", value)
+            }
         }
     }
 
