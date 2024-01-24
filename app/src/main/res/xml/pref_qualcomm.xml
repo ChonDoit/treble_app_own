@@ -19,4 +19,9 @@
         android:key="key_qualcomm_disable_stereo_voip"
         android:title="Disable stereo support on VoIP"
         android:summary="May fix high pitched audio. Requires a reboot" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="key_qualcomm_direct_output_voip"
+        android:title="Define VoIP as Direct Output"
+        android:summary="Should fix high pitched audio. Requires a reboot" />
 </PreferenceScreen>
