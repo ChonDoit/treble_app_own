@@ -140,6 +140,7 @@ class Samsung: EntryStartup {
         Log.e("PHH", "Samsung TS: Supports aod_enable ${tsCmdExists("aod_enable")}")
 
         tsCmd("check_connection")
+        tsCmd("fod_enable,1,1,0")
 
         for(malware in listOf("com.dti.globe", "com.singtel.mysingtel", "com.LogiaGroup.LogiaDeck", "com.mygalaxy")) {
             try {
