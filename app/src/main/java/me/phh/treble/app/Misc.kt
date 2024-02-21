@@ -336,6 +336,11 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.mtk_ged_kpi", if (value) "1" else "0")
             }
+            MiscSettings.disableSfGlBackpressure -> {
+                val value = sp.getBoolean(key, false)
+                // Note: Reversed value because the prop is enabling
+                SystemProperties.set("persist.sys.phh.enable_sf_gl_backpressure", if (value) "0" else "1")
+            }
         }
     }
 
