@@ -53,6 +53,7 @@ object MiscSettings : Settings {
     val disableVoiceCallIn = "key_misc_disable_voice_call_in"
     val mtkGedKpi = "key_misc_mediatek_ged_kpi"
     val disableSfGlBackpressure = "key_misc_disable_sf_gl_backpressure"
+    val disableSaeUpgrade = "key_misc_disable_sae_upgrade"
 
     override fun enabled() = true
 }

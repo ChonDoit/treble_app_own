@@ -341,6 +341,10 @@ object Misc: EntryStartup {
                 // Note: Reversed value because the prop is enabling
                 SystemProperties.set("persist.sys.phh.enable_sf_gl_backpressure", if (value) "0" else "1")
             }
+            MiscSettings.disableSaeUpgrade -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.wifi_disable_sae", if (value) "true" else "false")
+            }
         }
     }
 

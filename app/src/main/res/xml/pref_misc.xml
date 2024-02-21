@@ -233,6 +233,10 @@
 			android:summary="Unlikely to work for you" />
 		<SwitchPreference
 			android:defaultValue="false"
+			android:key="key_misc_disable_sae_upgrade"
+			android:title="Disable WPA3/SAE" />
+		<SwitchPreference
+			android:defaultValue="false"
 			android:key="key_misc_force_navbar_off"
 			android:title="Force navigation bar disabled"
 			android:summary="Requires a reboot" />
