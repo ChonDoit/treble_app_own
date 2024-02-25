@@ -104,6 +104,7 @@ class SettingsActivity : PreferenceActivity() {
                 || NubiaSettingsFragment::class.java.name == fragmentName
                 || ImsSettingsFragment::class.java.name == fragmentName
                 || CustomSettingsFragment::class.java.name == fragmentName
+                || AudioEffectsFragment::class.java.name == fragmentName
     }
 
     companion object {

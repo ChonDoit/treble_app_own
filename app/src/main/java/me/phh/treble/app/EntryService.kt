@@ -60,6 +60,7 @@ class EntryService: Service() {
 
             tryC { Desktop.startup(this) }
             tryC { Lid.startup(this) }
+            tryC { AudioEffects.startup(this) }
 
             tryC { PresetDownloader.startup(this) }
             tryC {
