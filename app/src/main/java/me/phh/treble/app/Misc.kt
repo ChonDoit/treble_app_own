@@ -84,11 +84,6 @@ object Misc: EntryStartup {
                 SystemProperties.set("persist.sys.signal.level", value)
                 Log.d("PHH", "Setting signal level method to $value")
             }
-            MiscSettings.fpsDivisor -> {
-                val value = sp.getString(key, "1")
-                Log.d("PHH", "Setting fps divisor to $value")
-                Settings.Global.putString(c.contentResolver, "fps_divisor", value)
-            }
             MiscSettings.cameraTimestampOverride -> {
                 val value = sp.getString(key, "-1")
                 Log.d("PHH", "Setting cameraTimestampOverride to $value")
@@ -357,7 +352,6 @@ object Misc: EntryStartup {
         this.ctxt = WeakReference(ctxt.applicationContext)
 
         //Refresh parameters on boot
-        spListener.onSharedPreferenceChanged(sp, MiscSettings.fpsDivisor)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.cameraTimestampOverride)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.mobileSignal)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.maxAspectRatioPreO)
