@@ -108,7 +108,7 @@
 			android:key="key_misc_rounded_corners"
 			android:title="Set rounded corners diameter"
 			android:inputType="number"
-			android:summary="Requires a reboot" />
+			android:summary="Requires restart SystemUI" />
 		<EditTextPreference
 			android:defaultValue="-1"
 			android:key="key_misc_rounded_corners_overlay"
@@ -119,19 +119,23 @@
 			android:key="key_misc_sb_padding_top"
 			android:title="Set status bar top padding"
 			android:inputType="number"
-			android:summary="Requires a reboot" />
+			android:summary="Requires restart SystemUI" />
 		<EditTextPreference
 			android:defaultValue="-1"
 			android:key="key_misc_sb_padding_start"
 			android:title="Set status bar start padding"
 			android:inputType="number"
-			android:summary="Requires a reboot" />
+			android:summary="Requires restart SystemUI" />
 		<EditTextPreference
 			android:defaultValue="-1"
 			android:key="key_misc_sb_padding_end"
 			android:title="Set status bar end padding"
 			android:inputType="number"
-			android:summary="Requires a reboot" />
+			android:summary="Requires restart SystemUI" />
+		<Preference
+			android:key="key_misc_restart_systemui"
+			android:title="Restart SystemUI"
+			android:summary="Requires root access" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="DISPLAY">
@@ -147,10 +151,6 @@
 			android:entryValues="@array/pref_misc_max_aspect_ratio_pre_o_values"
 			android:key="key_misc_max_aspect_ratio_pre_o"
 			android:title="Compatibility max aspect ratio" />
-		<Preference
-			android:key="key_misc_restart_systemui"
-			android:title="Restart SystemUI"
-			android:summary="Recommended after switching display resolution\nRequires root" />
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="key_misc_no_hwcomposer"
