@@ -336,6 +336,10 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.wifi_disable_sae", if (value) "true" else "false")
             }
+	    MiscSettings.dynamicFps -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.dynamic_fps", if (value) "true" else "false")
+            }
         }
     }
 

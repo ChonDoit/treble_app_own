@@ -62,7 +62,7 @@
 			android:summary="Displays 5G as an option for the preferred network type\nRequires a reboot" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Audio">
+	<PreferenceCategory android:title="AUDIO">
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="key_misc_dynamic_sysbta"
@@ -145,6 +145,11 @@
 			android:entryValues="@array/pref_misc_display_fps_values"
 			android:key="key_misc_display_fps"
 			android:title="Force FPS (REFRESH RATE)" />
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_dynamic_fps"
+			android:title="Dynamic FPS"
+			android:summary="Adjust refresh rate based on screen content\nRequires reboot"/>
 		<ListPreference
 			android:defaultValue="1.86"
 			android:entries="@array/pref_misc_max_aspect_ratio_pre_o"
