@@ -56,6 +56,10 @@ object Ims: EntryStartup {
                 Misc.safeSetprop("persist.dbg.wfc_avail_ovr", value)
                 Misc.safeSetprop("persist.dbg.allow_ims_off", value)
             }
+            ImsSettings.allowBinderThread -> {
+                val value = sp.getBoolean(key, false)
+                Misc.safeSetprop("persist.sys.phh.allow_binder_thread_on_incoming_calls", if(value) "1" else "0")
+            }
         }
     }
 

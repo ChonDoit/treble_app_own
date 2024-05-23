@@ -28,6 +28,7 @@ object ImsSettings : Settings {
     val createApn = "key_ims_create_apn"
     val forceEnableSettings = "key_ims_force_enable_setting"
     val installImsApk = "key_ims_install_apn"
+    val allowBinderThread = "key_ims_allow_binder_thread_on_incoming_calls"
 
     override fun enabled() = true
 }
