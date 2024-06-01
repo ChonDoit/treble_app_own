@@ -175,6 +175,11 @@
 			android:key="key_misc_disable_sf_gl_backpressure"
 			android:title="Disable SF GL backpressure"
 			android:summary="Might improve rendering performance\nRequires reboot"/>
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="key_misc_disable_sf_hwc_backpressure"
+			android:title="Disable SF HWC backpressure"
+			android:summary="Might improve rendering performance"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="BACKLIGHT">

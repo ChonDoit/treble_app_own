@@ -336,6 +336,11 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.dynamic_fps", if (value) "true" else "false")
             }
+	    MiscSettings.disableSfHwcBackpressure -> {
+                val value = sp.getBoolean(key, false)
+                // Note: Reversed value because the prop is enabling
+                SystemProperties.set("persist.sys.phh.enable_sf_hwc_backpressure", if (value) "0" else "1")
+            }
         }
     }
 
