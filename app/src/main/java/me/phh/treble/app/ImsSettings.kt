@@ -94,11 +94,14 @@ class ImsSettingsFragment : SettingsFragment() {
         Log.d("PHH", "MTK Q radio = ${Ims.gotMtkQ}")
         Log.d("PHH", "MTK R radio = ${Ims.gotMtkR}")
         Log.d("PHH", "MTK S radio = ${Ims.gotMtkS}")
+        Log.d("PHH", "MTK AIDL radio = ${Ims.gotMtkAidl}")
         Log.d("PHH", "Qualcomm HIDL radio = ${Ims.gotQcomHidl}")
         Log.d("PHH", "Qualcomm AIDL radio = ${Ims.gotQcomAidl}")
 
         val (url, message) =
                 when {
+                    (Ims.gotMtkR || Ims.gotMtkS || Ims.gotMtkAidl) && Build.VERSION.SDK_INT >= 34
+                        -> Pair("https://treble.phh.me/ims-mtk-u.apk", "MediaTek R+ vendor")
                     Ims.gotMtkP -> Pair("https://treble.phh.me/stable/ims-mtk-p.apk", "MediaTek P vendor")
                     Ims.gotMtkQ -> Pair("https://treble.phh.me/stable/ims-mtk-q.apk", "MediaTek Q vendor")
                     Ims.gotMtkR -> Pair("https://treble.phh.me/stable/ims-mtk-r.apk", "MediaTek R vendor")
