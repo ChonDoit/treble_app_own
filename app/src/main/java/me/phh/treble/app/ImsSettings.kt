@@ -101,17 +101,17 @@ class ImsSettingsFragment : SettingsFragment() {
         val (url, message) =
                 when {
                     (Ims.gotMtkR || Ims.gotMtkS || Ims.gotMtkAidl) && Build.VERSION.SDK_INT >= 34
-                        -> Pair("https://treble.phh.me/ims-mtk-u.apk", "MediaTek R+ vendor")
-                    Ims.gotMtkP -> Pair("https://treble.phh.me/stable/ims-mtk-p.apk", "MediaTek P vendor")
-                    Ims.gotMtkQ -> Pair("https://treble.phh.me/stable/ims-mtk-q.apk", "MediaTek Q vendor")
-                    Ims.gotMtkR -> Pair("https://treble.phh.me/stable/ims-mtk-r.apk", "MediaTek R vendor")
-                    Ims.gotMtkS -> Pair("https://treble.phh.me/stable/ims-mtk-s.apk", "MediaTek S vendor")
+                        -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-mtk-u.apk", "MediaTek R+ vendor")
+                    Ims.gotMtkP -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-mtk-p.apk", "MediaTek P vendor")
+                    Ims.gotMtkQ -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-mtk-q.apk", "MediaTek Q vendor")
+                    Ims.gotMtkR -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-mtk-r.apk", "MediaTek R vendor")
+                    Ims.gotMtkS -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-mtk-s.apk", "MediaTek S vendor")
                     (Ims.gotQcomHidl || Ims.gotQcomAidl) && Build.VERSION.SDK_INT >= 34
-                        -> Pair("https://treble.phh.me/ims-caf-u.apk", "Qualcomm vendor")
-                    Ims.gotQcomHidlMoto -> Pair("https://treble.phh.me/stable/ims-caf-moto.apk", "Qualcomm pre-S vendor (Motorola)")
-                    Ims.gotQcomHidl -> Pair("https://treble.phh.me/stable/ims-q.64.apk", "Qualcomm pre-S vendor")
-                    Ims.gotQcomAidl -> Pair("https://treble.phh.me/stable/ims-caf-s.apk", "Qualcomm S+ vendor")
-                    else -> Pair("", "NOT SUPPORTED")
+                        -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-caf-u.apk", "Qualcomm vendor")
+                    Ims.gotQcomHidlMoto -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-caf-moto.apk", "Qualcomm pre-S vendor (Motorola)")
+                    Ims.gotQcomHidl -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-q.64.apk", "Qualcomm pre-S vendor")
+                    Ims.gotQcomAidl -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/ims-caf-s.apk", "Qualcomm S+ vendor")
+                    else -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/Stable/floss-ims-19.apk", "FLOSS IMS -WIP-")
                 }
 
         installIms!!.title = "Install IMS APK for $message"
