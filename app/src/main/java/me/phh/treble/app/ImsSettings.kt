@@ -15,6 +15,7 @@ import android.os.StrictMode
 import android.os.UserHandle
 import android.telephony.TelephonyManager
 import android.util.Log
+import dalvik.system.PathClassLoader
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.preference.ListPreference
@@ -29,6 +30,22 @@ object ImsSettings : Settings {
     val forceEnableSettings = "key_ims_force_enable_setting"
     val installImsApk = "key_ims_install_apn"
     val allowBinderThread = "key_ims_allow_binder_thread_on_incoming_calls"
+
+    fun checkHasPhhSignature(): Boolean {
+        try {
+            val cl = PathClassLoader(
+                "/system/framework/services.jar",
+                ClassLoader.getSystemClassLoader()
+            )
+            val pmUtils = cl.loadClass("com.android.server.pm.PackageManagerServiceUtils")
+            val field = pmUtils.getDeclaredField("PHH_SIGNATURE")
+            Log.d("PHH", "checkHasPhhSignature Field $field")
+            return true
+        } catch(t: Throwable) {
+            Log.d("PHH", "checkHasPhhSignature Field failed")
+            return false
+        }
+    }
 
     override fun enabled() = true
 }
@@ -98,19 +115,20 @@ class ImsSettingsFragment : SettingsFragment() {
         Log.d("PHH", "Qualcomm HIDL radio = ${Ims.gotQcomHidl}")
         Log.d("PHH", "Qualcomm AIDL radio = ${Ims.gotQcomAidl}")
 
+        val signSuffix = if(ImsSettings.checkHasPhhSignature()) "-resigned" else ""
         val (url, message) =
                 when {
                     (Ims.gotMtkR || Ims.gotMtkS || Ims.gotMtkAidl) && Build.VERSION.SDK_INT >= 34
-                        -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-mtk-u.apk", "MediaTek R+ vendor")
-                    Ims.gotMtkP -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-mtk-p.apk", "MediaTek P vendor")
-                    Ims.gotMtkQ -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-mtk-q.apk", "MediaTek Q vendor")
-                    Ims.gotMtkR -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-mtk-r.apk", "MediaTek R vendor")
-                    Ims.gotMtkS -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-mtk-s.apk", "MediaTek S vendor")
+                        -> Pair("https://treble.phh.me/ims-mtk-u$signSuffix.apk", "MediaTek R+ vendor")
+                    Ims.gotMtkP -> Pair("https://treble.phh.me/stable/ims-mtk-p$signSuffix.apk", "MediaTek P vendor")
+                    Ims.gotMtkQ -> Pair("https://treble.phh.me/stable/ims-mtk-q$signSuffix.apk", "MediaTek Q vendor")
+                    Ims.gotMtkR -> Pair("https://treble.phh.me/stable/ims-mtk-r$signSuffix.apk", "MediaTek R vendor")
+                    Ims.gotMtkS -> Pair("https://treble.phh.me/stable/ims-mtk-s$signSuffix.apk", "MediaTek S vendor")
                     (Ims.gotQcomHidl || Ims.gotQcomAidl) && Build.VERSION.SDK_INT >= 34
-                        -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-caf-u.apk", "Qualcomm vendor")
-                    Ims.gotQcomHidlMoto -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-caf-moto.apk", "Qualcomm pre-S vendor (Motorola)")
-                    Ims.gotQcomHidl -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-q.64.apk", "Qualcomm pre-S vendor")
-                    Ims.gotQcomAidl -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/ims-caf-s.apk", "Qualcomm S+ vendor")
+                        -> Pair("https://treble.phh.me/ims-caf-u$signSuffix.apk", "Qualcomm vendor")
+                    Ims.gotQcomHidlMoto -> Pair("https://treble.phh.me/stable/ims-caf-moto$signSuffix.apk", "Qualcomm pre-S vendor (Motorola)")
+                    Ims.gotQcomHidl -> Pair("https://treble.phh.me/stable/ims-q.64$signSuffix.apk", "Qualcomm pre-S vendor")
+                    Ims.gotQcomAidl -> Pair("https://treble.phh.me/stable/ims-caf-s$signSuffix.apk", "Qualcomm S+ vendor")
                     else -> Pair("https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/floss-ims-19.apk", "FLOSS IMS -WIP-")
                 }
 
