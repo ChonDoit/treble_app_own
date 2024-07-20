@@ -132,21 +132,6 @@ object Misc: EntryStartup {
                     ForceHeadsetAudio.shutdown(c)
                 }
             }
-            MiscSettings.roundedCorners -> {
-                val value = sp.getString(key, "-1").toInt()
-                if (value >= 0) {
-                    Settings.Secure.putInt(c.contentResolver, "sysui_rounded_content_padding", value)
-                    SystemProperties.set("persist.sys.phh.rounded_corners_padding", value.toString())
-		} else {
-                    SystemProperties.set("persist.sys.phh.rounded_corners_padding", null)
-                }
-            }
-            MiscSettings.roundedCornersOverlay -> {
-                val value = sp.getString(key, "-1").toFloat()
-                if (value >= 0) {
-                    Settings.Secure.putFloat(c.contentResolver, "sysui_rounded_size", value)
-                }
-            }
             MiscSettings.disableButtonsBacklight -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_buttons_light", if (value) "true" else "false")

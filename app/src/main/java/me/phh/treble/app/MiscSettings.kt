@@ -16,8 +16,6 @@ object MiscSettings : Settings {
     val multiCameras = "key_misc_multi_camera"
     val forceCamera2APIHAL3 = "key_misc_force_camera2api_hal3"
     val headsetFix = "key_huawei_headset_fix"
-    val roundedCorners = "key_misc_rounded_corners"
-    val roundedCornersOverlay = "key_misc_rounded_corners_overlay"
     val disableButtonsBacklight = "key_misc_disable_buttons_backlight"
     val forceNavbarOff = "key_misc_force_navbar_off"
     val bluetooth = "key_misc_bluetooth"
