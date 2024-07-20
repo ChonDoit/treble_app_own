@@ -71,7 +71,7 @@ class MiscSettingsFragment : SettingsFragment() {
 
                 var cmds = listOf(
                     arrayOf("su", "-c", "/system/bin/phh-securize.sh"),
-                    arrayOf("/system/bin/phh-su", "-c", "/system/bin/phh-securize.sh")
+                    arrayOf("phh-su", "-c", "/system/bin/phh-securize.sh")
                 )
                 for (cmd in cmds) {
                     try {
@@ -101,7 +101,7 @@ class MiscSettingsFragment : SettingsFragment() {
 
                 var cmds = listOf(
                     arrayOf("su", "-c", "/system/bin/remove-telephony.sh"),
-                    arrayOf("/system/bin/phh-su", "-c", "/system/bin/remove-telephony.sh"),
+                    arrayOf("phh-su", "-c", "/system/bin/remove-telephony.sh"),
                 )
                 for (cmd in cmds) {
                     try {
@@ -144,7 +144,7 @@ class MiscSettingsFragment : SettingsFragment() {
         restartSystemUIPref!!.setOnPreferenceClickListener {
             var cmds = listOf(
                 arrayOf("su", "-c", "/system/bin/killall com.android.systemui"),
-                arrayOf("/system/bin/phh-su", "0", "/system/bin/killall com.android.systemui")
+                arrayOf("phh-su", "0", "/system/bin/killall com.android.systemui")
             )
             for (cmd in cmds) {
                 try {

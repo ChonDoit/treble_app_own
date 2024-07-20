@@ -37,7 +37,7 @@ object Misc: EntryStartup {
                 Log.d("PHH", "Resolution changed, attempting to restart SystemUI")
                 var cmds = listOf(
                     arrayOf("su", "-c", "/system/bin/killall com.android.systemui"),
-                    arrayOf("/system/bin/phh-su", "-c", "/system/bin/killall com.android.systemui"),
+                    arrayOf("phh-su", "-c", "/system/bin/killall com.android.systemui"),
                 )
                 for (cmd in cmds) {
                     try {
