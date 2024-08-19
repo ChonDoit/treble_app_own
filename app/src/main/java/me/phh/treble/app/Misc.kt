@@ -326,6 +326,14 @@ object Misc: EntryStartup {
                 // Note: Reversed value because the prop is enabling
                 SystemProperties.set("persist.sys.phh.enable_sf_hwc_backpressure", if (value) "0" else "1")
             }
+        MiscSettings.maxBTAudioDevices -> {
+                val value = sp.getString(key, "1").toInt()
+                if(value >= 1) {
+                    SystemProperties.set("persist.bluetooth.maxconnectedaudiodevices", value.toString())
+                } else {
+                    SystemProperties.set("persist.bluetooth.maxconnectedaudiodevices", null)
+                }
+            }
         }
     }
 
