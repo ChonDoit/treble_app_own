@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="AUTO SETTINGS">
+        <Preference
+            android:key="key_spoof_auto"
+            android:title="Update props"
+            android:summary="Bash from Narnia to Jumanji" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="MANUAL SETTINGS">
+        <SwitchPreference
+            android:key="key_spoof_manual"
+            android:defaultValue="false"
+            android:title="Enable manual settings" />
+
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_product"
+            android:title="Product"
+            android:inputType="text"
+            android:summary="Set product property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_device"
+            android:title="Device"
+            android:inputType="text"
+            android:summary="Set device property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_manufacturer"
+            android:title="Manufacturer"
+            android:inputType="text"
+            android:summary="Set manufacturer property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_brand"
+            android:title="Brand"
+            android:inputType="text"
+            android:summary="Set brand property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_model"
+            android:title="Model"
+            android:inputType="text"
+            android:summary="Set model property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_fingerprint"
+            android:title="Fingerprint"
+            android:inputType="text"
+            android:summary="Set fingerprint property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_securitypatch"
+            android:title="Security Patch"
+            android:inputType="text"
+            android:summary="Set security patch property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_firstapilevel"
+            android:title="First API Level"
+            android:inputType="text"
+            android:summary="Set first api level property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_id"
+            android:title="ID"
+            android:inputType="text"
+            android:summary="Set id property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:defaultValue="user"
+            android:key="key_spoof_type"
+            android:title="Type"
+            android:inputType="text"
+            android:summary="Set type property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:defaultValue="release-keys"
+            android:key="key_spoof_tags"
+            android:title="Tags"
+            android:inputType="text"
+            android:summary="Set tags property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_incremental"
+            android:title="Incremental"
+            android:inputType="text"
+            android:summary="Set incremental property" />
+        <EditTextPreference
+            android:dependency="key_spoof_manual"
+            android:key="key_spoof_release"
+            android:title="Release"
+            android:inputType="text"
+            android:summary="Set release property" />
+    </PreferenceCategory>
+</PreferenceScreen>

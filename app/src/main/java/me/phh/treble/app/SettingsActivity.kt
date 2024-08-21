@@ -77,6 +77,8 @@ class SettingsActivity : PreferenceActivity() {
             target.removeIf { it.fragment == ImsSettingsFragment::class.java.name }
         if (!CustomSettings.enabled())
             target.removeIf { it.fragment == CustomSettingsFragment::class.java.name }
+        if (!SpoofSettings.enabled())
+            target.removeIf { it.fragment == SpoofSettingsFragment::class.java.name }
         val p = SystemProperties.get("ro.system.ota.json_url", "")
         if (p.trim() == "")
             target.removeIf { it.id.compareTo(R.id.updater) == 0 }
@@ -105,6 +107,7 @@ class SettingsActivity : PreferenceActivity() {
                 || ImsSettingsFragment::class.java.name == fragmentName
                 || CustomSettingsFragment::class.java.name == fragmentName
                 || AudioEffectsFragment::class.java.name == fragmentName
+                || SpoofSettingsFragment::class.java.name == fragmentName
     }
 
     companion object {

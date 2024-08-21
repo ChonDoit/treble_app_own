@@ -61,6 +61,8 @@ class EntryService: Service() {
             tryC { Lid.startup(this) }
             tryC { AudioEffects.startup(this) }
 
+            tryC { Spoof.startup(this) }
+
             tryC { PresetDownloader.startup(this) }
             tryC {
                 val p = SystemProperties.get("ro.system.ota.json_url", "")
