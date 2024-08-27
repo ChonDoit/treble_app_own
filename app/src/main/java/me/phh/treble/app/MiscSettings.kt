@@ -53,6 +53,7 @@ object MiscSettings : Settings {
     val disableSaeUpgrade = "key_misc_disable_sae_upgrade"
     val disableSfHwcBackpressure = "key_misc_disable_sf_hwc_backpressure"
     val maxBTAudioDevices = "key_misc_max_bluetooth_audio_devices"
+    val twoPaneLayout = "key_misc_two_pane_layout"
 
     override fun enabled() = true
 }

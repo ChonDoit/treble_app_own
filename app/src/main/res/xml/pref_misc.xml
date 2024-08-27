@@ -103,6 +103,11 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="USER INTERFACE">
+	         <SwitchPreference
+			android:defaultValue="true"
+			android:key="key_misc_two_pane_layout"
+			android:title="Two-Pane Layout"
+			android:summary="Enable Two-Pane Layout\nRequires restart apps"/>
 		<EditTextPreference
 			android:defaultValue="-1"
 			android:key="key_misc_sb_padding_top"
