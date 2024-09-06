@@ -35,6 +35,11 @@ object Qualcomm: EntryStartup {
                 val value = if(b) "true" else "false"
                 Misc.safeSetprop("persist.sys.phh.direct_output_voip", value)
             }
+            QualcommSettings.restartQCrild -> {
+                val b = sp.getBoolean(key, false)
+                val value = if(b) "1" else "0"
+                Misc.safeSetprop("persist.sys.phh.restart_qcrild", value)
+            }
         }
     }
 
