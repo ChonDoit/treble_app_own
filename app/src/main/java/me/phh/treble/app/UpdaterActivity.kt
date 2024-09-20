@@ -197,7 +197,7 @@ class UpdaterActivity : PreferenceActivity() {
             PackageCache.deleteRecursively()
             Log.d("PHH", "Deleted package_cache successfully.")
             Toast.makeText(this, R.string.toast_delete_cache, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, R.string.toast_reboot, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_reboot, Toast.LENGTH_LONG).show();
         } catch (e: Exception) {
             Log.e("PHH", "Failed deleting package_cache. Error: " + e.toString(), e)
         }
@@ -387,7 +387,7 @@ class UpdaterActivity : PreferenceActivity() {
                         runOnUiThread(Runnable {
                             val builder = AlertDialog.Builder(this)
                             if (hasSuccess) {
-                                Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_LONG).show();
                                 builder.setTitle(getString(R.string.title_activity_updater))
                                 builder.setMessage(getString(R.string.success_install_message))
                                 deletePackageCache()
