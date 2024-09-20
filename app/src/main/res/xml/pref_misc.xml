@@ -28,7 +28,7 @@
 			android:entries="@array/pref_misc_fod_color"
 			android:entryValues="@array/pref_misc_fod_color_values"
 			android:key="key_misc_fod_color"
-			android:title="Under-display fp color" />
+			android:title="FOD Icon color" />
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="key_misc_biometricstrong"
