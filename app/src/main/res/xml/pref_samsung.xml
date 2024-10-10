@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Audio">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_samsung_alternate_audio_policy"
-            android:title="Use alternate audio policy" />
+
+    <PreferenceCategory android:title="AUDIO">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_audio_stereo"
@@ -15,7 +12,8 @@
             android:title="Disable Built-In Back Mic"
             android:summary="May fix broken mic on video recording" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Screen">
+
+    <PreferenceCategory android:title="DISPLAY">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_high_brightness"
@@ -25,7 +23,8 @@
             android:key="key_samsung_glove_mode"
             android:title="Enable glove mode" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Misc">
+
+    <PreferenceCategory android:title="MISCELLANEOUS">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_wireless_charging_transmit"
@@ -50,7 +49,8 @@
 	        android:summary="Usually values are integers between 1 and 5"
 	        android:inputType="number" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Workarounds">
+
+    <PreferenceCategory android:title="WORKAROUNDS">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_samsung_extra_sensors"
@@ -69,4 +69,5 @@
             android:title="Set backlight scale/max backlight level"
             android:inputType="number" />
     </PreferenceCategory>
+
 </PreferenceScreen>

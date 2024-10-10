@@ -4,6 +4,7 @@ import android.app.Activity
 import android.hardware.*
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -11,6 +12,8 @@ import android.widget.*
 class DebugSensors : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Debug Sensors"
 
         val sm = getSystemService(SensorManager::class.java)
         val sensors = sm.getSensorList(Sensor.TYPE_ALL)
@@ -72,5 +75,15 @@ class DebugSensors : Activity() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

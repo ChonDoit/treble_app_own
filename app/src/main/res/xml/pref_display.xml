@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="GENERAL">
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_display_fps"
+            android:entryValues="@array/pref_display_fps_values"
+            android:key="key_display_display_fps"
+            android:title="Force Refresh rate" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_display_dynamic_fps"
+            android:title="Dynamic Refresh rate"
+            android:summary="Adjust refresh rate based on screen content\nRequires reboot"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_display_disable_sf_gl_backpressure"
+            android:title="Disable SF GL backpressure"
+            android:summary="Might improve rendering performance\nRequires reboot"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_display_disable_sf_hwc_backpressure"
+            android:title="Disable SF HWC backpressure"
+            android:summary="Might improve rendering performance"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_display_no_hwcomposer"
+            android:title="Disable HW overlays"
+            android:summary="Eats more CPU and battery" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_display_aod"
+            android:title="Force allow Always-On Display" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="RENDER ENGINE">
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/pref_display_sf_renderengine_backend"
+            android:entryValues="@array/pref_display_sf_renderengine_backend_values"
+            android:key="key_display_sf_renderengine_backend"
+            android:title="Render engine backend" />
+
+        <ListPreference
+            android:defaultValue="kawase"
+            android:entries="@array/pref_display_sf_blur_algorithm"
+            android:entryValues="@array/pref_display_sf_blur_algorithm_values"
+            android:key="key_display_sf_blur_algorithm"
+            android:title="Blur algorithm" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nBACKLIGHT">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_backlight_low_gamma_brightness"
+            android:title="Set alternative brightness curve"
+            android:summary="Requires a reboot" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_backlight_linear_brightness"
+            android:title="Set linear brightness curve" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_backlight_backlight_scale"
+            android:title="Force alternative backlight scale"
+            android:summary="Requires turn off/on screen" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_backlight_disable_buttons_backlight"
+            android:title="Disable backlight of hardware buttons"
+            android:summary="Requires a reboot" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_backlight_minimal_brightness"
+            android:singleLineTitle="false"
+            android:title="Allows setting brightness to the lowest possible" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -10,10 +10,9 @@ import android.hardware.input.InputManager
 import android.os.*
 import android.util.Log
 import android.view.InputDevice
-import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.FileInputStream
 import kotlin.concurrent.thread
+
 
 object Desktop: EntryStartup {
     val devices = HashMap<Int, InputDevice>()
@@ -175,4 +174,3 @@ class DesktopInput : Activity() {
                 .show()
     }
 }
-

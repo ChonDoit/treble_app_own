@@ -1,6 +1,9 @@
 package me.phh.treble.app
 
+import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceFragment
+import android.util.Log
 
 object AsusSettings : Settings {
     val dt2w = "key_asus_dt2w"
@@ -8,14 +11,21 @@ object AsusSettings : Settings {
     val fpWake = "key_asus_fp_wake"
     val usbPortPicker = "key_asus_usb_port_picker"
 
-    override fun enabled() = Tools.vendorFp.startsWith("asus/") 
+    override fun enabled(context: Context): Boolean {
+        val isAsus = Tools.vendorFp.contains("asus")
+        Log.d("PHH", "AsusSettings.enabled() called, isAsus = $isAsus")
+        return isAsus
+    }
 }
 
-class AsusSettingsFragment : SettingsFragment() {
-    override val preferencesResId = R.xml.pref_asus
+class AsusSettingsFragment : PreferenceFragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.pref_asus)
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-        android.util.Log.d("PHH", "Loading asus fragment ${AsusSettings.enabled()}")
+        if (AsusSettings.enabled(context)) {
+            Log.d("PHH", "Loading Asus fragment ${AsusSettings.enabled(context)}")
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(AsusSettings.usbPortPicker)!!)
+        }
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="pref_telephony_mobile_signal">
+	    <item>"Default"</item>
+	    <item>"Huawei/OpenKirin"</item>
+	    <item>"RSSI"</item>
+	    <item>"RSRP"</item>
+	    <item>"RSSNR"</item>
+    </array>
+    <array name="pref_telephony_mobile_signal_values">
+	    <item>"default"</item>
+	    <item>"openkirin"</item>
+	    <item>"rssi"</item>
+	    <item>"rsrp"</item>
+	    <item>"rssnr"</item>
+    </array>
+
+	<array name="pref_telephony_simcount">
+		<item>"Don't Override"</item>
+		<item>Single SIM</item>
+		<item>Dual SIM</item>
+		<item>Dual SIM (Dual Active)</item>
+		<item>Triple SIM</item>
+	</array>
+	<array name="pref_telephony_simcount_values">
+		<item>default</item>
+		<item>ss</item>
+		<item>dsds</item>
+		<item>dsda</item>
+		<item>tsts</item>
+	</array>
+
+</resources>

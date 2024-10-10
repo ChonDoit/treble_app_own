@@ -70,8 +70,8 @@ object OnePlus: EntryStartup {
     }
 
     override fun startup(ctxt: Context) {
-        if(!OnePlusSettings.enabled()) return
-        Log.d("PHH", "Starting OP service")
+        if (!OnePlusSettings.enabled(ctxt)) return
+        Log.d("PHH", "Starting OnePlus service")
 
         if (File("/sys" + triStateKey).exists()) {
             //TODO: Oneplus framework calibrates tri_state_key because it is a hall sensor
@@ -101,11 +101,10 @@ object OnePlus: EntryStartup {
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, OnePlusSettings.displayModeKey)
         spListener.onSharedPreferenceChanged(sp, OnePlusSettings.usbOtgKey)
         spListener.onSharedPreferenceChanged(sp, OnePlusSettings.highBrightnessModeKey)
         spListener.onSharedPreferenceChanged(sp, OnePlusSettings.dt2w)
-
     }
 }

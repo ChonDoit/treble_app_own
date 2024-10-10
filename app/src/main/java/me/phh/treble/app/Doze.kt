@@ -253,7 +253,7 @@ object Doze: EntryStartup {
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, DozeSettings.handwaveKey)
         spListener.onSharedPreferenceChanged(sp, DozeSettings.pocketKey)
         spListener.onSharedPreferenceChanged(sp, DozeSettings.chopchopkey)

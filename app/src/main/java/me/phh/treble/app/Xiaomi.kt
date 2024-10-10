@@ -3,11 +3,12 @@ package me.phh.treble.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 
 object Xiaomi : EntryStartup {
     fun setDt2w(enable: Boolean) {
         val value = if(enable) "1" else "0"
-        Misc.safeSetprop("persist.sys.phh.xiaomi.dt2w", value)
+        Tools.safeSetprop("persist.sys.phh.xiaomi.dt2w", value)
     }
 
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
@@ -20,12 +21,13 @@ object Xiaomi : EntryStartup {
     }
 
     override fun startup(ctxt: Context) {
-        if (!XiaomiSettings.enabled()) return
+        if (!XiaomiSettings.enabled(ctxt)) return
+        Log.d("PHH", "Starting Xiaomi service")
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, XiaomiSettings.dt2w)
     }
 }

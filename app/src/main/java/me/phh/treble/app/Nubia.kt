@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Parcel
-import android.os.RemoteException
 import android.os.SystemProperties
 import android.os.UserHandle
 import android.preference.PreferenceManager
@@ -108,12 +106,13 @@ object Nubia : EntryStartup {
     }
 
     override fun startup(ctxt: Context) {
-        if (!NubiaSettings.enabled()) return
+        if (!NubiaSettings.enabled(ctxt)) return
+        Log.d("PHH", "Starting Nubia service")
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.dt2w)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.tsGameMode)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.shoulderBtn)
@@ -126,6 +125,7 @@ object Nubia : EntryStartup {
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.boostGpu)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.boostCache)
         spListener.onSharedPreferenceChanged(sp, NubiaSettings.boostUfs)
+
         // For 6, 6s, 6s pro only
         if (SystemProperties.get("persist.sys.support.fan", "false") == "true") {
             // Auto enable fan after connected to power supplier
@@ -137,6 +137,7 @@ object Nubia : EntryStartup {
                     NubiaFanControlTilesService::class.java
                 ), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0)
         }
+
         // Enable game mode quick setting tile
         ctxt.packageManager.setComponentEnabledSetting(
             ComponentName(

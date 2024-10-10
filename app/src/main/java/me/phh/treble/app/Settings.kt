@@ -1,11 +1,12 @@
 package me.phh.treble.app
 
+import android.content.Context
 import android.os.Bundle
 import androidx.annotation.XmlRes
 import androidx.preference.PreferenceFragment
 
 interface Settings {
-    fun enabled(): Boolean
+    fun enabled(context: Context): Boolean
 }
 
 abstract class SettingsFragment : PreferenceFragment() {

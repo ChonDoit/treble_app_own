@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <array name="pref_oneplus_display_mode">
         <item>Default</item>
         <item>DCI-P3</item>
@@ -10,6 +11,7 @@
         <item>dcip3</item>
         <item>srgb</item>
     </array>
+
     <array name="pref_oneplus_display_high_brightness">
         <item>Disabled</item>
         <item>"1"</item>
@@ -26,4 +28,5 @@
         <item>"4"</item>
         <item>"5"</item>
     </array>
+
 </resources>

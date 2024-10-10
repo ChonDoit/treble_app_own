@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="pref_display_fps">
+	    <item>"Don't force"</item>
+	    <item>"60fps"</item>
+    </array>
+    <array name="pref_display_fps_values">
+	    <item>"-1"</item>
+	    <item>"0"</item>
+    </array>
+
+    <array name="pref_ui_fod_color">
+	    <item>Green</item>
+	    <item>Cyan</item>
+	    <item>White</item>
+    </array>
+    <array name="pref_ui_fod_color_values">
+	    <item>"00ff00"</item>
+	    <item>"00ffff"</item>
+	    <item>"ffffff"</item>
+    </array>
+
+    <array name="pref_ui_custom_pointer_type">
+      <item>Mouse cursor</item>
+      <item>Pen pointer</item>
+      <item>Transparent</item>
+    </array>
+    <array name="pref_ui_custom_pointer_type_values">
+      <item>"mouse"</item>
+      <item>"pen"</item>
+      <item>"transparent"</item>
+    </array>
+
+    <array name="pref_display_sf_blur_algorithm">
+        <item>Disabled</item>
+        <item>Gaussian</item>
+        <item>Kawase (Default)</item>
+    </array>
+    <array name="pref_display_sf_blur_algorithm_values">
+        <item>"disabled"</item>
+        <item>"gaussian"</item>
+        <item>"kawase"</item>
+    </array>
+
+    <array name="pref_display_sf_renderengine_backend">
+        <item>"Don't override"</item>
+        <item>SkiaGL</item>
+        <item>SkiaGL (threaded)</item>
+        <item>SkiaVK</item>
+        <item>SkiaVK (threaded)</item>
+    </array>
+    <array name="pref_display_sf_renderengine_backend_values">
+        <item>""</item>
+        <item>"skiagl"</item>
+        <item>"skiaglthreaded"</item>
+        <item>"skiavk"</item>
+        <item>"skiavkthreaded"</item>
+    </array>
+
+</resources>

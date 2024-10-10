@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="key_telephony_smsc"
+        android:title="Set SMSC value"
+        android:inputType="text"
+        android:summary="Default" />
+
+    <ListPreference
+        android:defaultValue="default"
+        android:entries="@array/pref_telephony_simcount"
+        android:entryValues="@array/pref_telephony_simcount_values"
+        android:key="key_telephony_simcount"
+        android:title="SIM Count" />
+
+    <ListPreference
+        android:defaultValue="default"
+        android:entries="@array/pref_telephony_mobile_signal"
+        android:entryValues="@array/pref_telephony_mobile_signal_values"
+        android:key="key_telephony_mobile_signal"
+        android:title="Signal meter method" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="key_telephony_restart_ril"
+        android:title="Automatically restart RIL" />
+
+    <Preference
+        android:title="Remove Telephony Subsystem"
+        android:key="key_telephony_removetelephony"
+        android:summary="For devices without simcard" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="key_telephony_force_display_5g"
+        android:title="Force display 5G network"
+        android:summary="Displays 5G as an option for the preferred network type\nRequires a reboot" />
+
+</PreferenceScreen>

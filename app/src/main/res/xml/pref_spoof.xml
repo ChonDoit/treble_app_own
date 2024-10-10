@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="AUTO SETTINGS">
-        <Preference
-            android:key="key_spoof_auto"
-            android:title="Update props"
-            android:summary="Bash from Narnia to Jumanji" />
+    <PreferenceCategory android:title="SYSTEM WIDE">
+        <SwitchPreference
+            android:key="key_spoof_bka"
+            android:defaultValue="true"
+            android:title="Block key attestation"
+            android:summary="Disable if TrickyStore isn't working"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="MANUAL SETTINGS">
+        <Preference
+            android:key="key_spoof_auto"
+            android:title="Automatically update props"
+            android:summary="Bash from Narnia to Jumanji" />
+
         <SwitchPreference
             android:key="key_spoof_manual"
             android:defaultValue="false"
@@ -19,80 +26,88 @@
             android:key="key_spoof_product"
             android:title="Product"
             android:inputType="text"
-            android:summary="Set product property" />
+            android:summary="ro.product.name" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_device"
             android:title="Device"
             android:inputType="text"
-            android:summary="Set device property" />
+            android:summary="ro.product.device" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_manufacturer"
             android:title="Manufacturer"
             android:inputType="text"
-            android:summary="Set manufacturer property" />
+            android:summary="ro.product.manufacturer" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_brand"
             android:title="Brand"
             android:inputType="text"
-            android:summary="Set brand property" />
+            android:summary="ro.product.brand" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_model"
             android:title="Model"
             android:inputType="text"
-            android:summary="Set model property" />
+            android:summary="ro.product.model" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_fingerprint"
             android:title="Fingerprint"
             android:inputType="text"
-            android:summary="Set fingerprint property" />
+            android:summary="ro.build.fingerprint" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_securitypatch"
             android:title="Security Patch"
             android:inputType="text"
-            android:summary="Set security patch property" />
+            android:summary="ro.build.version.security_patch" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_firstapilevel"
             android:title="First API Level"
             android:inputType="text"
-            android:summary="Set first api level property" />
+            android:summary="ro.product.first_api_level" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_id"
             android:title="ID"
             android:inputType="text"
-            android:summary="Set id property" />
+            android:summary="ro.build.id" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:defaultValue="user"
             android:key="key_spoof_type"
             android:title="Type"
             android:inputType="text"
-            android:summary="Set type property" />
+            android:summary="ro.build.type" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:defaultValue="release-keys"
             android:key="key_spoof_tags"
             android:title="Tags"
             android:inputType="text"
-            android:summary="Set tags property" />
+            android:summary="ro.build.tags" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_incremental"
             android:title="Incremental"
             android:inputType="text"
-            android:summary="Set incremental property" />
+            android:summary="ro.build.version.incremental" />
         <EditTextPreference
             android:dependency="key_spoof_manual"
             android:key="key_spoof_release"
             android:title="Release"
             android:inputType="text"
-            android:summary="Set release property" />
+            android:summary="ro.build.version.release" />
+
+        <Preference android:summary="Reference for above props can be found clicking here"
+            android:key="key_manual_reference">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Build.java" />
+        </Preference>
     </PreferenceCategory>
+
 </PreferenceScreen>

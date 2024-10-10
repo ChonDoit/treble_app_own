@@ -1,6 +1,9 @@
 package me.phh.treble.app
 
+import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceFragment
+import android.util.Log
 
 object OppoSettings : Settings {
     val dt2w = "key_oppo_double_tap_to_wake"
@@ -8,14 +11,20 @@ object OppoSettings : Settings {
     val usbOtg = "key_oppo_usb_otg"
     val dcDiming = "key_oppo_dc_diming"
 
-    override fun enabled() = Tools.deviceId.startsWith("RMX") || Tools.deviceId == "CPH1859"
+    override fun enabled(context: Context): Boolean {
+        val isOppo = Tools.deviceId.startsWith("RMX")
+        Log.d("PHH", "OppoSettings enabled() called, isOppo = $isOppo")
+        return isOppo
+    }
 }
 
-class OppoSettingsFragment : SettingsFragment() {
-    override val preferencesResId = R.xml.pref_oppo
+class OppoSettingsFragment : PreferenceFragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.pref_oppo)
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-        android.util.Log.d("PHH", "Loading oppo fragment ${OppoSettings.enabled()}")
+        if (OppoSettings.enabled(context)) {
+            Log.d("PHH", "Loading Oppo fragment ${OppoSettings.enabled(context)}")
+        }
     }
 }

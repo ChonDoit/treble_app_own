@@ -49,7 +49,7 @@ object AudioEffects: SharedPreferences.OnSharedPreferenceChangeListener {
         val sp = android.preference.PreferenceManager.getDefaultSharedPreferences(context)
         val effects = AudioEffect.queryEffects()
         effects.forEach {
-            //Refresh parameters on boot
+            // Refresh parameters on boot
             onSharedPreferenceChanged(sp, "audio_effect_" + it.uuid.toString())
         }
         sp.registerOnSharedPreferenceChangeListener(this)

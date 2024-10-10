@@ -1,7 +1,6 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Handler

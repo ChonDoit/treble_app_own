@@ -75,22 +75,38 @@ class Huawei: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 enableHwcOverlay(!value)
             }
+            HuaweiSettings.headsetFix -> {
+                val value = sp.getBoolean(key, HuaweiSettings.enabled(ctxt!!))
+                if (!sp.contains(key))
+                    Log.d("PHH", "Setting Huawei headset fix to $value")
+                if (value) {
+                    Log.d("PHH", "starting huaweiaudio")
+                    ctxt?.let { ForceHeadsetAudio.startup(it) }
+                } else {
+                    Log.d("PHH", "stopping huaweiaudio")
+                    ctxt?.let { ForceHeadsetAudio.shutdown(it) }
+                }
+            }
         }
     }
 
     override fun startup(ctxt: Context) {
-        if (!HuaweiSettings.enabled()) return
+        if (!HuaweiSettings.enabled(ctxt)) return
+        Log.d("PHH", "Starting Huawei service")
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
         this.ctxt = ctxt.applicationContext
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, HuaweiSettings.fingerprintGestures)
         spListener.onSharedPreferenceChanged(sp, HuaweiSettings.touchscreenGloveMode)
         spListener.onSharedPreferenceChanged(sp, HuaweiSettings.fastCharge)
         spListener.onSharedPreferenceChanged(sp, HuaweiSettings.noHwcomposer)
+        spListener.onSharedPreferenceChanged(sp, HuaweiSettings.headsetFix)
+        if (! sp.contains(HuaweiSettings.headsetFix))
+            sp.edit().putBoolean(HuaweiSettings.headsetFix, HuaweiSettings.enabled(ctxt)).commit()
         tsService?.hwTsGetChipInfo { _, chip_info ->
             Log.d("PHH", "HW Touchscreen chip $chip_info")
         }
@@ -102,11 +118,11 @@ class Huawei: EntryStartup {
         if(installed != SystemProperties.getBoolean(imsRroProperty, false)) {
             SystemProperties.set(imsRroProperty, if (installed) "true" else "false")
             val replaceIntent =
-                    Intent(Intent.ACTION_PACKAGE_CHANGED)
-                            .setData(Uri.parse("package:com.huawei.ims"))
-                            .putExtra(Intent.EXTRA_UID, 0)
-                            .putExtra(Intent.EXTRA_DONT_KILL_APP, false)
-                            .putExtra(Intent.EXTRA_CHANGED_COMPONENT_NAME_LIST, emptyArray<String>())
+                Intent(Intent.ACTION_PACKAGE_CHANGED)
+                    .setData(Uri.parse("package:com.huawei.ims"))
+                    .putExtra(Intent.EXTRA_UID, 0)
+                    .putExtra(Intent.EXTRA_DONT_KILL_APP, false)
+                    .putExtra(Intent.EXTRA_CHANGED_COMPONENT_NAME_LIST, emptyArray<String>())
             ctxt.sendBroadcastAsUser(replaceIntent, UserHandle.SYSTEM)
         }
     }
@@ -114,7 +130,7 @@ class Huawei: EntryStartup {
     companion object: EntryStartup {
         private var self: Huawei? = null
         override fun startup(ctxt: Context) {
-            if (!HuaweiSettings.enabled()) return
+            if (!HuaweiSettings.enabled(ctxt)) return
             self = Huawei()
             self!!.startup(ctxt)
         }

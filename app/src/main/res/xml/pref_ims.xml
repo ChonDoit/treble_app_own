@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <PreferenceCategory android:title="REQUIREMENTS">
-        <Preference android:title="Create IMS APN"
+        <Preference
+            android:title="Create IMS APN"
             android:key="key_ims_create_apn" />
-        <Preference android:title="Download and install IMS APK"
+        <Preference
+            android:title="Download and install IMS APK"
             android:key="key_ims_install_apn" />
         <SwitchPreference
             android:defaultValue="false"
@@ -21,5 +25,6 @@
             android:key="key_ims_allow_binder_thread_on_incoming_calls"
             android:title="Allow binder thread on incoming calls"
             android:summary="Workaround for 4G calling\nRequires a reboot" />
-	</PreferenceCategory>
+    </PreferenceCategory>
+
 </PreferenceScreen>

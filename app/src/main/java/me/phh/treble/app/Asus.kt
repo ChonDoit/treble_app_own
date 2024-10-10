@@ -15,21 +15,21 @@ object Asus: EntryStartup {
                 val value = sp.getBoolean(key, false)
 
                 // persist.asus.dclick prop method
-                Misc.safeSetprop("persist.sys.phh.asus.dt2w", if(value) "1" else "0")
+                Tools.safeSetprop("persist.sys.phh.asus.dt2w", if(value) "1" else "0")
 
                 // zenmotion method
                 val asusSvc = try { IZenMotion.getService() } catch(e: Exception) { null }
-                if(asusSvc != null) {
+                if (asusSvc != null) {
                     asusSvc.setDclickEnable(if(value) 1 else 0)
                 }
             }
             AsusSettings.gloveMode -> {
                 val value = sp.getBoolean(key, false)
-                Misc.safeSetprop("persist.asus.glove", if(value) "1" else "0")
+                Tools.safeSetprop("persist.asus.glove", if(value) "1" else "0")
             }
             AsusSettings.fpWake -> {
                 val value = sp.getBoolean(key, false)
-                Misc.safeSetprop("persist.asus.fp.wakeup", if(value) "true" else "false")
+                Tools.safeSetprop("persist.asus.fp.wakeup", if(value) "true" else "false")
             }
             AsusSettings.usbPortPicker -> {
                 val value = sp.getString(key, "none")
@@ -41,10 +41,10 @@ object Asus: EntryStartup {
                     port[1] = port[0]
                 when (value) {
                     "port_1" -> {
-                        Misc.safeSetprop("persist.sys.phh.asus.usb.port", port[0])
+                        Tools.safeSetprop("persist.sys.phh.asus.usb.port", port[0])
                     }
                     "port_2" -> {
-                        Misc.safeSetprop("persist.sys.phh.asus.usb.port", port[1])
+                        Tools.safeSetprop("persist.sys.phh.asus.usb.port", port[1])
                     }
                 }
             }
@@ -52,8 +52,9 @@ object Asus: EntryStartup {
     }
 
     override fun startup(ctxt: Context) {
-        if(!AsusSettings.enabled()) return
+        if (!AsusSettings.enabled(ctxt)) return
         Log.d("PHH", "Starting Asus service")
+
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
     }

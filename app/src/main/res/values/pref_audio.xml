@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="pref_audio_bt_workarounds">
+        <item>None</item>
+	    <item>Mediatek</item>
+	    <item>Huawei</item>
+    </array>
+    <array name="pref_audio_bt_workarounds_values">
+	    <item>"none"</item>
+	    <item>"mediatek"</item>
+	    <item>"huawei"</item>
+    </array>
+
+    <array name="pref_audio_esco_transport_size">
+	    <item>"0 (Default)"</item>
+	    <item>"8"</item>
+	    <item>"16 (Samsung)"</item>
+	    <item>"24"</item>
+	    <item>"32"</item>
+    </array>
+    <array name="pref_audio_esco_transport_size_values">
+	    <item>"0"</item>
+	    <item>"8"</item>
+	    <item>"16"</item>
+	    <item>"24"</item>
+	    <item>"32"</item>
+     </array>
+
+</resources>

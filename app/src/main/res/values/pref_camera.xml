@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="pref_camera_timestamp">
+	    <item>No override</item>
+	    <item>Clock monotonic</item>
+	    <item>Clock boottime</item>
+    </array>
+    <array name="pref_camera_timestamp_values">
+	    <item>"-1"</item>
+	    <item>"0"</item>
+	    <item>"1"</item>
+    </array>
+
+
+</resources>

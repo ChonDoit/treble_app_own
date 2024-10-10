@@ -1,14 +1,10 @@
 package me.phh.treble.app
 
 import android.content.SharedPreferences
-import android.content.res.TypedArray
-import android.os.Build
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.util.TypedValue
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 
 class NubiaGameModeTilesService: TileService() {
     private lateinit var sp: SharedPreferences

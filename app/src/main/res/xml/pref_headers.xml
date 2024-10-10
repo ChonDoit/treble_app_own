@@ -1,59 +1,155 @@
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-    <header
-        android:fragment="me.phh.treble.app.MyDeviceSettingsFragment"
-        android:title="My device" />
-    <header
-        android:fragment="me.phh.treble.app.OnePlusSettingsFragment"
-        android:title="OnePlus features" />
-    <header
-        android:fragment="me.phh.treble.app.NubiaSettingsFragment"
-        android:title="Nubia features" />
-    <header
-        android:fragment="me.phh.treble.app.VsmartSettingsFragment"
-        android:title="Vsmart features" />
-    <header
-        android:fragment="me.phh.treble.app.QualcommSettingsFragment"
-        android:title="Qualcomm features" />
-    <header
-        android:fragment="me.phh.treble.app.HuaweiSettingsFragment"
-        android:title="Huawei features" />
-    <header
-        android:fragment="me.phh.treble.app.SamsungSettingsFragment"
-        android:title="Samsung features" />
-    <header
-        android:fragment="me.phh.treble.app.TranssionSettingsFragment"
-        android:title="Transsion features" />
-    <header
-        android:fragment="me.phh.treble.app.LenovoSettingsFragment"
-        android:title="Lenovo features" />
-    <header
-        android:fragment="me.phh.treble.app.XiaomiSettingsFragment"
-        android:title="Xiaomi features" />
-    <header
-        android:fragment="me.phh.treble.app.OppoSettingsFragment"
-        android:title="Oppo features" />
-    <header
-        android:fragment="me.phh.treble.app.AsusSettingsFragment"
-        android:title="Asus features" />
-    <header
-        android:fragment="me.phh.treble.app.DozeSettingsFragment"
-        android:title="Doze features" />
-    <header
-        android:fragment="me.phh.treble.app.MiscSettingsFragment"
-        android:title="Misc features" />
-    <header
-        android:fragment="me.phh.treble.app.ImsSettingsFragment"
-        android:title="IMS features" />
-    <header
-        android:fragment="me.phh.treble.app.AudioEffectsFragment"
-        android:title="Audio effects" />
-    <header
-        android:fragment="me.phh.treble.app.SpoofSettingsFragment"
-        android:title="Spoof Settings" />
-    <header
-        android:id="@+id/updater"
-        android:title="Updater">
-        <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
-                android:targetClass=".UpdaterActivity"/>
-    </header>
-</preference-headers>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="SHOW YOUR LOVE &amp; SYSTEM UDPATES">
+        <Preference android:title="Sponsor phhusson"
+            android:icon="@drawable/user"
+            android:summary="A help to the pocket">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/sponsors/phhusson/" />
+        </Preference>
+        <Preference android:title="System updates"
+            android:id="@+id/updater"
+            android:summary="OTA is here"
+            android:icon="@drawable/ota" >
+            <intent
+                android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
+                android:targetClass=".UpdaterActivity" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nDEVICE SPECIFIC">
+        <Preference
+            android:key="asus_settings"
+            android:title="Asus settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="mydevice_settings"
+            android:title="My device"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="mediatek_settings"
+            android:title="Mediatek settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="qualcomm_settings"
+            android:title="Qualcomm settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="oneplus_settings"
+            android:title="OnePlus settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="nubia_settings"
+            android:title="Nubia settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="vsmart_settings"
+            android:title="Vsmart settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="huawei_settings"
+            android:title="Huawei settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="samsung_settings"
+            android:title="Samsung settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="transsion_settings"
+            android:title="Transsion settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="lenovo_settings"
+            android:title="Lenovo settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="xiaomi_settings"
+            android:title="Xiaomi settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="oppo_settings"
+            android:title="Oppo settings"
+            android:icon="@drawable/devices" />
+        <Preference
+            android:key="doze_settings"
+            android:title="Doze settings"
+            android:icon="@drawable/doze" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nDISPLAY">
+        <Preference
+            android:key="display_settings"
+            android:title="Display settings"
+            android:summary="Backlight, refresh rate and more"
+            android:icon="@drawable/display"/>
+        <Preference
+            android:key="ui_settings"
+            android:title="User interface"
+            android:summary="Layouts, paddings, icons and others"
+            android:icon="@drawable/ui"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nAUDIO">
+        <Preference
+            android:key="audio_settings"
+            android:title="Audio settings"
+            android:summary="Bluetooth and general fixes"
+            android:icon="@drawable/audio" />
+        <Preference
+            android:key="audiofx_settings"
+            android:title="Audio effects"
+            android:summary="Audio modifications pre-included by your vendor"
+            android:icon="@drawable/audiofx" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nTELEPHONY">
+        <Preference
+            android:key="telephony_settings"
+            android:title="Telephony settings"
+            android:summary="Telephony, signal, ril and 5G options"
+            android:icon="@drawable/telephony" />
+        <Preference
+            android:key="ims_settings"
+            android:title="IMS settings"
+            android:summary="VoLTE is here"
+            android:icon="@drawable/ims" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nCAMERA">
+        <Preference
+            android:key="camera_settings"
+            android:title="Camera settings"
+            android:summary="Useful camera things"
+            android:icon="@drawable/camera" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nMISCELLANEOUS">
+        <Preference
+            android:key="misc_settings"
+            android:title="Misc settings"
+            android:summary="Not so much useful options"
+            android:icon="@drawable/miscellaneous" />
+        <Preference
+            android:key="spoof_settings"
+            android:title="Spoof settings"
+            android:summary="Helper to pass Play Integrity"
+            android:icon="@drawable/spoof" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="\nDEBUGGING">
+        <Preference
+            android:key="debug_settings"
+            android:title="Debug settings"
+            android:summary="Debug sensors, insecure adb remote access"
+            android:icon="@drawable/debug" />
+    </PreferenceCategory>
+
+    <Preference android:iconSpaceReserved="true" android:summary="This app has been developed by phhusson">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/phhusson/treble_app" />
+    </Preference>
+
+</PreferenceScreen>

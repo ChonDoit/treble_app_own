@@ -91,7 +91,7 @@ class UpdaterActivity : PreferenceActivity() {
                     Log.e("PHH", "Delete in progress")
                     SystemProperties.set("sys.phh.uninstall-ota", "true");
                 }
-                builder.setNegativeButton(android.R.string.no) { _, _ -> 
+                builder.setNegativeButton(android.R.string.no) { _, _ ->
                     Log.e("PHH", "Delete canceled")
                 }
                 builder.show()

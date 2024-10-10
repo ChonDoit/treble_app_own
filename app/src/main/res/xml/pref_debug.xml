@@ -1,0 +1,28 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <Preference android:title="Debug sensors" android:summary="Are you working?">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="me.phh.treble.app"
+                android:targetClass="me.phh.treble.app.DebugSensors" />
+        </Preference>
+
+        <Preference
+            android:key="key_debug_restart_app"
+            android:title="Kill TrebleApp"
+            android:summary="To save a few taps" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_debug_debuggable_mode"
+            android:title="Set debuggable mode"
+            android:summary="Toggle insecure adb and related" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_debug_remotectl"
+            android:title="Enable remote access"
+            android:summary="Allow takeover of the device by phhusson for debugging" />
+
+</PreferenceScreen>

@@ -13,17 +13,17 @@ object Oppo: EntryStartup {
             OppoSettings.dt2w -> {
                 val b = sp.getBoolean(key, false)
                 val value = if(b) "1" else "0"
-                Misc.safeSetprop("persist.sys.phh.oppo.dt2w", value)
+                Tools.safeSetprop("persist.sys.phh.oppo.dt2w", value)
             }
             OppoSettings.gamingMode -> {
                 val b = sp.getBoolean(key, false)
                 val value = if(b) "1" else "0"
-                Misc.safeSetprop("persist.sys.phh.oppo.gaming_mode", value)
+                Tools.safeSetprop("persist.sys.phh.oppo.gaming_mode", value)
             }
             OppoSettings.usbOtg -> {
                 val b = sp.getBoolean(key, false)
                 val value = if(b) "1" else "0"
-                Misc.safeSetprop("persist.sys.phh.oppo.usbotg", value)
+                Tools.safeSetprop("persist.sys.phh.oppo.usbotg", value)
             }
             OppoSettings.dcDiming -> {
                 val b = sp.getBoolean(key, false)
@@ -38,12 +38,13 @@ object Oppo: EntryStartup {
     }
 
     override fun startup(ctxt: Context) {
-        if(!OppoSettings.enabled()) return
-        Log.d("PHH", "Starting OPPO service")
+        if (!OppoSettings.enabled(ctxt)) return
+        Log.d("PHH", "Starting Oppo service")
+
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        //Refresh parameters on boot
+        // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, OppoSettings.gamingMode)
         spListener.onSharedPreferenceChanged(sp, OppoSettings.dt2w)
         spListener.onSharedPreferenceChanged(sp, OppoSettings.usbOtg)

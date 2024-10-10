@@ -1,5 +1,8 @@
 package me.phh.treble.app
 
+import android.content.Context
+import android.os.Bundle
+import android.preference.PreferenceFragment
 import android.util.Log
 
 object NubiaSettings : Settings {
@@ -17,13 +20,26 @@ object NubiaSettings : Settings {
     val boostUfs = "nubia_boost_ufs"
     val shoulderBtn = "nubia_shoulder_btn"
 
-    override fun enabled() = Tools.vendorFp.toLowerCase().startsWith("nubia/")
+    override fun enabled(context: Context): Boolean {
+        val isNubia = Tools.vendorFp.toLowerCase().startsWith("nubia/")
+        Log.d("PHH", "NubiaSettings enabled() called, isNubia = $isNubia")
+        return isNubia
+    }
+
     fun is6Series() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx669")
     fun is5GLite() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx651")
     fun is5G5S() = Tools.vendorFp.toLowerCase().startsWith("nubia/nx659")
-
 }
 
-class NubiaSettingsFragment : SettingsFragment() {
-    override val preferencesResId = R.xml.pref_nubia
+class NubiaSettingsFragment : PreferenceFragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.pref_nubia)
+
+        if (OnePlusSettings.enabled(context)) {
+            Log.d("PHH", "Loading Nubia fragment ${NubiaSettings.enabled(context)}")
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(NubiaSettings.fanSpeed)!!)
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(NubiaSettings.redmagicLed)!!)
+        }
+    }
 }

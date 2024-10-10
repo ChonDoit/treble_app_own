@@ -6,7 +6,6 @@ import android.content.om.IOverlayManager
 import android.content.om.OverlayInfo
 import android.os.RemoteException
 import android.os.SystemProperties
-import android.preference.PreferenceManager
 import android.util.Log
 
 object OverlayPicker: EntryStartup {
@@ -16,45 +15,16 @@ object OverlayPicker: EntryStartup {
     private val platform = SystemProperties.get("ro.board.platform")
     private val vendorFp = SystemProperties.get("ro.vendor.build.fingerprint")
 
-    enum class ThemeOverlay {
-        AccentColor,
-        IconShape,
-        FontFamily,
-        IconPack
-    }
-
     fun setOverlayEnabled(o: String, enabled: Boolean) {
+        if (om == null) {
+            Log.d("PHH", "OverlayManager is not initialized")
+            return
+        }
+
         try {
             om!!.setEnabled(o, enabled, 0)
         } catch (e: RemoteException) {
             Log.d("PHH", "Failed to set overlay", e)
-        }
-    }
-
-    fun getThemeOverlays(to: ThemeOverlay): List<OverlayInfo> {
-        when(to) {
-            ThemeOverlay.AccentColor ->
-                return overlays.filter {
-                    it.targetPackageName == "android" &&
-                    it.packageName.startsWith("com.android.theme.color.")
-                }
-            ThemeOverlay.IconShape ->
-                return overlays.filter {
-                    it.targetPackageName == "android" &&
-                    it.packageName.startsWith("com.android.theme.icon.")
-                }
-            ThemeOverlay.FontFamily ->
-                return overlays.filter {
-                    it.targetPackageName == "android" &&
-                    it.packageName.startsWith("com.android.theme.font.")
-                }
-            ThemeOverlay.IconPack -> {
-                return overlays.filter {
-                    it.packageName.startsWith("com.android.theme.icon_pack.")
-                }
-            }
-            else ->
-                return listOf<OverlayInfo>()
         }
     }
 
@@ -66,7 +36,7 @@ object OverlayPicker: EntryStartup {
 
     private fun handleNokia(ctxt: Context) {
         if(vendorFp == null) return
-		
+
         //Nokia 8.1/X7 [PNX]
         if(vendorFp.matches(Regex("Nokia/Phoenix.*"))) {
             setOverlayEnabled("me.phh.treble.overlay.nokia.pnx_8_1_x7.systemui", true)
@@ -77,7 +47,7 @@ object OverlayPicker: EntryStartup {
         if(vendorFp == null) return
 
         if(vendorFp.matches(Regex(".*(crown|star)[q2]*lte.*")) ||
-                vendorFp.matches(Regex(".*(SC-0[23]K|SCV3[89]).*"))) {
+            vendorFp.matches(Regex(".*(SC-0[23]K|SCV3[89]).*"))) {
             setOverlayEnabled("me.phh.treble.overlay.samsung.s9.systemui", true)
         }
     }
@@ -106,7 +76,7 @@ object OverlayPicker: EntryStartup {
 
     override fun startup(ctxt: Context) {
         om = IOverlayManager.Stub.asInterface(
-                ServiceManager.getService("overlay"))
+            ServiceManager.getService("overlay"))
 
         enableLte(ctxt)
         handleNokia(ctxt)

@@ -2,12 +2,10 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.SystemProperties
 import android.os.UserHandle
 import android.util.Log
-import dalvik.system.PathClassLoader
 import kotlin.concurrent.thread
 
 class QtiAudio: EntryStartup {

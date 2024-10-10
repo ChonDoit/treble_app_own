@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Fingerprint">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="FINGERPRINT">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_fingerprint_gestures"
             android:title="Enable Fingerprint gestures" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Display">
+
+    <PreferenceCategory android:title="AUDIO">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_huawei_headset_fix"
+            android:title="Force headset switch (Huawei default)" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="DISPLAY">
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_touchscreen_glove_mode"
@@ -14,9 +24,11 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_huawei_no_hwcomposer"
-            android:title="Enable graphic issues workaround (recommended if ui is blurry)" />
+            android:title="Enable graphic issues workaround"
+            android:summary="recommended if ui is blurry"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Misc">
+
+    <PreferenceCategory android:title="MISCELLANEOUS">
 	    <ListPreference
 		    android:defaultValue="-1"
 		    android:entries="@array/pref_huawei_fast_charge"

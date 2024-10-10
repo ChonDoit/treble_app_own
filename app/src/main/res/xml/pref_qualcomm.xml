@@ -13,20 +13,17 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_qualcomm_alternate_audiopolicy"
-	    android:title="Use alternate audio policy" />
-
+            android:title="Use alternate audio policy" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_qualcomm_disable_soundvolume_effect"
             android:title="Disable soundvolume effect"
             android:summary="May fix audio distorsion" />
-
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_qualcomm_disable_stereo_voip"
             android:title="Disable stereo support on VoIP"
             android:summary="May fix high pitched audio. Requires a reboot" />
-
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_qualcomm_direct_output_voip"
@@ -39,7 +36,7 @@
             android:defaultValue="false"
             android:key="key_qualcomm_restart_qcrild"
             android:title="Restart qcrild on boot"
-            android:summary="Workaround for incoming SMS" />
+            android:summary="Workaround for incoming SMS\nCan lead to no-audio on calls on some devices" />
     </PreferenceCategory>
 
 </PreferenceScreen>
