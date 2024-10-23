@@ -5,17 +5,23 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
 
-object Xiaomi : EntryStartup {
-    fun setDt2w(enable: Boolean) {
-        val value = if(enable) "1" else "0"
-        Tools.safeSetprop("persist.sys.phh.xiaomi.dt2w", value)
-    }
+import vendor.xiaomi.hw.touchfeature.ITouchFeature
 
+object Xiaomi : EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when (key) {
             XiaomiSettings.dt2w -> {
-                val b = sp.getBoolean(key, false)
-                setDt2w(b)
+                val value = sp.getBoolean(key, false)
+                Tools.safeSetprop("persist.sys.phh.xiaomi.dt2w", if(value) "1" else "0")
+                try {
+                    val binder = android.os.Binder.allowBlocking(
+                        ServiceManager.waitForDeclaredService(ITouchFeature.DESCRIPTOR + "/default"));
+                    val instance = ITouchFeature.Stub.asInterface(binder);
+                    val ret = instance.set_mode_value(0 /*touchid*/, 14 /* TOUCH_DOUBLETAP_MODE */, if(value) 1 else 0)
+                    Log.d("PHH", "Setting xiaomi touch mode returned $ret")
+                } catch(t: Throwable) {
+                    Log.d("PHH", "Setting xiaomi touch mode failed", t)
+                }
             }
         }
     }
