@@ -8,6 +8,7 @@ import java.io.File
 
 object LenovoSettings : Settings {
     val dt2w = "lenovo_double_tap_to_wake"
+    val support_pen = "lenovo_support_pen"
 
     override fun enabled(context: Context): Boolean {
         val isLenovo = Tools.vendorFp.contains("Lenovo")
