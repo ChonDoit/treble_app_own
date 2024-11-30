@@ -6,6 +6,8 @@ import android.os.SystemProperties
 import android.util.Log
 import androidx.preference.PreferenceManager
 
+import vendor.mediatek.hardware.agolddaemon.IAgoldDaemon
+
 object Misc: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
@@ -30,6 +32,18 @@ object Misc: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.dynamic_superuser", if (value) "1" else "0")
             }
+            MiscSettings.unihertzdt2w -> {
+                val value = sp.getBoolean(key, false)
+                try {
+                    val binder = android.os.Binder.allowBlocking(
+                        ServiceManager.waitForDeclaredService(IAgoldDaemon.DESCRIPTOR + "/default"));
+                    val instance = IAgoldDaemon.Stub.asInterface(binder);
+                    val ret = instance.SendMessageToIoctl(100, 0, if(value) 1 else 0, if(value) 1 else 0)
+                    Log.d("PHH", "Setting agold touch mode returned $ret")
+                } catch(t: Throwable) {
+                    Log.d("PHH", "Setting agold touch mode failed", t)
+                }
+            }
         }
     }
 
@@ -42,5 +56,6 @@ object Misc: EntryStartup {
         // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, MiscSettings.storageFUSE)
         spListener.onSharedPreferenceChanged(sp, MiscSettings.dynamicsuperuser)
+        spListener.onSharedPreferenceChanged(sp, MiscSettings.unihertzdt2w)
     }
 }

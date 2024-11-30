@@ -20,12 +20,11 @@
             android:defaultValue="false"
             android:key="key_misc_biometricstrong"
             android:title="Set BIOMETRIC_STRONG security level"
-            android:summaryOn="Current: 0:2:15"
-            android:summaryOff="Current: Default" />
+            android:summaryOn="Required by some old broken devices" />
         <SwitchPreference
             android:defaultValue="0"
             android:key="key_misc_launcher3"
-            android:title="Set Launcher3 as recent provider"
+            android:title="Set Launcher3 as recents provider"
             android:summary="Requires a reboot" />
         <SwitchPreference
             android:defaultValue="false"
@@ -37,6 +36,14 @@
             android:key="key_misc_storage_fuse"
             android:title="Disable FUSE storage layer"
             android:summary="This can (de/in)crease storage speed\nRequires a reboot" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="DISPLAY">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="key_misc_unihertz_dt2w"
+            android:title="Enable Agold/Unihertz DT2W" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

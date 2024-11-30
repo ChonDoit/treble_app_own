@@ -12,11 +12,11 @@ import java.io.File
 object MiscSettings : Settings {
     val biometricstrong = "key_misc_biometricstrong"
     val launcher3 = "key_misc_launcher3"
-    val dt2w = "key_misc_dt2w"
     val disableSaeUpgrade = "key_misc_disable_sae_upgrade"
     val storageFUSE = "key_misc_storage_fuse"
     val securize = "key_misc_securize"
     val dynamicsuperuser = "key_misc_dynamic_superuser"
+    val unihertzdt2w = "key_misc_unihertz_dt2w"
 
     val stateMap = mapOf(
         "key_misc_dynamic_superuser" to "persist.sys.phh.dynamic_superuser",
