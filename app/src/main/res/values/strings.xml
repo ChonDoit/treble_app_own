@@ -31,7 +31,10 @@
     <string name="toast_install_done">OTA image successfully installed</string>
     <string name="toast_install_fail">Failed installing OTA image</string>
     <string name="toast_delete_cache">Packages cache deleted</string>
-    <string name="toast_reboot">Reboot your device right now</string>
+    <string name="toast_reboot">Reboot your device to apply changes</string>
     <string name="update_props">Updating Props</string>
     <string name="props_summary">Will bash from an URL, continue?</string>
+    <string name="restart_system_ui">Restarting System UI</string>
+    <string name="reset_simcount">Reset SIM Count</string>
+    <string name="reset_simcount_summary">Requires a reboot, continue?</string>
 </resources>

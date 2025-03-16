@@ -4,7 +4,7 @@
 
         <PreferenceCategory android:title="GENERAL">
                 <SwitchPreference
-                    android:defaultValue="true"
+                    android:defaultValue="false"
                     android:key="key_ui_two_pane_layout"
                     android:title="Two-Pane Layout"
                     android:summary="Enable tablet Layout. Requires restart apps"/>

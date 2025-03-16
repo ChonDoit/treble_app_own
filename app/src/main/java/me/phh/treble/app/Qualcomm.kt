@@ -8,11 +8,6 @@ import android.util.Log
 object Qualcomm: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
-            QualcommSettings.alternateAudiopolicy -> {
-                val b = sp.getBoolean(key, false)
-                val value = if(b) "1" else "0"
-                Tools.safeSetprop("persist.sys.phh.caf.audio_policy", value)
-            }
             QualcommSettings.alternateMediaprofile -> {
                 val b = sp.getBoolean(key, false)
                 val value = if(b) "true" else "false"

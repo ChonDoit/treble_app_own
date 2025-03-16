@@ -9,10 +9,25 @@ import android.os.SystemProperties
 object Spoof: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
+            SpoofSettings.enable -> {
+                val value = sp.getString(key, "manual")
+                SystemProperties.set("persist.sys.spoof.enabled", value)
+                Log.d("PHH-SPOOF", "Setting in-built spoof to $value")
+            }
+            SpoofSettings.json -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.spoof.json", value)
+                Log.d("PHH-SPOOF", "Setting hardware to $value")
+            }
             SpoofSettings.bka -> {
                 val value = sp.getBoolean(key, true)
                 SystemProperties.set("persist.sys.spoof.bka", if (value) "true" else "false")
                 Log.d("PHH-SPOOF", "Blocking key attestation to $value")
+            }
+            SpoofSettings.hardware -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.spoof.hardware", value)
+                Log.d("PHH-SPOOF", "Setting hardware to $value")
             }
             SpoofSettings.product -> {
                 val value = sp.getString(key, "")
@@ -110,5 +125,7 @@ object Spoof: EntryStartup {
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
+
+        spListener.onSharedPreferenceChanged(sp, SpoofSettings.enable)
     }
 }

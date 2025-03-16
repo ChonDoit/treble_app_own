@@ -25,6 +25,11 @@ object Audio: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.disable_voice_call_in", if (value) "true" else "false")
             }
+            AudioSettings.alternateAudiopolicy -> {
+                val b = sp.getBoolean(key, false)
+                val value = if(b) "1" else "0"
+                Tools.safeSetprop("persist.sys.phh.caf.audio_policy", value)
+            }
             // Bluetooth
             AudioSettings.sysbta -> {
                 val value = sp.getBoolean(key, false)
@@ -98,10 +103,21 @@ object Audio: EntryStartup {
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
         // Refresh parameters on boot
+        val unsupportedCommands = sp.getString(AudioSettings.unsupportedCommands, "none")
+
+        spListener.onSharedPreferenceChanged(sp, AudioSettings.unsupportedCommands)
+        spListener.onSharedPreferenceChanged(sp, AudioSettings.unsupportedOgFeatures)
+        spListener.onSharedPreferenceChanged(sp, AudioSettings.unsupportedLeFeatures)
+        spListener.onSharedPreferenceChanged(sp, AudioSettings.unsupportedStates)
+        spListener.onSharedPreferenceChanged(sp, AudioSettings.leVersionCap)
+
         sp.edit().putBoolean(AudioSettings.sysbta, SystemProperties.getBoolean("persist.bluetooth.system_audio_hal.enabled", false)).apply()
-        spListener.onSharedPreferenceChanged(sp, AudioSettings.workarounds)
         if (SamsungSettings.enabled(ctxt)) { sp.edit().putString(AudioSettings.escoTransportUnitSize, "16").apply() }
-        if (HuaweiSettings.enabled(ctxt)) { sp.edit().putString(AudioSettings.workarounds, "huawei").apply() }
-        if (MediatekSettings.enabled(ctxt)) { sp.edit().putString(AudioSettings.workarounds, "mediatek").apply() }
+        if (unsupportedCommands.isNullOrEmpty()) {
+            if (HuaweiSettings.enabled(ctxt)) { sp.edit().putString(AudioSettings.workarounds, "huawei").apply() }
+            if (MediatekSettings.enabled(ctxt)) { sp.edit().putString(AudioSettings.workarounds, "mediatek").apply() }
+            spListener.onSharedPreferenceChanged(sp, AudioSettings.workarounds)
+            Log.d("PHH-Audio", "Reapplied AudioSettings.workarounds on boot because unsupportedCommands is empty")
+        }
     }
 }

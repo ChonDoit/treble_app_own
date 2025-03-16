@@ -8,7 +8,6 @@ import android.util.Log
 
 object QualcommSettings : Settings {
     val alternateMediaprofile = "key_qualcomm_alternate_mediaprofile"
-    val alternateAudiopolicy = "key_qualcomm_alternate_audiopolicy"
     val disableSoundVolumeEffect = "key_qualcomm_disable_soundvolume_effect"
     val disableStereoVoip = "key_qualcomm_disable_stereo_voip"
     val directOutputVoip = "key_qualcomm_direct_output_voip"

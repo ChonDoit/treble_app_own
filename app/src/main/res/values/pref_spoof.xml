@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="pref_spoof_enabled_mode">
+        <item>"Automatic update on boot"</item>
+        <item>"Manual mode"</item>
+        <item>"Disabled"</item>
+    </array>
+    <array name="pref_spoof_enabled_mode_values">
+        <item>"auto"</item>
+        <item>"manual"</item>
+        <item>"false"</item>
+    </array>
+
+</resources>

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.SystemProperties
 import android.preference.PreferenceFragment
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -168,16 +169,16 @@ class ImsSettingsFragment : PreferenceFragment() {
                     "MediaTek S vendor"
                 )
 
+            (Ims.gotQcomHidlMoto && SystemProperties.getInt("ro.vndk.version", -1) <= 31) ->
+                Pair(
+                    "https://treble.phh.me/stable/ims-caf-moto$signSuffix.apk",
+                    "Qualcomm pre-S vendor (Motorola)"
+                )
+
             (Ims.gotQcomHidl || Ims.gotQcomAidl) && Build.VERSION.SDK_INT >= 34 ->
                 Pair(
                     "https://treble.phh.me/ims-caf-u$signSuffix.apk",
                     "Qualcomm vendor"
-                )
-
-            Ims.gotQcomHidlMoto ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-caf-moto$signSuffix.apk",
-                    "Qualcomm pre-S vendor (Motorola)"
                 )
 
             Ims.gotQcomHidl ->

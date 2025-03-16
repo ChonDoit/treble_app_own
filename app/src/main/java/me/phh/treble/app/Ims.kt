@@ -76,7 +76,7 @@ object Ims: EntryStartup {
     val gotQcomHidl = mAllSlots
             .find { i -> mHidlService.get("vendor.qti.hardware.radio.ims@1.0::IImsRadio", i) != null } != null
     val gotQcomHidlMoto = gotQcomHidl
-            && SystemProperties.get("ro.product.vendor.brand", "N/A").equals("motorola")
+            && SystemProperties.get("ro.product.vendor.brand", "").equals("motorola")
     val gotQcomAidl = mAllSlots
             .find { i -> ServiceManager.getService("vendor.qti.hardware.radio.ims.IImsRadio/" + i) != null } != null
     val gotSLSI = mAllSlots

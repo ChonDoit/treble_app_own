@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.util.Log
+import android.widget.Toast
 
 object UiSettings : Settings {
     val twoPaneLayout = "key_ui_two_pane_layout"
@@ -49,26 +50,37 @@ class UiSettingsFragment : PreferenceFragment() {
         }
     }
 
-    private fun restartUIDialog() {
+    private fun restartUIDialog(): Boolean {
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle("Restarting System UI")
             .setMessage("Are you sure?")
             .setPositiveButton(android.R.string.yes) { dialog, which ->
-                var cmds = listOf(
-                    arrayOf("su", "-c", "/system/bin/killall com.android.systemui"),
-                    arrayOf("phh-su", "-c", "/system/bin/killall com.android.systemui")
-                )
-                for (cmd in cmds) {
-                    try {
-                        Runtime.getRuntime().exec(cmd).waitFor()
-                        break
-                    } catch (t: Throwable) {
-                        Log.d("PHH", "Failed to exec \"" + cmd.joinToString(separator = " ") + "\", skipping")
+                try {
+                    val process = Runtime.getRuntime().exec("su")
+                    val outputStream = process.outputStream
+                    val writer = outputStream.bufferedWriter()
+
+                    writer.write("/system/bin/killall com.android.systemui\n")
+                    writer.write("exit\n")
+                    writer.flush()
+                    writer.close()
+
+                    val exitCode = process.waitFor()
+
+                    if (exitCode == 0) {
+                        Log.d("PHH", "Successfully executed killall via su shell!")
+                        Toast.makeText(activity, R.string.restart_system_ui, Toast.LENGTH_LONG).show()
+                    } else {
+                        Log.e("PHH", "Failed with exit code: $exitCode")
                     }
+
+                } catch (e: Exception) {
+                    Log.d("PHH", "Failed to exec su shell directly: ${e.message}")
                 }
             }
             .setNegativeButton(android.R.string.no, null)
 
         builder.show()
+        return true
     }
 }

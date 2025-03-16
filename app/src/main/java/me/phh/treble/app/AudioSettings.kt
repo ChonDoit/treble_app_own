@@ -10,6 +10,7 @@ object AudioSettings : Settings {
     val disableAudioEffects = "key_audio_disable_audio_effects"
     val disableFastAudio = "key_audio_disable_fast_audio"
     val disableVoiceCallIn = "key_audio_disable_voice_call_in"
+    val alternateAudiopolicy = "key_audio_alternate_audiopolicy"
     val sysbta = "key_bt_dynamic_sysbta"
     val workarounds = "key_bt_workarounds"
     val escoTransportUnitSize = "key_bt_esco_transport_unit_size"
@@ -20,6 +21,7 @@ object AudioSettings : Settings {
     val unsupportedStates = "key_bt_unsupported_states"
     val leVersionCap = "key_bt_le_version_cap"
     val disableLeApcfExtended = "key_bt_disable_le_apcfe"
+
 
     val stateMap = mapOf(
         "key_bt_unsupported_commands" to "persist.sys.bt.unsupported.commands",

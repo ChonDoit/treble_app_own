@@ -15,6 +15,11 @@
         android:key="key_telephony_simcount"
         android:title="SIM Count" />
 
+    <Preference
+        android:title="Reset SIM Count"
+        android:key="key_telephony_reset_simcount"
+        android:summary="Reset SIM count to default values \nRequires a Reboot" />
+
     <ListPreference
         android:defaultValue="default"
         android:entries="@array/pref_telephony_mobile_signal"
@@ -37,5 +42,11 @@
         android:key="key_telephony_force_display_5g"
         android:title="Force display 5G network"
         android:summary="Displays 5G as an option for the preferred network type\nRequires a reboot" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="key_telephony_restricted_networking"
+        android:title="Restricted networking mode"
+        android:summary="Requires be disabled for some devices" />
 
 </PreferenceScreen>

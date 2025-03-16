@@ -17,15 +17,13 @@
     </array>
 
 	<array name="pref_telephony_simcount">
-		<item>"Don't Override"</item>
-		<item>Single SIM</item>
+		<item>Default</item>
 		<item>Dual SIM</item>
 		<item>Dual SIM (Dual Active)</item>
 		<item>Triple SIM</item>
 	</array>
 	<array name="pref_telephony_simcount_values">
 		<item>default</item>
-		<item>ss</item>
 		<item>dsds</item>
 		<item>dsda</item>
 		<item>tsts</item>

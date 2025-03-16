@@ -32,17 +32,21 @@ object Telephony: EntryStartup {
                 SystemProperties.set("persist.sys.phh.smsc", value)
                 Log.d("PHH", "Setting SMSC to $value")
             }
+            TelephonySettings.restrictednetworking -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.restricted_networking", if(value) "1" else "0")
+            }
         }
     }
 
     override fun startup(ctxt: Context) {
-        Log.d("PHH", "Starting Telephont service")
+        Log.d("PHH", "Starting Telephony service")
 
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
         // Refresh parameters on boot
         spListener.onSharedPreferenceChanged(sp, TelephonySettings.mobileSignal)
-        spListener.onSharedPreferenceChanged(sp, TelephonySettings.simCount)
+        spListener.onSharedPreferenceChanged(sp, TelephonySettings.restrictednetworking)
     }
 }

@@ -7,6 +7,7 @@ import android.os.SystemProperties
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.util.Log
+import android.widget.Toast
 import java.io.File
 
 object MiscSettings : Settings {
@@ -62,17 +63,26 @@ class MiscSettingsFragment : PreferenceFragment() {
         builder.setTitle("Removing Root")
             .setMessage("Are you sure? This will remove in-built root access")
             .setPositiveButton(android.R.string.yes) { dialog, which ->
-                var cmds = listOf(
-                    arrayOf("su", "-c", "/system/bin/phh-securize.sh"),
-                    arrayOf("/system/bin/phh-su", "-c", "/system/bin/phh-securize.sh")
-                )
-                for (cmd in cmds) {
-                    try {
-                        Runtime.getRuntime().exec(cmd).waitFor()
-                        break
-                    } catch (t: Throwable) {
-                        Log.d("PHH", "Failed to exec \"" + cmd.joinToString(separator = " ") + "\", skipping")
+                try {
+                    val process = Runtime.getRuntime().exec("su")
+                    val outputStream = process.outputStream
+                    val writer = outputStream.bufferedWriter()
+
+                    writer.write("/system/bin/phh-securize.sh\n")
+                    writer.write("exit\n")
+                    writer.flush()
+                    writer.close()
+
+                    val exitCode = process.waitFor()
+
+                    if (exitCode == 0) {
+                        Log.d("PHH", "Successfully executed phh-securize.sh via su shell!")
+                        Toast.makeText(activity, R.string.toast_reboot, Toast.LENGTH_LONG).show()
+                    } else {
+                        Log.e("PHH", "Failed with exit code: $exitCode")
                     }
+                } catch (e: Exception) {
+                    Log.d("PHH", "Failed to exec su shell directly: ${e.message}")
                 }
             }
             .setNegativeButton(android.R.string.no, null)

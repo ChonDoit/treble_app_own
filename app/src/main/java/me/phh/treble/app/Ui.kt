@@ -72,5 +72,6 @@ object Ui: EntryStartup {
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
         // Refresh parameters on boot
+        Telephony.spListener.onSharedPreferenceChanged(sp, UiSettings.twoPaneLayout)
     }
 }

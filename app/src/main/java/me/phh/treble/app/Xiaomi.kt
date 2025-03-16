@@ -2,6 +2,7 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.ServiceManager
 import android.preference.PreferenceManager
 import android.util.Log
 

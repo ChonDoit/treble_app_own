@@ -4,14 +4,17 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.os.SystemProperties
-import android.util.Log
-import android.widget.Toast
 import android.preference.Preference
+import android.util.Log
 import android.preference.PreferenceFragment
+import android.widget.Toast
 
 object SpoofSettings : Settings {
+    val enable = "key_spoof_enable"
+    val json = "key_spoof_json"
     val bka = "key_spoof_bka"
     val auto = "key_spoof_auto"
+    val hardware = "key_spoof_hardware"
     val product = "key_spoof_product"
     val device = "key_spoof_device"
     val manufacturer = "key_spoof_manufacturer"
@@ -27,7 +30,10 @@ object SpoofSettings : Settings {
     val release = "key_spoof_release"
 
     val stateMap = mapOf(
+        "key_spoof_enable" to "persist.sys.spoof.enabled",
+        "key_spoof_json" to "persist.sys.spoof.json",
         "key_spoof_bka" to "persist.sys.spoof.bka",
+        "key_spoof_hardware" to "persist.sys.spoof.hardware",
         "key_spoof_product" to "persist.sys.spoof.product",
         "key_spoof_device" to "persist.sys.spoof.device",
         "key_spoof_manufacturer" to "persist.sys.spoof.manufacturer",
@@ -44,9 +50,13 @@ object SpoofSettings : Settings {
     )
 
     override fun enabled(context: Context): Boolean {
-        val isSpoof = SystemProperties.get("persist.sys.spoof.enabled", "false") == "true"
+        val isSpoof = SystemProperties.get("persist.sys.spoof.enabled", "") ?: ""
         Log.d("PHH", "SpoofSettings enabled() called, isSpoof = $isSpoof")
-        return isSpoof
+
+        return when (isSpoof) {
+            "auto", "manual", "false" -> true
+            else -> false
+        }
     }
 }
 
@@ -60,6 +70,9 @@ class SpoofSettingsFragment : PreferenceFragment() {
         if (SpoofSettings.enabled(context)) {
             Log.d("PHH-SPOOF", "Loading Spoof fragment ${SpoofSettings.enabled(context)}")
 
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.enable)!!)
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.json)!!)
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.hardware)!!)
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.product)!!)
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.device)!!)
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofSettings.manufacturer)!!)
@@ -87,7 +100,7 @@ class SpoofSettingsFragment : PreferenceFragment() {
         builder.setTitle(getString(R.string.update_props))
             .setMessage(getString(R.string.props_summary))
             .setPositiveButton(android.R.string.yes) { dialog, which ->
-                Log.d("PHH-SPOOF", "Running props update")
+                Log.d("PHH-SPOOF", "Running manual props update")
                 SystemProperties.set("persist.sys.spoof.auto_update", "true")
                 Toast.makeText(activity, R.string.toast_reboot, Toast.LENGTH_LONG).show()
             }
@@ -95,5 +108,4 @@ class SpoofSettingsFragment : PreferenceFragment() {
 
         builder.show()
     }
-
 }
