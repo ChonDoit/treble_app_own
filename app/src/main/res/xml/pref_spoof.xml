@@ -10,112 +10,43 @@
             android:entryValues="@array/pref_spoof_enabled_mode_values"
             android:title="Enable in-built spoof" />
         <SwitchPreference
-            android:key="key_spoof_bka"
+            android:key="key_spoof_enable_ps"
             android:defaultValue="true"
-            android:title="Block key attestation"
-            android:summary="Disable if TrickyStore isn't working"/>
+            android:title="Enable Play Store Spoof"
+            android:summary="Just in case" />
+        <SwitchPreference
+            android:key="key_spoof_enable_ps_sdk"
+            android:defaultValue="false"
+            android:title="Enable Play Store SDK Spoof"
+            android:summary="To force legacy check on Play Integrity" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="AUTOMATIC SETTINGS">
+    <PreferenceCategory android:title="JSON SETTINGS">
+        <SwitchPreference
+            android:key="key_spoof_run_on_boot"
+            android:defaultValue="true"
+            android:title="Run on boot"
+            android:summary="Parse JSON on system boot" />
+        <Preference
+            android:key="key_spoof_auto"
+            android:title="Update properties"
+            android:summary="Parse from JSON url" />
         <EditTextPreference
-            android:key="key_spoof_json"
-            android:title="Set JSON path"
+            android:key="key_spoof_json_url"
+            android:title="Set JSON URL"
             android:inputType="text"
-            android:hint="Set URL to own json file"
-            android:summary="Set URL to own json file" />
-
-        <Preference android:summary="Tap here for reference layout"
-            android:key="key_auto_json_reference">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://github.com/ChonDoit/device_phh_treble/blob/14/gms_certified_props.json" />
-        </Preference>
-
-
+            android:summary="Set custom URL to own JSON file" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="MANUAL SETTINGS">
         <Preference
-            android:key="key_spoof_auto"
-            android:title="Automatically update manual props"
-            android:summary="Bash from Narnia to Jumanji" />
-        <EditTextPreference
-            android:key="key_spoof_hardware"
-            android:title="Hardware"
-            android:inputType="text"
-            android:summary="ro.hardware" />
-        <EditTextPreference
-            android:key="key_spoof_product"
-            android:title="Product"
-            android:inputType="text"
-            android:summary="ro.product.name" />
-        <EditTextPreference
-            android:key="key_spoof_device"
-            android:title="Device"
-            android:inputType="text"
-            android:summary="ro.product.device" />
-        <EditTextPreference
-            android:key="key_spoof_manufacturer"
-            android:title="Manufacturer"
-            android:inputType="text"
-            android:summary="ro.product.manufacturer" />
-        <EditTextPreference
-            android:key="key_spoof_brand"
-            android:title="Brand"
-            android:inputType="text"
-            android:summary="ro.product.brand" />
-        <EditTextPreference
-            android:key="key_spoof_model"
-            android:title="Model"
-            android:inputType="text"
-            android:summary="ro.product.model" />
-        <EditTextPreference
-            android:key="key_spoof_fingerprint"
-            android:title="Fingerprint"
-            android:inputType="text"
-            android:summary="ro.build.fingerprint" />
-        <EditTextPreference
-            android:key="key_spoof_securitypatch"
-            android:title="Security Patch"
-            android:inputType="text"
-            android:summary="ro.build.version.security_patch" />
-        <EditTextPreference
-            android:key="key_spoof_firstapilevel"
-            android:title="First API Level"
-            android:inputType="text"
-            android:summary="ro.product.first_api_level" />
-        <EditTextPreference
-            android:key="key_spoof_id"
-            android:title="ID"
-            android:inputType="text"
-            android:summary="ro.build.id" />
-        <EditTextPreference
-             android:key="key_spoof_type"
-            android:title="Type"
-            android:inputType="text"
-            android:summary="ro.build.type" />
-        <EditTextPreference
-            android:key="key_spoof_tags"
-            android:title="Tags"
-            android:inputType="text"
-            android:summary="ro.build.tags" />
-        <EditTextPreference
-            android:key="key_spoof_incremental"
-            android:title="Incremental"
-            android:inputType="text"
-            android:summary="ro.build.version.incremental" />
-        <EditTextPreference
-            android:key="key_spoof_release"
-            android:title="Release"
-            android:inputType="text"
-            android:summary="ro.build.version.release" />
-
-        <Preference android:summary="Reference for above props can be found clicking here"
-            android:key="key_manual_reference">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://github.com/ChonDoit/device_phh_treble/blob/14/spoof_props.sh" />
-        </Preference>
+            android:key="key_spoof_gms"
+            android:title="GMS values"
+            android:summary="To pass play integrity" />
+        <Preference
+            android:key="key_spoof_ps"
+            android:title="Play Store values"
+            android:summary="To force Legacy SDK" />
     </PreferenceCategory>
 
 </PreferenceScreen>

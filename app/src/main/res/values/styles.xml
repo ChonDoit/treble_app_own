@@ -6,4 +6,8 @@
 
     <style name="Theme.TrebleApp" parent="Base.Theme.TrebleApp">
     </style>
+    
+    <color name="ic_launcher_background">#ff17191A</color>
+    <color name="ic_launcher_foreground">#ffffffff</color>
+    <color name="categoryBackground">#10000000</color>
 </resources>

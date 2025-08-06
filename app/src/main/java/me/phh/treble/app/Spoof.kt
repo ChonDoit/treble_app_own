@@ -2,9 +2,12 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Handler
+import android.os.Looper
 import android.preference.PreferenceManager
 import android.util.Log
 import android.os.SystemProperties
+import android.widget.Toast
 
 object Spoof: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
@@ -14,107 +17,25 @@ object Spoof: EntryStartup {
                 SystemProperties.set("persist.sys.spoof.enabled", value)
                 Log.d("PHH-SPOOF", "Setting in-built spoof to $value")
             }
-            SpoofSettings.json -> {
-                val value = sp.getString(key, "")
-                SystemProperties.set("persist.sys.spoof.json", value)
-                Log.d("PHH-SPOOF", "Setting hardware to $value")
-            }
-            SpoofSettings.bka -> {
+            SpoofSettings.enable_ps -> {
                 val value = sp.getBoolean(key, true)
-                SystemProperties.set("persist.sys.spoof.bka", if (value) "true" else "false")
-                Log.d("PHH-SPOOF", "Blocking key attestation to $value")
+                SystemProperties.set("persist.sys.spoof.ps.enabled", if (value) "true" else "false")
+                Log.d("PHH-SPOOF", "Setting Play Store Spoof to $value")
             }
-            SpoofSettings.hardware -> {
-                val value = sp.getString(key, "")
-                SystemProperties.set("persist.sys.spoof.hardware", value)
-                Log.d("PHH-SPOOF", "Setting hardware to $value")
+            SpoofSettings.enable_ps_sdk -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.spoof.ps_sdk.enabled", if (value) "true" else "false")
+                Log.d("PHH-SPOOF", "Setting Play Store SDK Spoof to $value")
             }
-            SpoofSettings.product -> {
+            SpoofSettings.json_url -> {
                 val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.product", value)
-                }
-                Log.d("PHH-SPOOF", "Setting product to $value")
+                SystemProperties.set("persist.sys.spoof.json_url", value)
+                Log.d("PHH-SPOOF", "Setting JSON URL to $value")
             }
-            SpoofSettings.device -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.device", value)
-                }
-                Log.d("PHH-SPOOF", "Setting device to $value")
-            }
-            SpoofSettings.manufacturer -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.manufacturer", value)
-                }
-                Log.d("PHH-SPOOF", "Setting manufacturer to $value")
-            }
-            SpoofSettings.brand -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.brand", value)
-                }
-                Log.d("PHH-SPOOF", "Setting brand to $value")
-            }
-            SpoofSettings.model -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.model", value)
-                }
-                Log.d("PHH-SPOOF", "Setting model to $value")
-            }
-            SpoofSettings.fingerprint -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.fingerprint", value)
-                }
-                Log.d("PHH-SPOOF", "Setting fingerprint to $value")
-            }
-            SpoofSettings.securitypatch -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.security_patch", value)
-                }
-                Log.d("PHH-SPOOF", "Setting securitypatch to $value")
-            }
-            SpoofSettings.firstapilevel -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.first_api_level", value)
-                }
-                Log.d("PHH-SPOOF", "Setting firstapilevel to $value")
-            }
-            SpoofSettings.id -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.id", value)
-                }
-                Log.d("PHH-SPOOF", "Setting id to $value")
-            }
-            SpoofSettings.type -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.type", value)
-                }
-                Log.d("PHH-SPOOF", "Setting type to $value")
-            }
-            SpoofSettings.tags -> {
-                val value = sp.getString(key, "")
-                if (!value.isNullOrEmpty()) {
-                    SystemProperties.set("persist.sys.spoof.tags", value)
-                }
-                Log.d("PHH-SPOOF", "Setting tags to $value")
-            }
-            SpoofSettings.incremental -> {
-                val value = sp.getString(key, "")
-                SystemProperties.set("persist.sys.spoof.incremental", value)
-                Log.d("PHH-SPOOF", "Setting incremental to $value")
-            }
-            SpoofSettings.release -> {
-                val value = sp.getString(key, "")
-                SystemProperties.set("persist.sys.spoof.release", value)
-                Log.d("PHH-SPOOF", "Setting release to $value")
+            SpoofSettings.run_on_boot -> {
+                val value = sp.getBoolean(key, true)
+                SystemProperties.set("persist.sys.spoof.run_on_boot", if (value) "true" else "false")
+                Log.d("PHH-SPOOF", "Setting Run on boot to $value")
             }
         }
     }
@@ -126,6 +47,14 @@ object Spoof: EntryStartup {
         val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
-        spListener.onSharedPreferenceChanged(sp, SpoofSettings.enable)
+        val shouldRunOnBoot = SystemProperties.getBoolean("persist.sys.spoof.run_on_boot", false)
+        if (shouldRunOnBoot) {
+            Log.d("PHH-SPOOF", "Running props fetch on boot")
+            SpoofPropertyManager().fetchAndApply { success ->
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(ctxt, R.string.update_props_on_boot, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }

@@ -30,6 +30,12 @@ import org.json.JSONObject
 import org.json.JSONTokener
 import org.tukaani.xz.XZInputStream
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+
 class UpdaterActivity : PreferenceActivity() {
 
     private val OTA_JSON_URL = SystemProperties.get("ro.system.ota.json_url")
@@ -55,6 +61,26 @@ class UpdaterActivity : PreferenceActivity() {
                 checkUpdate()
             }
             return@setOnClickListener
+        }
+
+        val changelogTextView = findViewById<TextView>(R.id.remote_text_content)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL(getChangelogUrl())
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                val content = connection.inputStream.bufferedReader().use { it.readText() }
+                connection.disconnect()
+
+                runOnUiThread {
+                    changelogTextView.text = content
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    changelogTextView.text = "Failed to load changelog: ${e.localizedMessage}"
+                }
+            }
         }
     }
 
@@ -159,17 +185,23 @@ class UpdaterActivity : PreferenceActivity() {
         val update_title = findViewById(R.id.txt_update_title) as TextView
         val update_description = findViewById(R.id.txt_update_description) as TextView
 
-        var update_description_text = getGSIName() + "\n\n"
+        var update_description_text = getGSIName() + "\n"
+
+        update_description_text += getBuildDate() + "\n\n"
+
         update_description_text += "Android version: " + getAndroidVersion() + "\n"
         update_description_text += "Build variant: " + getVariant() + "\n"
         update_description_text += "Security patch: " + getPatchDate() + "\n\n"
 
         if (hasUpdate) {
-            update_description_text += "••••••••••••••• \n\n"
-            update_description_text += "Update available: " + getUpdateVersion() + "\n"
+            update_description_text += "•••••••••• UPDATE AVAILABLE •••••••••• \n\n"
+            update_description_text += getGSIName() + "\n"
+            update_description_text += getOtaDate() + "\n\n"
+
+            update_description_text += "Android version: " + getAndroidVersion() + "\n"
             update_description_text += "Build variant: " + getBuildVariant() + "\n"
-            update_description_text += "Download size: " + getUpdateSize() + "\n\n"
-            update_description_text += "CHANGELOG: \n" + getChangelogUrl() + "\n"
+            update_description_text += "Security patch: " + getPatchDate() + "\n"
+            update_description_text += "Image size: " + getUpdateSize() + "\n\n"
 
             update_title.text = getString(R.string.update_found_title)
             btn_update.text = getString(R.string.update_found_button)
@@ -178,6 +210,26 @@ class UpdaterActivity : PreferenceActivity() {
             btn_update.text = getString(R.string.update_not_found_button)
         }
         update_description.text = update_description_text
+
+        val changelogTextView = findViewById<TextView>(R.id.remote_text_content)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = java.net.URL(getChangelogUrl())
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                val content = connection.inputStream.bufferedReader().use { it.readText() }
+                connection.disconnect()
+
+                runOnUiThread {
+                    changelogTextView.text = content
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    changelogTextView.text = "Failed to load changelog: \n ${e.localizedMessage}"
+                }
+            }
+        }
     }
 
     private fun getAndroidVersion() : String {
@@ -189,6 +241,34 @@ class UpdaterActivity : PreferenceActivity() {
         Log.e("PHH", "Security patch date: " + patchDate)
         val localDate = LocalDate.parse(patchDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         return localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
+    }
+
+    private fun getBuildDate() : String {
+        val buildDate = SystemProperties.get("ro.system.build.date.utc")
+        Log.e("PHH", "Build date: $buildDate")
+        val buildDateLong = buildDate.toLong()
+        return unixToHumanReadable(buildDateLong)
+    }
+
+    private fun getOtaDate(): String {
+        if (otaJson.length() > 0) {
+            val unixSeconds = otaJson.getLong("date")
+            return unixToHumanReadable(unixSeconds)
+        }
+        return "Unknown"
+    }
+
+    private fun unixToHumanReadable(unixSeconds: Long): String {
+        return try {
+            val instant = Instant.ofEpochSecond(unixSeconds)
+            val localTime = instant.atZone(ZoneId.systemDefault())
+            DateTimeFormatter
+                .ofPattern("MMM dd, yyyy hh:mm a")
+                .format(localTime)
+        } catch (e: Exception) {
+            Log.e("PHH", "Error parsing update date", e)
+            "Invalid date"
+        }
     }
 
     private fun deletePackageCache() {

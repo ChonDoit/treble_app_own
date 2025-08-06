@@ -59,7 +59,6 @@ class EntryService: Service() {
             // Tools
             tryC { Tools.startup(this) }
             tryC { QtiAudio.startup(this) }
-            tryC { Desktop.startup(this) }
             tryC { Lid.startup(this) }
             tryC { Doze.startup(this) }
             tryC { OverlayPicker.startup(this) }
@@ -99,6 +98,8 @@ class EntryService: Service() {
             // Miscellaneous
             tryC { Misc.startup(this) }
             tryC { Spoof.startup(this) }
+            tryC { SpoofPs.startup(this) }
+            tryC { SpoofGms.startup(this) }
             tryC { Debug.startup(this) }
 
             // Presets

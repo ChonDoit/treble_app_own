@@ -6,34 +6,48 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_gravity="center_vertical"
-    android:layout_weight="1"
     android:orientation="vertical"
-    tools:context=".UpdaterActivity">
+    tools:context=".UpdaterActivity"
+    android:weightSum="3">
+
+    <!-- Content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:orientation="vertical">
+
         <ListView
             android:id="@android:id/list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp" />
-        <ImageView
-            android:id="@+id/system_update"
-            android:src="@drawable/ic_system_update"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal" />
-        <TextView
-            android:id="@+id/txt_update_title"
-            android:text="@string/update_not_found_title"
+
+        <!-- New horizontal LinearLayout to place image and text side by side -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:textAlignment="center"
-            style="@style/TextAppearance.AppCompat.Display1" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <!-- Image on the left -->
+            <ImageView
+                android:id="@+id/system_update"
+                android:src="@drawable/ic_system_update"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <!-- Text on the right -->
+            <TextView
+                android:id="@+id/txt_update_title"
+                android:text="@string/update_not_found_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                style="@style/TextAppearance.AppCompat.Display1" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txt_update_description"
             android:layout_width="match_parent"
@@ -42,6 +56,7 @@
             android:textAlignment="textStart"
             android:autoLink="web"
             style="@style/TextAppearance.AppCompat.Body2" />
+
         <ProgressBar
             android:id="@+id/progress_horizontal"
             android:layout_width="match_parent"
@@ -50,6 +65,7 @@
             android:padding="16dp"
             android:visibility="gone"
             style="?android:attr/progressBarStyleHorizontal" />
+
         <TextView
             android:id="@+id/progress_value"
             android:layout_width="match_parent"
@@ -58,6 +74,41 @@
             android:textAlignment="center"
             style="@style/TextAppearance.AppCompat.Subhead" />
     </LinearLayout>
+
+    <!-- Changelog Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center_horizontal"
+            android:background="?android:attr/colorAccent" />
+
+        <!-- Changelog TextView -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+            <TextView
+                android:id="@+id/remote_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading changelog..."
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingStart="0dp"
+                android:textSize="14sp"
+                android:gravity="center_horizontal"/>
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- Button -->
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

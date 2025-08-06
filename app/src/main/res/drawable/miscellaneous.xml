@@ -3,10 +3,13 @@
     android:height="64dp"
     android:viewportWidth="42"
     android:viewportHeight="42">
-    <group android:translateX="9"
-        android:translateY="9">
+
+    <group android:translateX="11.5"
+        android:translateY="10.5"
+        android:scaleX="0.8"
+        android:scaleY="0.8">
         <path
             android:pathData="M7.75 12c0 0.966-0.784 1.75-1.75 1.75S4.25 12.966 4.25 12 5.034 10.25 6 10.25 7.75 11.034 7.75 12zm6 0c0 0.966-0.784 1.75-1.75 1.75s-1.75-0.784-1.75-1.75 0.784-1.75 1.75-1.75 1.75 0.784 1.75 1.75zM18 13.75c0.966 0 1.75-0.784 1.75-1.75s-0.784-1.75-1.75-1.75-1.75 0.784-1.75 1.75 0.784 1.75 1.75 1.75z"
-            android:fillColor="?android:attr/colorAccent" />
+            android:fillColor="?android:attr/textColorPrimary" />
     </group>
 </vector>

@@ -9,10 +9,6 @@ import androidx.preference.PreferenceManager
 object Debug: EntryStartup {
     val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
         when(key) {
-            DebugSettings.remotectl -> {
-                val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.sys.phh.remote", if (value) "true" else "false")
-            }
             DebugSettings.debuggable -> {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.debuggable", if (value) "true" else "false")

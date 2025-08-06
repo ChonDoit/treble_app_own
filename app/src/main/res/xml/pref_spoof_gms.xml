@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="GMS MANUAL SETTINGS">
+        <EditTextPreference
+            android:key="key_spoof_gms_sdk"
+            android:title="SDK"
+            android:inputType="text"
+            android:summary="ro.build.version.sdk" />
+        <EditTextPreference
+            android:key="key_spoof_gms_hardware"
+            android:title="Hardware"
+            android:inputType="text"
+            android:summary="ro.hardware" />
+        <EditTextPreference
+            android:key="key_spoof_gms_product"
+            android:title="Product"
+            android:inputType="text"
+            android:summary="ro.product.name" />
+        <EditTextPreference
+            android:key="key_spoof_gms_device"
+            android:title="Device"
+            android:inputType="text"
+            android:summary="ro.product.vendor.device" />
+        <EditTextPreference
+            android:key="key_spoof_gms_manufacturer"
+            android:title="Manufacturer"
+            android:inputType="text"
+            android:summary="ro.product.vendor.manufacturer" />
+        <EditTextPreference
+            android:key="key_spoof_gms_brand"
+            android:title="Brand"
+            android:inputType="text"
+            android:summary="ro.product.vendo.rbrand" />
+        <EditTextPreference
+            android:key="key_spoof_gms_model"
+            android:title="Model"
+            android:inputType="text"
+            android:summary="ro.product.vendor.model" />
+        <EditTextPreference
+            android:key="key_spoof_gms_fingerprint"
+            android:title="Fingerprint"
+            android:inputType="text"
+            android:summary="ro.vendor.build.fingerprint" />
+        <EditTextPreference
+            android:key="key_spoof_gms_securitypatch"
+            android:title="Security Patch"
+            android:inputType="text"
+            android:summary="ro.build.version.security_patch" />
+        <EditTextPreference
+            android:key="key_spoof_gms_firstapilevel"
+            android:title="First API Level"
+            android:inputType="text"
+            android:summary="ro.product.first_api_level" />
+        <EditTextPreference
+            android:key="key_spoof_gms_id"
+            android:title="ID"
+            android:inputType="text"
+            android:summary="ro.vendor.build.id" />
+        <EditTextPreference
+            android:key="key_spoof_gms_type"
+            android:title="Type"
+            android:inputType="text"
+            android:summary="ro.build.type" />
+        <EditTextPreference
+            android:key="key_spoof_gms_tags"
+            android:title="Tags"
+            android:inputType="text"
+            android:summary="ro.build.tags" />
+        <EditTextPreference
+            android:key="key_spoof_gms_incremental"
+            android:title="Incremental"
+            android:inputType="text"
+            android:summary="ro.vendor.build.version.incremental" />
+        <EditTextPreference
+            android:key="key_spoof_gms_release"
+            android:title="Release"
+            android:inputType="text"
+            android:summary="ro.build.version.release" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

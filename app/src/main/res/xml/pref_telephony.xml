@@ -2,11 +2,11 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:key="key_telephony_smsc"
-        android:title="Set SMSC value"
-        android:inputType="text"
-        android:summary="Default" />
+    <SwitchPreference
+            android:title="SMSC Workaround"
+            android:key="key_telephony_smsc_workaround"
+            android:defaultValue="true"
+            android:summary="May requires be disabled on some devices to receive SMS" />
 
     <ListPreference
         android:defaultValue="default"

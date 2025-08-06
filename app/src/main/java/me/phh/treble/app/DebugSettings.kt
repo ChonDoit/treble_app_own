@@ -11,10 +11,8 @@ import android.util.Log
 object DebugSettings : Settings {
     val restartApp = "key_debug_restart_app"
     val debuggable = "key_debug_debuggable_mode"
-    val remotectl = "key_debug_remotectl"
 
     val stateMap = mapOf(
-        "key_debug_remotectl" to "persist.sys.phh.remote",
         "key_debug_debuggable_mode" to "persist.sys.phh.debuggable",
     )
 

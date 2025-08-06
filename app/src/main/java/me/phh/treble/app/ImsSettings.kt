@@ -139,66 +139,19 @@ class ImsSettingsFragment : PreferenceFragment() {
 
         val signSuffix = if (ImsSettings.checkHasPhhSignature()) "-resigned" else ""
         val (url, message) = when {
-            (Ims.gotMtkR || Ims.gotMtkS || Ims.gotMtkAidl) && Build.VERSION.SDK_INT >= 34 ->
-                Pair(
-                    "https://treble.phh.me/ims-mtk-u$signSuffix.apk",
-                    "MediaTek R+ vendor"
-                )
-
-            Ims.gotMtkP ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-mtk-p$signSuffix.apk",
-                    "MediaTek P vendor"
-                )
-
-            Ims.gotMtkQ ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-mtk-q$signSuffix.apk",
-                    "MediaTek Q vendor"
-                )
-
-            Ims.gotMtkR ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-mtk-r$signSuffix.apk",
-                    "MediaTek R vendor"
-                )
-
-            Ims.gotMtkS ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-mtk-s$signSuffix.apk",
-                    "MediaTek S vendor"
-                )
-
-            (Ims.gotQcomHidlMoto && SystemProperties.getInt("ro.vndk.version", -1) <= 31) ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-caf-moto$signSuffix.apk",
-                    "Qualcomm pre-S vendor (Motorola)"
-                )
-
-            (Ims.gotQcomHidl || Ims.gotQcomAidl) && Build.VERSION.SDK_INT >= 34 ->
-                Pair(
-                    "https://treble.phh.me/ims-caf-u$signSuffix.apk",
-                    "Qualcomm vendor"
-                )
-
-            Ims.gotQcomHidl ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-q.64$signSuffix.apk",
-                    "Qualcomm pre-S vendor"
-                )
-
-            Ims.gotQcomAidl ->
-                Pair(
-                    "https://treble.phh.me/stable/ims-caf-s$signSuffix.apk",
-                    "Qualcomm S+ vendor"
-                )
-
-            else ->
-                Pair(
-                    "https://github.com/ChonDoit/treble_ims/releases/download/A14-QPR3/floss-ims-19.apk",
-                    "FLOSS IMS -WIP-"
-                )
-        }
+            (Ims.gotMtkR || Ims.gotMtkS || Ims.gotMtkAidl) && Build.VERSION.SDK_INT >= 34
+                        -> Pair("https://treble.phh.me/ims-mtk-u$signSuffix.apk", "MediaTek R+ vendor")
+                    Ims.gotMtkP -> Pair("https://treble.phh.me/stable/ims-mtk-p$signSuffix.apk", "MediaTek P vendor")
+                    Ims.gotMtkQ -> Pair("https://treble.phh.me/stable/ims-mtk-q$signSuffix.apk", "MediaTek Q vendor")
+                    Ims.gotMtkR -> Pair("https://treble.phh.me/stable/ims-mtk-r$signSuffix.apk", "MediaTek R vendor")
+                    Ims.gotMtkS -> Pair("https://treble.phh.me/stable/ims-mtk-s$signSuffix.apk", "MediaTek S vendor")
+                    (Ims.gotQcomHidl || Ims.gotQcomAidl) && Build.VERSION.SDK_INT >= 34
+                        -> Pair("https://treble.phh.me/ims-caf-u$signSuffix.apk", "Qualcomm vendor")
+                    Ims.gotQcomHidlMoto -> Pair("https://treble.phh.me/stable/ims-caf-moto$signSuffix.apk", "Qualcomm pre-S vendor (Motorola)")
+                    Ims.gotQcomHidl -> Pair("https://treble.phh.me/stable/ims-q.64$signSuffix.apk", "Qualcomm pre-S vendor")
+                    Ims.gotQcomAidl -> Pair("https://treble.phh.me/stable/ims-caf-s$signSuffix.apk", "Qualcomm S+ vendor")
+                    else -> Pair("https://treble.phh.me/floss-ims-resigned.apk", "Floss IMS (EXPERIMENTAL)")
+                }
 
         installIms!!.title = "Install IMS APK for $message"
         installIms.setOnPreferenceClickListener {

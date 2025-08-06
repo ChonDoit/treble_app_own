@@ -16,8 +16,8 @@ object TelephonySettings : Settings {
     val removeTelephony = "key_telephony_removetelephony"
     val simCount = "key_telephony_simcount"
     val resetSimCount = "key_telephony_reset_simcount"
-    val smsc = "key_telephony_smsc"
     val restrictednetworking = "key_telephony_restricted_networking"
+    val smscWorkaround = "key_telephony_smsc_workaround"
 
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Audio settings")
@@ -32,7 +32,6 @@ class TelephonySettingsFragment : PreferenceFragment() {
 
         SettingsActivity.bindPreferenceSummaryToValue(findPreference(TelephonySettings.mobileSignal)!!)
         SettingsActivity.bindPreferenceSummaryToValue(findPreference(TelephonySettings.simCount)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(TelephonySettings.smsc)!!)
 
         val removeTelephonyHandler: Preference? = findPreference(TelephonySettings.removeTelephony)
         removeTelephonyHandler?.setOnPreferenceClickListener {

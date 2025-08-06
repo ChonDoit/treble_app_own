@@ -20,21 +20,20 @@ object Telephony: EntryStartup {
             }
             TelephonySettings.forceDisplay5g -> {
                 val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.sys.phh.force_display_5g", if(value) "1" else "0")
+                SystemProperties.set("persist.sys.phh.force_display_5g", if (value) "1" else "0")
             }
             TelephonySettings.simCount -> {
                 val value = sp.getString(key, "default")
                 SystemProperties.set("persist.sys.phh.sim_count", value)
                 Log.d("PHH", "Setting SIM count to $value")
             }
-            TelephonySettings.smsc -> {
-                val value = sp.getString(key, "")
-                SystemProperties.set("persist.sys.phh.smsc", value)
-                Log.d("PHH", "Setting SMSC to $value")
-            }
             TelephonySettings.restrictednetworking -> {
                 val value = sp.getBoolean(key, false)
-                SystemProperties.set("persist.sys.phh.restricted_networking", if(value) "1" else "0")
+                SystemProperties.set("persist.sys.phh.restricted_networking", if (value) "1" else "0")
+            }
+            TelephonySettings.smscWorkaround -> {
+                val value = sp.getBoolean(key, true)
+                SystemProperties.set("persist.sys.phh.smsc_workaround", if (value) "true" else "false")
             }
         }
     }
