@@ -1,8 +1,6 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
 
 object CameraSettings : Settings {
@@ -10,17 +8,23 @@ object CameraSettings : Settings {
     val forceCamera2APIHAL3 = "key_camera_force_camera2api_hal3"
     val cameraTimestampOverride = "key_camera_camera_timestamp"
 
+    val stateMap = mapOf(
+        "key_camera_multi_camera" to "persist.sys.phh.include_all_cameras",
+        "key_camera_force_camera2api_hal3" to "persist.sys.bt.esco_transport_unit_size",
+        "key_camera_camera_timestamp" to "persist.sys.phh.camera.force_timestampsource",
+    )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
+        
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Camera settings")
         return true
     }
 }
 
-class CameraSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_camera)
+class CameraSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_camera, rootKey)
 
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(CameraSettings.cameraTimestampOverride)!!)
+        SettingsActivity.bindPreferenceSummariesFromStateMap(this, CameraSettings.stateMap)
     }
 }

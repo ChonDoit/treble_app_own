@@ -14,8 +14,10 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.io.File
+import android.telephony.SubscriptionManager
 
 object Samsung : EntryStartup {
+    private lateinit var appContext: Context
     val tspBase = "/sys/devices/virtual/sec/tsp"
 
     private val spListener = SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
@@ -86,22 +88,53 @@ object Samsung : EntryStartup {
                 SystemProperties.set("persist.sys.phh.disable_back_mic", value)
             }
         }
+        PrefSync.notifyChange()
     }
 
-    private val telephonyCallback: TelephonyCallback = @RequiresApi(Build.VERSION_CODES.S)
-    object : TelephonyCallback(), TelephonyCallback.CallStateListener {
-        override fun onCallStateChanged(p0: Int) {
-            Log.d("PHH", "Call state changed $p0")
-            if (p0 == TelephonyManager.CALL_STATE_OFFHOOK) {
-                AudioSystem.setParameters("g_call_state=514") // CALL_STATUS_VOLTE_CP_VOICE_CALL_ON
-            } else {
-                AudioSystem.setParameters("g_call_state=1") // CALL_STATUS_CS_VOICE_CP_VIDEO_CALL_OFF
+    @RequiresApi(Build.VERSION_CODES.S)
+    private val telephonyCallback: TelephonyCallback = object : TelephonyCallback(),
+        TelephonyCallback.CallStateListener,
+        TelephonyCallback.ActiveDataSubscriptionIdListener {
+
+        private var activeSimSlot: Int = 1 // Default SIM slot
+
+        override fun onActiveDataSubscriptionIdChanged(subId: Int) {
+
+            val sm = appContext.getSystemService(SubscriptionManager::class.java)
+            val subscriptionInfoList = sm.activeSubscriptionInfoList
+            for (info in subscriptionInfoList) {
+                if (info.subscriptionId == subId) {
+                    activeSimSlot = info.simSlotIndex + 1 // simSlotIndex starts from 0
+                    Log.d("PHH", "Detected active SIM slot: $activeSimSlot")
+                    break
+                }
+            }
+        }
+
+        override fun onCallStateChanged(state: Int) {
+            Log.d("PHH", "Call state changed $state")
+            try {
+                when (state) {
+                    TelephonyManager.CALL_STATE_OFFHOOK -> {
+                        val simSlotHex = "0x%02x".format(activeSimSlot)
+                        AudioSystem.setParameters("g_call_sim_slot=$simSlotHex")
+                        AudioSystem.setParameters("g_call_state=514")
+                    }
+                    else -> {
+                        AudioSystem.setParameters("g_call_state=1")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("PHH", "Error handling call state", e)
             }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
     override fun startup(ctxt: Context) {
+
+        appContext = ctxt.applicationContext
+
         if (!SamsungSettings.enabled(ctxt)) return
         Log.d("PHH", "Starting Samsung service")
 
@@ -109,10 +142,9 @@ object Samsung : EntryStartup {
 
         val tm = ctxt.getSystemService(TelephonyManager::class.java)
         tm.registerTelephonyCallback({ p0 -> handler.post(p0) }, telephonyCallback)
-
         Log.d("PHH", "Registered telecom listener for Samsung")
-        val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
 
+        val sp = PreferenceManager.getDefaultSharedPreferences(ctxt)
         sp.edit().putBoolean(SamsungSettings.wirelessChargingTransmit, false).apply()
         sp.registerOnSharedPreferenceChangeListener(spListener)
 
@@ -132,21 +164,41 @@ object Samsung : EntryStartup {
             try {
                 ctxt.packageManager.setApplicationEnabledSetting(malware, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0)
             } catch (t: Throwable) {
-                // Ignore exceptions
+                // Ignore
             }
         }
     }
 
     private fun tsCmd(cmd: String): String {
-        File("${tspBase}/cmd").writeText(cmd + "\n")
-        val status = File("${tspBase}/cmd_status").readText().trim()
-        val ret = File("${tspBase}/cmd_result").readText().trim()
-        if (status != "OK") Log.e("PHH", "Samsung TSP answered $status when doing $cmd (Got $ret)")
-        return ret
+        val tspDir = File(tspBase)
+        if (!tspDir.exists()) {
+            Log.w("PHH", "tsCmd skipped, tspBase not found for cmd=$cmd")
+            return ""
+        }
+        return try {
+            File("$tspBase/cmd").writeText(cmd + "\n")
+            val status = File("$tspBase/cmd_status").readText().trim()
+            val ret = File("$tspBase/cmd_result").readText().trim()
+            if (status != "OK") { Log.e("PHH", "Samsung TSP answered $status when doing $cmd (Got $ret)")}
+            ret
+        } catch (e: Exception) {
+            Log.e("PHH", "Failed running tsCmd $cmd", e)
+            ""
+        }
     }
 
     private fun tsCmdExists(cmd: String): Boolean {
-        val supported = File("${tspBase}/cmd_list").readLines()
-        return supported.contains(cmd)
+        val tspDir = File(tspBase)
+        if (!tspDir.exists()) {
+            Log.w("PHH", "tsCmdExists skipped, tspBase not found")
+            return false
+        }
+        return try {
+            val supported = File("$tspBase/cmd_list").readLines()
+            supported.contains(cmd)
+        } catch (e: Exception) {
+            Log.e("PHH", "Failed checking tsCmdExists($cmd)", e)
+            false
+        }
     }
 }

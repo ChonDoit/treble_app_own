@@ -2,9 +2,9 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.hardware.Sensor
-import android.os.Bundle
-import android.preference.PreferenceFragment
-import android.preference.PreferenceManager
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreference
 import android.util.Log
 
 object DozeSettings : Settings {
@@ -12,38 +12,38 @@ object DozeSettings : Settings {
     val pocketKey = "key_doze_pocket"
     val chopchopkey = "key_doze_chopchop"
 
+    val stateMap: Map<String, String> = mapOf()
+    init { PrefSync.registerSettingsStateMap(stateMap) }
+
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Doze settings")
         return true
     }
 
     fun isMotorola(): Boolean {
-        val isMoto = Tools.vendorFp.toLowerCase().startsWith("motorola")
+        val isMoto = Tools.vendorFpLow.startsWith("motorola")
         Log.d("PHH", "Chop-Chop enabled() called, isMoto = $isMoto")
         return isMoto
     }
 }
 
-class DozeSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_doze)
+class DozeSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_doze, rootKey)
 
         // Check enabled status for each preference and remove if not enabled
-        val context = activity ?: return
+        val context = context ?: return
         val checkEnabled = EntryService.getEnabledPreferences(context)
         checkEnabled.forEach { (key, isEnabled) ->
             if (!isEnabled) {
-                val preference = findPreference(key)
-                preference?.let {
-                    val parent = preference.parent
-                    parent?.removePreference(preference)
+                findPreference<Preference>(key)?.let {
+                    it.parent?.removePreference(it)
                 }
             }
         }
 
         // Checking for ChopChop Sensor
-        val chopchopPref = findPreference(DozeSettings.chopchopkey) as? android.preference.SwitchPreference
+        val chopchopPref = findPreference<SwitchPreference>(DozeSettings.chopchopkey)
         var chopchopSensor: Sensor? = null
         try {
             chopchopSensor = Doze.sensorManager.getSensorList(Sensor.TYPE_ALL)
@@ -55,7 +55,7 @@ class DozeSettingsFragment : PreferenceFragment() {
                 isChecked = false
             }
 
-            val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+            val sp = PreferenceManager.getDefaultSharedPreferences(context ?: return)
             val editor = sp.edit()
             editor.putBoolean(DozeSettings.chopchopkey, false)
             editor.apply()

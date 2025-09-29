@@ -1,125 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:layout_gravity="center_vertical"
-    android:orientation="vertical"
-    tools:context=".UpdaterActivity"
-    android:weightSum="3">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    tools:context=".UpdaterActivity">
 
-    <!-- Content -->
-    <LinearLayout
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@id/button_container"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-
-        <!-- New horizontal LinearLayout to place image and text side by side -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
-            <!-- Image on the left -->
-            <ImageView
-                android:id="@+id/system_update"
-                android:src="@drawable/ic_system_update"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <!-- Text on the right -->
-            <TextView
-                android:id="@+id/txt_update_title"
-                android:text="@string/update_not_found_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                style="@style/TextAppearance.AppCompat.Display1" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txt_update_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:textAlignment="textStart"
-            android:autoLink="web"
-            style="@style/TextAppearance.AppCompat.Body2" />
-
-        <ProgressBar
-            android:id="@+id/progress_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="16dp"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleHorizontal" />
-
-        <TextView
-            android:id="@+id/progress_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:textAlignment="center"
-            style="@style/TextAppearance.AppCompat.Subhead" />
-    </LinearLayout>
-
-    <!-- Changelog Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp">
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="5dp"
-            android:layout_marginTop="0dp"
-            android:layout_gravity="center_horizontal"
-            android:background="?android:attr/colorAccent" />
-
-        <!-- Changelog TextView -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
-            <TextView
-                android:id="@+id/remote_text_content"
+            <!-- Current Build Info -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loading changelog..."
-                android:padding="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:paddingStart="0dp"
-                android:textSize="14sp"
-                android:gravity="center_horizontal"/>
-        </ScrollView>
-    </LinearLayout>
+                android:orientation="vertical"
+                android:background="@drawable/bg_updater"
+                android:padding="20dp"
+                android:layout_marginBottom="12dp">
 
-    <!-- Button -->
+                <LinearLayout
+                    android:id="@+id/current_build_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:text="CURRENT BUILD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        android:textColor="?attr/colorPrimary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_current_build"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        style="@style/TextAppearance.Material3.BodyMedium"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_update_title"
+                    android:text="@string/update_not_found_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:background="@drawable/bg_updater_title"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <!-- Update Data -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_updater"
+                android:padding="20dp"
+                android:layout_marginBottom="12dp"
+                android:id="@+id/update_available_container"
+                android:visibility="gone">
+
+                <!-- Update Available Section-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:text="UPDATE AVAILABLE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        android:textColor="?attr/colorPrimary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_update_available"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        style="@style/TextAppearance.Material3.BodyMedium"/>
+                </LinearLayout>
+
+                <!-- Progress indicators -->
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progress_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:visibility="gone"
+                    app:trackCornerRadius="8dp"
+                    app:trackThickness="8dp"
+                    app:trackColor="?attr/colorSurfaceVariant"
+                    app:indicatorColor="?attr/colorPrimary"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/progress_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    style="@style/TextAppearance.Material3.BodySmall"/>
+            </LinearLayout>
+
+            <!-- Changelog -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_updater"
+                    android:padding="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/update_available_changelog">
+
+                <TextView
+                    android:id="@+id/changelog_header"
+                    android:text="Changelog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_updater_title"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/changelog_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/colorOnPrimary" />
+
+                <TextView
+                    android:id="@+id/changelog_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    style="@style/TextAppearance.Material3.BodyMedium"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed Bottom Button Container -->
     <FrameLayout
-        android:layout_width="fill_parent"
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0">
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorSurface"
+        android:elevation="8dp">
+
         <Button
             android:id="@+id/btn_update"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:text="@string/update_not_found_button"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="bottom|right" />
+            android:layout_gravity="end"
+            android:layout_marginVertical="8dp"/>
     </FrameLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -1,18 +1,29 @@
 package me.phh.treble.app
 
-import android.app.AlertDialog
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.SystemProperties
-import android.preference.PreferenceActivity
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.format.Formatter
+import android.text.style.StyleSpan
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowInsetsController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -33,10 +44,11 @@ import org.tukaani.xz.XZInputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.ZoneId
 
-class UpdaterActivity : PreferenceActivity() {
+class UpdaterActivity : AppCompatActivity() {
 
     private val OTA_JSON_URL = SystemProperties.get("ro.system.ota.json_url")
     private var hasUpdate = false
@@ -44,9 +56,32 @@ class UpdaterActivity : PreferenceActivity() {
     private var otaJson = JSONObject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DynamicColors.applyToActivityIfAvailable(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_updater)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.apply {
+            setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            elevation = 0f
+        }
+
+        val window = window ?: return
+        val isLightTheme = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(
+                if (isLightTheme) WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS else 0,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = if (isLightTheme)
+                window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            else
+                window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        }
 
         updateUiElements(false)
         checkUpdate()
@@ -62,32 +97,12 @@ class UpdaterActivity : PreferenceActivity() {
             }
             return@setOnClickListener
         }
-
-        val changelogTextView = findViewById<TextView>(R.id.remote_text_content)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val url = URL(getChangelogUrl())
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                val content = connection.inputStream.bufferedReader().use { it.readText() }
-                connection.disconnect()
-
-                runOnUiThread {
-                    changelogTextView.text = content
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
-                    changelogTextView.text = "Failed to load changelog: ${e.localizedMessage}"
-                }
-            }
-        }
     }
 
     override fun onBackPressed() {
         if (isUpdating) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.title_activity_updater))
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(getString(R.string.ota_title))
             builder.setMessage(getString(R.string.prevent_exit_message))
             builder.setPositiveButton(android.R.string.yes) { _, _ ->
                 super.onBackPressed()
@@ -108,14 +123,19 @@ class UpdaterActivity : PreferenceActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
             R.id.menu_delete_ota -> {
                 Log.e("PHH", "Deleting OTA file")
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle(getString(R.string.warning_dialog_title))
+                val builder = MaterialAlertDialogBuilder(this)
+                builder.setTitle(getString(R.string.warning))
                 builder.setMessage(getString(R.string.delete_ota_message))
                 builder.setPositiveButton(android.R.string.yes) { _, _ ->
                     Log.e("PHH", "Delete in progress")
                     SystemProperties.set("sys.phh.uninstall-ota", "true");
+                    Toast.makeText(this, R.string.toast_delete_ota, Toast.LENGTH_LONG).show()
                 }
                 builder.setNegativeButton(android.R.string.no) { _, _ ->
                     Log.e("PHH", "Delete canceled")
@@ -127,106 +147,201 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun checkUpdate() {
-        val btn_update = findViewById(R.id.btn_update) as Button
-        btn_update.setVisibility(View.INVISIBLE)
+        val btnUpdate = findViewById<Button>(R.id.btn_update)
+        val titleTextView = findViewById<TextView>(R.id.txt_update_title) // Get the title TextView
+        val progressBar = findViewById<LinearProgressIndicator>(R.id.progress_horizontal)
+        val progressText = findViewById<TextView>(R.id.progress_value)
 
-        val progress_bar = findViewById(R.id.progress_horizontal) as ProgressBar
-        val progress_text = findViewById(R.id.progress_value) as TextView
-        progress_bar.setVisibility(View.INVISIBLE)
-        progress_text.setVisibility(View.INVISIBLE)
+        // Hide button and progress initially
+        btnUpdate.visibility = View.INVISIBLE
+        progressBar.visibility = View.INVISIBLE
+        progressText.visibility = View.INVISIBLE
 
-        val update_title = findViewById(R.id.txt_update_title) as TextView
-        update_title.text = getString(R.string.checking_update_title)
+        // Set checking status
+        titleTextView.text = getString(R.string.checking_update_title)
 
         if (isDynamic()) {
             isMagiskInstalled()
-            Log.e("PHH", "Updating OTA info at: " + OTA_JSON_URL)
+            Log.e("PHH", "Updating OTA info at: $OTA_JSON_URL")
             val request = Request.Builder().url(OTA_JSON_URL).build()
-            OkHttpClient().newCall(request).enqueue(object: Callback {
+            OkHttpClient().newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.e("PHH", "Failed downloading OTA info. Error: " + e.toString(), e)
-                    runOnUiThread(Runnable {
+                    Log.e("PHH", "Failed downloading OTA info. Error: ${e.toString()}", e)
+                    runOnUiThread {
                         hasUpdate = false
+                        titleTextView.text = getString(R.string.update_not_found_title)
                         updateUiElements(false)
-                    })
+                    }
                 }
+
                 override fun onResponse(call: Call, response: Response) {
-                    Log.e("PHH", "Got response")
                     if ((response.code == 200 || response.code == 304) && response.body != null) {
-                        val body = response.body?.string()
-                        Log.e("PHH", "Response body: " + body)
-                        otaJson = JSONTokener(body).nextValue() as JSONObject
-                        runOnUiThread(Runnable {
-                            hasUpdate = existsUpdate()
-                            updateUiElements(false)
-                        })
+                        try {
+                            val body = response.body?.string()
+                            otaJson = JSONTokener(body).nextValue() as JSONObject
+                            runOnUiThread {
+                                hasUpdate = existsUpdate()
+                                titleTextView.text = if (hasUpdate) {
+                                    getString(R.string.update_found_title)
+                                } else {
+                                    getString(R.string.update_not_found_title)
+                                }
+                                Thread.sleep(1000) // Keep your delay if needed
+                                updateUiElements(false)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("PHH", "Error parsing OTA info", e)
+                            runOnUiThread {
+                                hasUpdate = false
+                                titleTextView.text = getString(R.string.update_not_found_title)
+                                updateUiElements(false)
+                            }
+                        }
                     } else {
-                        Log.e("PHH", "Invalid HTTP response or body. Code: " + response.code)
-                        runOnUiThread(Runnable {
+                        runOnUiThread {
                             hasUpdate = false
+                            titleTextView.text = getString(R.string.update_not_found_title)
                             updateUiElements(false)
-                        })
+                        }
                     }
                 }
             })
         } else {
             hasUpdate = false
+            titleTextView.text = getString(R.string.update_not_found_title)
             updateUiElements(false)
         }
     }
 
     private fun updateUiElements(wasUpdated: Boolean) {
-        val btn_update = findViewById(R.id.btn_update) as Button
+        val btnUpdate = findViewById<Button>(R.id.btn_update)
+        val update_title = findViewById(R.id.txt_update_title) as TextView
+        val currentBuildTextView = findViewById<TextView>(R.id.txt_current_build)
+        val updateAvailableTextView = findViewById<TextView>(R.id.txt_update_available)
+        val updateAvailableContainer = findViewById<View>(R.id.update_available_container)
+        val updateAvailableChangelog = findViewById<View>(R.id.update_available_changelog)
 
         if (!wasUpdated) {
-            btn_update.setVisibility(View.VISIBLE)
+            btnUpdate.visibility = View.VISIBLE
         }
 
-        val update_title = findViewById(R.id.txt_update_title) as TextView
-        val update_description = findViewById(R.id.txt_update_description) as TextView
+        // Current build info
+        val currentBuildText = """
+        ${getGSIName()}
+        ${getBuildDate()}
+        
+        Android version: ${getAndroidVersion()}
+        Build variant: ${getVariant()}
+        Security patch: ${getPatchDate()}
+    """.trimIndent()
 
-        var update_description_text = getGSIName() + "\n"
-
-        update_description_text += getBuildDate() + "\n\n"
-
-        update_description_text += "Android version: " + getAndroidVersion() + "\n"
-        update_description_text += "Build variant: " + getVariant() + "\n"
-        update_description_text += "Security patch: " + getPatchDate() + "\n\n"
+        currentBuildTextView.text = currentBuildText
 
         if (hasUpdate) {
-            update_description_text += "•••••••••• UPDATE AVAILABLE •••••••••• \n\n"
-            update_description_text += getGSIName() + "\n"
-            update_description_text += getOtaDate() + "\n\n"
+            updateAvailableContainer.visibility = View.VISIBLE
+            updateAvailableChangelog.visibility = if (getChangelogUrl().isNotEmpty()) View.VISIBLE else View.GONE
 
-            update_description_text += "Android version: " + getAndroidVersion() + "\n"
-            update_description_text += "Build variant: " + getBuildVariant() + "\n"
-            update_description_text += "Security patch: " + getPatchDate() + "\n"
-            update_description_text += "Image size: " + getUpdateSize() + "\n\n"
+            val updateText = """
+            ${getGSIName()}
+            ${getOtaDate()}
+            
+            Android version: ${getAndroidVersion()}
+            Build variant: ${getBuildVariant()}
+            Security patch: ${getPatchDate()}
+            Image size: ${getUpdateSize()}
+        """.trimIndent()
+
+            updateAvailableTextView.text = updateText
 
             update_title.text = getString(R.string.update_found_title)
-            btn_update.text = getString(R.string.update_found_button)
-        } else if (!wasUpdated) {
+            btnUpdate.text = getString(R.string.update_found_button)
+        } else {
+            updateAvailableContainer.visibility = View.GONE
             update_title.text = getString(R.string.update_not_found_title)
-            btn_update.text = getString(R.string.update_not_found_button)
+            btnUpdate.text = getString(R.string.update_not_found_button)
         }
-        update_description.text = update_description_text
 
-        val changelogTextView = findViewById<TextView>(R.id.remote_text_content)
+        if (getChangelogUrl().isNotEmpty()) {
+            loadChangelog()
+        } else {
+            updateAvailableChangelog.visibility = View.GONE
+        }
+    }
+
+    private fun loadChangelog(){
+        val changelogContainer = findViewById<LinearLayout>(R.id.update_available_changelog)
+        changelogContainer.visibility = View.GONE
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val url = java.net.URL(getChangelogUrl())
+                val url = URL(getChangelogUrl())
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 val content = connection.inputStream.bufferedReader().use { it.readText() }
                 connection.disconnect()
 
-                runOnUiThread {
-                    changelogTextView.text = content
+                withContext(Dispatchers.Main) {
+                    changelogContainer.visibility = View.VISIBLE
+                    while (changelogContainer.childCount > 1) {
+                        changelogContainer.removeViewAt(1)
+                    }
+                    parseChangelog(content, changelogContainer)
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    changelogTextView.text = "Failed to load changelog: \n ${e.localizedMessage}"
+                withContext(Dispatchers.Main) {
+                    while (changelogContainer.childCount > 1) {
+                        changelogContainer.removeViewAt(1)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun parseChangelog(rawText: String, container: LinearLayout) {
+        val inflater = LayoutInflater.from(this)
+        val entries = rawText.split("\n\n")
+
+        entries.forEach { entry ->
+            val lines = entry.trim().split("\n")
+            var title: String? = null
+            val summaryItems = mutableListOf<Pair<String, Boolean>>()
+
+            lines.forEach { line ->
+                when {
+                    line.startsWith("[Title]") -> title = line.removePrefix("[Title]").trim()
+                    line.startsWith("[Summary]") -> summaryItems.add(Pair(line.removePrefix("[Summary]").trim(), false))
+                    line.startsWith("[SummaryTitle]") -> summaryItems.add(Pair(line.removePrefix("[SummaryTitle]").trim(), true))
+                }
+            }
+
+            if (!title.isNullOrEmpty() && summaryItems.isNotEmpty()) {
+                inflater.inflate(R.layout.changelog_title, container, false).apply {
+                    findViewById<TextView>(R.id.title_text).text = title
+                    container.addView(this)
+                }
+
+                summaryItems.forEach { (summary, isBold) ->
+                    inflater.inflate(R.layout.changelog_summary, container, false).apply {
+                        val textView = findViewById<TextView>(R.id.summary_text)
+
+                        if (isBold) {
+                            val spannable = SpannableString(summary)
+                            spannable.setSpan(
+                                StyleSpan(Typeface.BOLD),
+                                0,
+                                summary.length,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            textView.text = spannable
+                        } else {
+                            textView.text = if (summary.isBlank()) {
+                                "" // keep empty line
+                            } else {
+                                "• $summary"
+                            }
+                        }
+                        container.addView(this)
+                    }
                 }
             }
         }
@@ -291,12 +406,18 @@ class UpdaterActivity : PreferenceActivity() {
         return ""
     }
 
-    private fun getChangelogUrl() : String {
-        if (otaJson.length() > 0) {
-            return otaJson.getString("changelog")
+    private fun getChangelogUrl(): String {
+        return try {
+            if (otaJson.length() > 0 && otaJson.has("changelog")) {
+                otaJson.getString("changelog").takeIf { it.isNotEmpty() } ?: ""
+            } else {
+                Log.e("PHH", "OTA json is empty or missing changelog field")
+                ""
+            }
+        } catch (e: Exception) {
+            Log.e("PHH", "Error getting changelog URL", e)
+            ""
         }
-        Log.e("PHH", "OTA json is empty")
-        return ""
     }
 
     private fun getBuildVariant() : String {
@@ -310,14 +431,6 @@ class UpdaterActivity : PreferenceActivity() {
                     return otaVariantName;
                 }
             }
-        }
-        Log.e("PHH", "OTA json is empty")
-        return ""
-    }
-
-    private fun getUpdateVersion() : String {
-        if (otaJson.length() > 0) {
-            return otaJson.getString("version")
         }
         Log.e("PHH", "OTA json is empty")
         return ""
@@ -351,8 +464,8 @@ class UpdaterActivity : PreferenceActivity() {
         val isDynamic = SystemProperties.get("ro.boot.dynamic_partitions")
         if (isDynamic != "true") {
             Log.e("PHH", "Device is not dynamic")
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.error_dialog_title))
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(getString(R.string.error))
             builder.setMessage(getString(R.string.dynamic_device_message))
             builder.setPositiveButton(android.R.string.ok) { _, _ -> }
             builder.show()
@@ -366,8 +479,8 @@ class UpdaterActivity : PreferenceActivity() {
         val magiskBin = File("/system/bin/magisk")
         if (magiskBin.exists()) {
             Log.e("PHH", "Magisk is installed")
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.warning_dialog_title))
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(getString(R.string.warning))
             builder.setMessage(getString(R.string.magisk_exists_message))
             builder.setPositiveButton(android.R.string.ok) { _, _ -> }
             builder.show()
@@ -392,9 +505,9 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun getVariant() : String {
-        var flavor = SystemProperties.get("persist.sys.phh.buildvariant")
-        Log.e("PHH", "Device variant is: " + flavor)
-        return flavor
+        var buildvariant = SystemProperties.get("persist.sys.phh.buildvariant")
+        Log.e("PHH", "Device variant is: " + buildvariant)
+        return buildvariant
     }
 
     private fun getUrl() : String {
@@ -418,7 +531,7 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun downloadUpdate() {
-        val progress_bar = findViewById(R.id.progress_horizontal) as ProgressBar
+        val progress_bar = findViewById<LinearProgressIndicator>(R.id.progress_horizontal)
         val progress_text = findViewById(R.id.progress_value) as TextView
 
         val btn_update = findViewById(R.id.btn_update) as Button
@@ -427,8 +540,8 @@ class UpdaterActivity : PreferenceActivity() {
         val url = getUrl()
         if (url.isEmpty()) {
             Log.d("PHH", "Empty URL")
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.error_dialog_title))
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(getString(R.string.error))
             builder.setMessage(getString(R.string.update_error_message))
             builder.setPositiveButton(android.R.string.ok) { _, _ -> }
             builder.show()
@@ -465,16 +578,16 @@ class UpdaterActivity : PreferenceActivity() {
                             Log.e("PHH", "Failed applying OTA image. Error: " + e.toString(), e)
                         }
                         runOnUiThread(Runnable {
-                            val builder = AlertDialog.Builder(this)
+                            val builder = MaterialAlertDialogBuilder(this)
                             if (hasSuccess) {
                                 Toast.makeText(this, R.string.toast_install_done, Toast.LENGTH_LONG).show();
-                                builder.setTitle(getString(R.string.title_activity_updater))
+                                builder.setTitle(getString(R.string.ota_title))
                                 builder.setMessage(getString(R.string.success_install_message))
                                 deletePackageCache()
                             } else {
                                 progress_bar.setVisibility(View.GONE)
                                 progress_text.setVisibility(View.GONE)
-                                builder.setTitle(getString(R.string.error_dialog_title))
+                                builder.setTitle(getString(R.string.error))
                                 builder.setMessage(getString(R.string.failed_install_message))
                                 Toast.makeText(this, R.string.toast_install_fail, Toast.LENGTH_SHORT).show();
                             }
@@ -491,8 +604,8 @@ class UpdaterActivity : PreferenceActivity() {
                 Toast.makeText(this, R.string.toast_download_fail, Toast.LENGTH_SHORT).show();
                 progress_bar.setVisibility(View.GONE)
                 progress_text.setVisibility(View.GONE)
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle(getString(R.string.error_dialog_title))
+                val builder = MaterialAlertDialogBuilder(this)
+                builder.setTitle(getString(R.string.error))
                 builder.setMessage(getString(R.string.failed_download_message))
                 builder.setPositiveButton(android.R.string.ok) { _, _ -> }
                 builder.show()
@@ -504,13 +617,13 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun prepareOTA() {
-        val progress_bar = findViewById(R.id.progress_horizontal) as ProgressBar
+        val progress_bar = findViewById<LinearProgressIndicator>(R.id.progress_horizontal)
         val progress_text = findViewById(R.id.progress_value) as TextView
         val update_title = findViewById(R.id.txt_update_title) as TextView
 
         runOnUiThread(Runnable {
             update_title.text = getString(R.string.preparing_update_title)
-            progress_bar.setIndeterminate(true)
+            progress_bar.isIndeterminate = true
             progress_text.text = "Preparing storage for OTA..."
             progress_bar.setVisibility(View.VISIBLE)
             progress_text.setVisibility(View.VISIBLE)
@@ -527,15 +640,15 @@ class UpdaterActivity : PreferenceActivity() {
     }
 
     private fun extractUpdate(stream: InputStream, completeFileSize: Long) {
-        val progress_bar = findViewById(R.id.progress_horizontal) as ProgressBar
+        val progress_bar = findViewById<LinearProgressIndicator>(R.id.progress_horizontal)
         val progress_text = findViewById(R.id.progress_value) as TextView
         val update_title = findViewById(R.id.txt_update_title) as TextView
 
         runOnUiThread(Runnable {
             Toast.makeText(this, R.string.toast_download_start, Toast.LENGTH_SHORT).show();
             update_title.text = getString(R.string.downloading_update_title)
-            progress_bar.setIndeterminate(false)
-            progress_bar.setProgress(0)
+            progress_bar.isIndeterminate = false
+            progress_bar.setProgressCompat(0, false)
             progress_text.text = "Downloading 0%"
             progress_bar.setVisibility(View.VISIBLE)
             progress_text.setVisibility(View.VISIBLE)
@@ -576,7 +689,7 @@ class UpdaterActivity : PreferenceActivity() {
                 var extProgress = (100 * nBytesRead) / completeFileSize
                 runOnUiThread(Runnable {
                     if (extProgress < 100) {
-                        progress_bar.setProgress(extProgress.toInt())
+                        progress_bar.setProgressCompat(extProgress.toInt(), true)
                         progress_text.text = "Downloading " + extProgress.toInt().toString() + "%"
                     }
                 })
@@ -604,13 +717,13 @@ class UpdaterActivity : PreferenceActivity() {
         }
 
         runOnUiThread(Runnable {
-            progress_bar.setProgress(100)
+            progress_bar.setProgressCompat(100, true)
             progress_text.text = "100%"
         })
     }
 
     private fun applyUpdate() {
-        val progress_bar = findViewById(R.id.progress_horizontal) as ProgressBar
+        val progress_bar = findViewById<LinearProgressIndicator>(R.id.progress_horizontal)
         val progress_text = findViewById(R.id.progress_value) as TextView
         val update_title = findViewById(R.id.txt_update_title) as TextView
 
@@ -628,7 +741,7 @@ class UpdaterActivity : PreferenceActivity() {
         while (!SystemProperties.get("init.svc.phh-ota-switch", "").equals("stopped")) {
             val state = SystemProperties.get("init.svc.phh-ota-switch", "not-defined")
             Log.d("PHH", "Current value of phh-ota-switch svc is " + state)
-            Thread.sleep(100)
+            Thread.sleep(1000)
         }
 
         runOnUiThread(Runnable {

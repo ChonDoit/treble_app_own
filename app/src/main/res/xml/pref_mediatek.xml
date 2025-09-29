@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="GENERAL">
+    <PreferenceCategory app:title="@string/general_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_mtk_mediatek_touch_hint_rotate"
-            android:title="Rotation perf hint instead of touch"
-            android:summary="For Mediatek devices"/>
+            app:defaultValue="false"
+            app:key="key_mtk_mediatek_touch_hint_rotate"
+            app:title="@string/rotation_perf_hint_title"
+            app:summary="@string/rotation_perf_hint_summary"/>
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_mtk_mediatek_ged_kpi"
-            android:title="Mediatek GED KPI support"
-            android:summary="Might improve GPU performance for Mediatek devices"/>
+            app:defaultValue="false"
+            app:key="key_mtk_mediatek_ged_kpi"
+            app:title="@string/mtk_ged_kpi_title"
+            app:summary="@string/mtk_ged_kpi_summary"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="TELEPHONY">
+    <PreferenceCategory app:title="@string/telephony_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_mtk_force_cognitive"
-            android:title="Forward-port support for forceCognitive"
-            android:summary="Required on somes mtk devices"/>
+            app:defaultValue="false"
+            app:key="key_mtk_force_cognitive"
+            app:title="@string/forward_support_forcecognitive_title"
+            app:summary="@string/forward_support_forcecognitive_summary"/>
     </PreferenceCategory>
-
+    
 </PreferenceScreen>

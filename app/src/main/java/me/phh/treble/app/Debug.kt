@@ -14,6 +14,7 @@ object Debug: EntryStartup {
                 SystemProperties.set("persist.sys.phh.debuggable", if (value) "true" else "false")
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.os.UserHandle
 import android.os.SystemProperties
 import android.util.Log
+import android.widget.Toast
 import kotlin.concurrent.thread
 
 
@@ -17,7 +20,7 @@ class EntryService: Service() {
     companion object {
         var service: EntryService? = null
 
-        // Function to return the map of enabled status for settings
+        // Return the map of enabled status for settings
         fun getEnabledPreferences(context: Context): Map<String, Boolean> {
             return mapOf(
                 "mydevice_settings" to MyDeviceSettings.enabled(context),
@@ -33,9 +36,13 @@ class EntryService: Service() {
                 "oppo_settings" to OppoSettings.enabled(context),
                 "asus_settings" to AsusSettings.enabled(context),
                 "mediatek_settings" to MediatekSettings.enabled(context),
-                "spoof_settings" to SpoofSettings.enabled(context),
+                "spoof_category" to SpoofSettings.enabled(context),
                 "key_doze_motorola" to DozeSettings.isMotorola(),
                 "key_misc_root_access" to MiscSettings.isRoot(),
+                "key_backlight_force_hwc_brightness" to Tools.isAtLeastSdk(34),
+                "key_backlight_force_fallback_light_hal" to Tools.isAtLeastSdk(34),
+                "key_misc_virtual_sensors_are_real" to Tools.isAtLeastSdk(34),
+                "key_ui_fod_color" to Tools.isLowerAsSdk(34),
             )
         }
     }
@@ -91,15 +98,18 @@ class EntryService: Service() {
             // Audio
             tryC { Audio.startup(this) }
             tryC { AudioEffects.startup(this) }
+			tryC { Bluetooth.startup(this) }
 
             // Camera
             tryC { Camera.startup(this) }
-
-            // Miscellaneous
-            tryC { Misc.startup(this) }
+			
+			// Spoof
             tryC { Spoof.startup(this) }
             tryC { SpoofPs.startup(this) }
             tryC { SpoofGms.startup(this) }
+
+            // Miscellaneous
+            tryC { Misc.startup(this) }
             tryC { Debug.startup(this) }
 
             // Presets
@@ -133,6 +143,16 @@ class Starter: BroadcastReceiver() {
                 context.startService(Intent(context, EntryService::class.java).apply {
                     flags = Intent.FLAG_RECEIVER_REGISTERED_ONLY
                 })
+
+                if (SpoofSettings.enabled(context)) {
+                    val shouldRunOnBoot = SystemProperties.getBoolean("persist.sys.sp00f.run_on_boot", false)
+                    if (shouldRunOnBoot) {
+                        Log.d("PHH-SPOOF", "Running props fetch on boot")
+                        SpoofPropertyManager().fetchAndApply(context,
+                            SpoofPropertyManager.ApplyMode.GMS_ONLY
+                        ) { success -> }
+                    }
+                }
             }
         }
     }

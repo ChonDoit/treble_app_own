@@ -59,6 +59,7 @@ object OnePlus: EntryStartup {
                 Log.d("PHH", "Setting dtPanel to $value")
             }
         }
+        PrefSync.notifyChange()
     }
 
     fun writeToFileNofail(path: String, content: String) {

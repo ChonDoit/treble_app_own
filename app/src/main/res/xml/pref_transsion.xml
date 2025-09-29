@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="DISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_transsion_dt2w"
-            android:title="Enable DT2W" />
+            app:defaultValue="false"
+            app:key="key_transsion_dt2w"
+            app:title="@string/enable_dt2w" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="OTHER">
+    <PreferenceCategory app:title="@string/others_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_transsion_usb_otg"
-            android:title="Enable USB OTG" />
+            app:defaultValue="false"
+            app:key="key_transsion_usb_otg"
+            app:title="@string/enable_usb_otg" />
     </PreferenceCategory>
 
 </PreferenceScreen>

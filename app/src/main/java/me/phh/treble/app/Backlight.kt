@@ -29,7 +29,16 @@ object Backlight: EntryStartup {
                 val value = sp.getBoolean(key, false)
                 SystemProperties.set("persist.sys.phh.linear_brightness", if(value) "1" else "0")
             }
+            BacklightSettings.forceHWCBrightness -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.sf.force_hwc_brightness", if(value) "1" else "0")
+            }
+            BacklightSettings.forceFallbackHal -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.sf.force_light_brightness", if(value) "1" else "0")
+            }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

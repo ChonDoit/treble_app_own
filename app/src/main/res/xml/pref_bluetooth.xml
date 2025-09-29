@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/general_title">
+        <SwitchPreference
+            app:defaultValue="true"
+            app:key="key_bt_dynamic_sysbta"
+            app:title="@string/use_sysbt_hal" />
+
+        <EditTextPreference
+            app:defaultValue="1"
+            app:key="key_bt_max_bluetooth_audio_devices"
+            app:title="@string/max_bt_connected_devices"
+            app:inputType="number" />
+
+        <ListPreference
+            app:defaultValue="0"
+            app:key="key_bt_esco_transport_unit_size"
+            app:entries="@array/pref_audio_esco_transport_size"
+            app:entryValues="@array/pref_audio_esco_transport_size_values"
+            app:title="@string/set_esco_size" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/workarounds_title">
+        <SwitchPreference
+            app:key="key_bt_disable_le_apcfe"
+            app:defaultValue="false"
+            app:title="@string/disable_leapcfe_title"
+            app:summary="@string/disable_leapcfe_summary" />
+
+        <EditTextPreference
+            app:key="key_bt_le_version_cap"
+            app:title="@string/cap_le_vendor"
+            app:inputType="number"
+            app:summary="@string/default_string" />
+
+        <ListPreference
+            app:defaultValue="none"
+            app:key="key_bt_workarounds"
+            app:entries="@array/pref_audio_bt_workarounds"
+            app:entryValues="@array/pref_audio_bt_workarounds_values"
+            app:title="@string/predefinded_worksrounds" />
+
+        <EditTextPreference
+            app:key="key_bt_unsupported_commands"
+            app:title="@string/set_unsupported_bt_commands"
+            app:inputType="text"
+            app:summary="@string/default_string" />
+
+        <EditTextPreference
+            app:key="key_bt_unsupported_og"
+            app:title="@string/set_unsupported_bt_og"
+            app:inputType="text"
+            app:summary="@string/default_string" />
+
+        <EditTextPreference
+            app:key="key_bt_unsupported_le"
+            app:title="@string/set_unsupported_bt_le"
+            app:inputType="text"
+            app:summary="@string/default_string" />
+
+        <EditTextPreference
+            app:key="key_bt_unsupported_states"
+            app:title="@string/set_unsupported_bt_states"
+            app:inputType="text"
+            app:summary="@string/default_string" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

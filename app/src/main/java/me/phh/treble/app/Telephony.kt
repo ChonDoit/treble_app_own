@@ -35,7 +35,29 @@ object Telephony: EntryStartup {
                 val value = sp.getBoolean(key, true)
                 SystemProperties.set("persist.sys.phh.smsc_workaround", if (value) "true" else "false")
             }
+            TelephonySettings.smsc0 -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.phh.smsc_0", value)
+                Log.d("PHH-SMSC", "Setting SMSC0 to $value")
+            }
+            TelephonySettings.smsc1 -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.phh.smsc_1", value)
+                Log.d("PHH-SMSC", "Setting SMSC1 to $value")
+
+            }
+            TelephonySettings.smsc2 -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.phh.smsc_2", value)
+                Log.d("PHH-SMSC", "Setting SMSC2 to $value")
+            }
+            TelephonySettings.smsc3 -> {
+                val value = sp.getString(key, "")
+                SystemProperties.set("persist.sys.phh.smsc_3", value)
+                Log.d("PHH-SMSC", "Setting SMSC3 to $value")
+            }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

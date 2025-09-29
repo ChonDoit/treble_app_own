@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="DISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
 	    <ListPreference
-            android:defaultValue="default"
-            android:entries="@array/pref_oneplus_display_mode"
-            android:entryValues="@array/pref_oneplus_display_mode_values"
-            android:key="key_oneplus_display_mode"
-            android:title="Display Mode" />
+            app:defaultValue="default"
+            app:entries="@array/pref_oneplus_display_mode"
+            app:entryValues="@array/pref_oneplus_display_mode_values"
+            app:key="key_oneplus_display_mode"
+            app:title="@string/display_mode" />
         <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/pref_oneplus_display_high_brightness"
-            android:entryValues="@array/pref_oneplus_display_high_brightness_values"
-            android:key="key_oneplus_display_high_brightness"
-            android:title="High brightness mode" />
+            app:defaultValue="0"
+            app:entries="@array/pref_oneplus_display_high_brightness"
+            app:entryValues="@array/pref_oneplus_display_high_brightness_values"
+            app:key="key_oneplus_display_high_brightness"
+            app:title="@string/high_brightness_mode" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="MISCELLANEOUS">
+    <PreferenceCategory app:title="@string/miscellaneous_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_oneplus_usb_otg"
-            android:title="Enable USB OTG" />
+            app:defaultValue="false"
+            app:key="key_oneplus_usb_otg"
+            app:title="@string/enable_usb_otg" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_oneplus_double_tap_to_wake"
-            android:title="Enable DT2W" />
+            app:defaultValue="false"
+            app:key="key_oneplus_double_tap_to_wake"
+            app:title="@string/enable_dt2w" />
     </PreferenceCategory>
 
 </PreferenceScreen>

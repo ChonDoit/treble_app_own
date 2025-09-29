@@ -1,24 +1,24 @@
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-        <PreferenceCategory android:title="GENERAL">
-            <Preference android:title="Debug sensors" android:summary="Are you working?">
+        <PreferenceCategory app:title="@string/general_title">
+            <Preference app:title="@string/debug_sensors" app:summary="Are you working?">
                 <intent
-                    android:action="android.intent.action.VIEW"
-                    android:targetPackage="me.phh.treble.app"
-                    android:targetClass="me.phh.treble.app.DebugSensors" />
+                    app:action="android.intent.action.VIEW"
+                    app:targetPackage="me.phh.treble.app"
+                    app:targetClass="me.phh.treble.app.DebugSensors" />
              </Preference>
 
             <Preference
-                android:key="key_debug_restart_app"
-                android:title="Kill TrebleApp"
-                android:summary="To save a few taps" />
+                app:key="key_debug_restart_app"
+                app:title="@string/kill_trebleapp_title"
+                app:summary="@string/kill_trebleapp_summary" />
 
             <SwitchPreference
-                android:defaultValue="false"
-                android:key="key_debug_debuggable_mode"
-                android:title="Set debuggable mode"
-                android:summary="Toggle insecure adb and related" />
+                app:defaultValue="false"
+                app:key="key_debug_debuggable_mode"
+                app:title="@string/set_debuggable_mode_title"
+                app:summary="@string/set_debuggable_mode_summary" />
         </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,12 +1,15 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
 
 object XiaomiSettings : Settings {
-    val dt2w = "xiaomi_double_tap_to_wake"
+    val dt2w = "key_xiaomi_dt2w"
+
+    val stateMap = mapOf(
+        "key_xiaomi_dt2w" to "persist.sys.phh.xiaomi.dt2w",
+    )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         val isXiaomi = Tools.vendorFp.toLowerCase().startsWith("xiaomi") ||
@@ -17,13 +20,14 @@ object XiaomiSettings : Settings {
     }
 }
 
-class XiaomiSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_xiaomi)
+class XiaomiSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_xiaomi, rootKey)
 
-        if (XiaomiSettings.enabled(context)) {
-            Log.d("PHH", "Loading Xiaomi fragment ${XiaomiSettings.enabled(context)}")
+        if (XiaomiSettings.enabled(requireContext())) {
+            Log.d("PHH", "Loading Xiaomi fragment ${XiaomiSettings.enabled(requireContext())}")
+
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, XiaomiSettings.stateMap)
         }
     }
 }

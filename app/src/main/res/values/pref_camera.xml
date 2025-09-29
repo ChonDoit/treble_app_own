@@ -2,7 +2,7 @@
 <resources>
 
     <array name="pref_camera_timestamp">
-	    <item>No override</item>
+	    <item>"Don't override"</item>
 	    <item>Clock monotonic</item>
 	    <item>Clock boottime</item>
     </array>

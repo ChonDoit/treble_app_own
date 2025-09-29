@@ -94,15 +94,13 @@ object Display: EntryStartup {
                 SystemProperties.set("persist.sys.overlay.aod", if (value) "true" else "false")
                 OverlayPicker.setOverlayEnabled("me.phh.treble.overlay.misc.aod_systemui", true)
             }
-            DisplaySettings.disableSfGlBackpressure -> {
-                val value = sp.getBoolean(key, false)
-                // Note: Reversed value because the prop is enabling
-                SystemProperties.set("persist.sys.phh.enable_sf_gl_backpressure", if (value) "0" else "1")
+            DisplaySettings.enableSfGlBackpressure -> {
+                val value = sp.getBoolean(key, true)
+                SystemProperties.set("debug.sf.enable_gl_backpressure", if (value) "1" else "0")
             }
-            DisplaySettings.disableSfHwcBackpressure -> {
-                val value = sp.getBoolean(key, false)
-                // Note: Reversed value because the prop is enabling
-                SystemProperties.set("persist.sys.phh.enable_sf_hwc_backpressure", if (value) "0" else "1")
+            DisplaySettings.enableSfHwcBackpressure -> {
+                val value = sp.getBoolean(key, true)
+                SystemProperties.set("persist.sys.phh.enable_sf_hwc_backpressure", if (value) "1" else "0")
             }
             DisplaySettings.sfBlurAlgorithm -> {
                 val value = sp.getString(key, "kawase")
@@ -113,6 +111,7 @@ object Display: EntryStartup {
                 SystemProperties.set("debug.renderengine.backend", value)
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

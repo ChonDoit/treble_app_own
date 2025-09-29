@@ -1,65 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-        <PreferenceCategory android:title="GENERAL">
-                <SwitchPreference
-                    android:defaultValue="false"
-                    android:key="key_ui_two_pane_layout"
-                    android:title="Two-Pane Layout"
-                    android:summary="Enable tablet Layout. Requires restart apps"/>
+    <PreferenceCategory app:title="@string/general_title">
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_ui_two_pane_layout"
+            app:title="@string/enable_two_pane_title"
+            app:summary="@string/enable_two_pane_summary"/>
 
-                <SwitchPreference
-                    android:defaultValue="false"
-                    android:key="key_UI_force_navbar_off"
-                    android:title="Force navigation bar disabled"
-                    android:summary="Requires a reboot" />
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_UI_force_navbar_off"
+            app:title="@string/force_navigation_bar"
+            app:summary="@string/requires_reboot" />
 
-                <ListPreference
-                    android:defaultValue="mouse"
-                    android:entries="@array/pref_ui_custom_pointer_type"
-                    android:entryValues="@array/pref_ui_custom_pointer_type_values"
-                    android:key="key_ui_pointer_type"
-                    android:title="Pointer type" />
-        </PreferenceCategory>
+        <ListPreference
+            app:defaultValue="mouse"
+            app:entries="@array/pref_ui_custom_pointer_type"
+            app:entryValues="@array/pref_ui_custom_pointer_type_values"
+            app:key="key_ui_pointer_type"
+            app:title="@string/pointer_type" />
 
-        <PreferenceCategory android:title="LOCK SCREEN">
-                <ListPreference
-                    android:defaultValue="00ff00"
-                    android:entries="@array/pref_ui_fod_color"
-                    android:entryValues="@array/pref_ui_fod_color_values"
-                    android:key="key_ui_fod_color"
-                    android:title="FOD Icon color" />
-        </PreferenceCategory>
+        <ListPreference
+            app:defaultValue="00ff00"
+            app:entries="@array/pref_ui_fod_color"
+            app:entryValues="@array/pref_ui_fod_color_values"
+            app:key="key_ui_fod_color"
+            app:title="@string/fod_icon_color" />
+    </PreferenceCategory>
 
-        <PreferenceCategory android:title="STATUS BAR">
-                <EditTextPreference
-                    android:key="key_ui_sb_padding_top"
-                    android:title="Set status bar top padding"
-                    android:inputType="number"
-                    android:hint="Requires SystemUI restart"
-                    android:summary="Requires SystemUI restart" />
+    <PreferenceCategory app:title="@string/status_bar_title">
+        <EditTextPreference
+            app:key="key_ui_sb_padding_top"
+            app:title="@string/status_bar_padding_top"
+            app:inputType="number"
+            app:hint="@string/requires_systemui_restart" />
 
-                <EditTextPreference
-                    android:key="key_ui_sb_padding_start"
-                    android:title="Set status bar start padding"
-                    android:inputType="number"
-                    android:hint="Requires SystemUI restart"
-                    android:summary="Requires SystemUI restart" />
+        <EditTextPreference
+            app:key="key_ui_sb_padding_start"
+            app:title="@string/status_bar_padding_start"
+            app:inputType="number"
+            app:hint="@string/requires_systemui_restart" />
 
-                <EditTextPreference
-                    android:key="key_ui_sb_padding_end"
-                    android:title="Set status bar end padding"
-                    android:inputType="number"
-                    android:hint="Requires SystemUI restart"
-                    android:summary="Requires SystemUI restart" />
-        </PreferenceCategory>
+        <EditTextPreference
+            app:key="key_ui_sb_padding_end"
+            app:title="@string/status_bar_padding_end"
+            app:inputType="number"
+            app:hint="@string/requires_systemui_restart" />
+    </PreferenceCategory>
 
-        <PreferenceCategory android:title="TOOLS">
-                <Preference
-                    android:key="key_ui_restart_systemui"
-                    android:title="Restart SystemUI"
-                    android:summary="Requires root access" />
-        </PreferenceCategory>
+    <PreferenceCategory app:title="@string/tools_title">
+        <Preference
+            app:key="key_ui_restart_systemui"
+            app:title="@string/restart_system_ui"
+            app:summary="@string/requires_root" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

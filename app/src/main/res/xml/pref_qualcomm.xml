@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="CAMERA">
+    <PreferenceCategory app:title="@string/camera_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_qualcomm_alternate_mediaprofile"
-            android:title="Use alternate camera profile"
-            android:summary="Requires a reboot" />
+            app:defaultValue="false"
+            app:key="key_qualcomm_alternate_mediaprofile"
+            app:title="@string/use_añternate_camera_profile"
+            app:summary="@string/requires_reboot" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="AUDIO">
+    <PreferenceCategory app:title="@string/audio_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_qualcomm_disable_soundvolume_effect"
-            android:title="Disable soundvolume effect"
-            android:summary="May fix audio distorsion" />
+            app:defaultValue="false"
+            app:key="key_qualcomm_disable_soundvolume_effect"
+            app:title="@string/disable_soundvolume_effect_title"
+            app:summary="@string/disable_soundvolume_effect_summary" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_qualcomm_disable_stereo_voip"
-            android:title="Disable stereo support on VoIP"
-            android:summary="May fix high pitched audio. Requires a reboot" />
+            app:defaultValue="false"
+            app:key="key_qualcomm_disable_stereo_voip"
+            app:title="@string/disable_voip_stereo_support_title"
+            app:summary="@string/disable_voip_stereo_support_summary" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_qualcomm_direct_output_voip"
-            android:title="Define VoIP as Direct Output"
-            android:summary="Should fix high pitched audio. Requires a reboot" />
+            app:defaultValue="false"
+            app:key="key_qualcomm_direct_output_voip"
+            app:title="@string/define_voip_direct_output_title"
+            app:summary="@string/define_voip_direct_output_summary" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="MOBILE NETWORK">
+    <PreferenceCategory app:title="@string/mobile_network_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_qualcomm_restart_qcrild"
-            android:title="Restart qcrild on boot"
-            android:summary="Workaround for incoming SMS\nCan lead to no-audio on calls on some devices" />
+            app:defaultValue="false"
+            app:key="key_qualcomm_restart_qcrild"
+            app:title="@string/restart_qcril_on_boot_title"
+            app:summary="@string/restart_qcril_on_boot_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>

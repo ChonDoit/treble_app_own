@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="xiaomi_double_tap_to_wake"
-            android:title="Enable DT2W" />
+        <PreferenceCategory app:title="@string/general_title">
+            <SwitchPreference
+                app:defaultValue="false"
+                app:key="key_xiaomi_dt2w"
+                app:title="@string/enable_dt2w" />
+        </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,12 +1,10 @@
 package me.phh.treble.app
 
-import android.app.AlertDialog
 import android.content.Context
-import android.os.Bundle
-import android.preference.Preference
-import android.preference.PreferenceFragment
+import androidx.preference.Preference
 import android.util.Log
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object UiSettings : Settings {
     val twoPaneLayout = "key_ui_two_pane_layout"
@@ -19,10 +17,14 @@ object UiSettings : Settings {
     val restartSystemUI = "key_ui_restart_systemui"
 
     val stateMap = mapOf(
+        "key_ui_two_pane_layout" to "persist.sys.phh.two_pane_layout",
+        "key_UI_force_navbar_off" to "persist.sys.phh.mainkeys",
+        "key_ui_fod_color" to "persist.sys.phh.fod_color",
         "key_ui_sb_padding_top" to "persist.sys.phh.status_bar_padding_top",
         "key_ui_sb_padding_start" to "persist.sys.phh.status_bar_padding_start",
         "key_ui_sb_padding_end" to "persist.sys.phh.status_bar_padding_end",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing UI settings")
@@ -30,18 +32,12 @@ object UiSettings : Settings {
     }
 }
 
-class UiSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_ui)
+class UiSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_ui, rootKey)
 
-        Tools.updatePreferenceState(this, UiSettings.stateMap)
-
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(UiSettings.fodColor)!!)
+        SettingsActivity.bindPreferenceSummariesFromStateMap(this, UiSettings.stateMap)
         SettingsActivity.bindPreferenceSummaryToValue(findPreference(UiSettings.pointerType)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(UiSettings.statusbarpaddingtop)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(UiSettings.statusbarpaddingstart)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(UiSettings.statusbarpaddingend)!!)
 
         val restartUIHandler: Preference? = findPreference(UiSettings.restartSystemUI)
         restartUIHandler?.setOnPreferenceClickListener {
@@ -51,9 +47,9 @@ class UiSettingsFragment : PreferenceFragment() {
     }
 
     private fun restartUIDialog(): Boolean {
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setTitle("Restarting System UI")
-            .setMessage("Are you sure?")
+        val builder = MaterialAlertDialogBuilder(activity!!)
+        builder.setTitle(getString(R.string.restarting_system_ui))
+            .setMessage(getString(R.string.are_you_sure))
             .setPositiveButton(android.R.string.yes) { dialog, which ->
                 try {
                     val process = Runtime.getRuntime().exec("su")

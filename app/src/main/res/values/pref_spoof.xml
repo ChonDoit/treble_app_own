@@ -1,13 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <array name="pref_spoof_enabled_mode">
-        <item>"Manual mode"</item>
-        <item>"Disabled"</item>
+    <string name="device_rotation">On JSON parse checks for current device, if match with any of "Devices to check" will be replaced with the one selected on "Device to set"</string>
+    <string name="default_category">Configuration options for this section. Click on individual settings to modify them.</string>
+
+    <array name="check_codename">
+        <item>"Don't check"</item>
+        <item>Pixel 10 Series</item>
+        <item>Pixel 9 Series</item>
+        <item>Pixel 8 Series</item>
+        <item>Pixel 7 Series</item>
+        <item>Pixel 6 Series</item>
+        <item>Pixel Fold/Tablet</item>
     </array>
-    <array name="pref_spoof_enabled_mode_values">
-        <item>"manual"</item>
-        <item>"false"</item>
+
+    <array name="check_codename_values">
+        <item>""</item>
+        <item>"blazer,granel,mustang"</item>
+        <item>"tegu,comet,caiman,komodo,tokay"</item>
+        <item>"akita,husky,shiba"</item>
+        <item>"lynx,cheetah,panther"</item>
+        <item>"bluejay,oriole,raven"</item>
+        <item>"felix,tangorpro"</item>
+    </array>
+
+    <array name="set_codename">
+        <item>"Don't replace"</item>
+        <item>Pixel 10 Pro</item>
+        <item>Pixel 10</item>
+        <item>Pixel 10 Pro XL</item>
+        <item>Pixel 9a</item>
+        <item>Pixel 9 Pro Fold</item>
+        <item>Pixel 9 Pro</item>
+        <item>Pixel 9 Pro XL</item>
+        <item>Pixel 9</item>
+        <item>Pixel 8a</item>
+        <item>Pixel 8 Pro</item>
+        <item>Pixel 8</item>
+        <item>Pixel Fold</item>
+        <item>Pixel Tablet</item>
+        <item>Pixel 7a</item>
+        <item>Pixel 7 Pro</item>
+        <item>Pixel 7</item>
+        <item>Pixel 6a</item>
+        <item>Pixel 6</item>
+        <item>Pixel 6 Pro</item>
+    </array>
+    <array name="set_codename_values">
+        <item>""</item>
+        <item>"blazer:Pixel 10 Pro"</item>
+        <item>"granel:Pixel 10"</item>
+        <item>"mustang:Pixel 10 Pro XL"</item>
+        <item>"tegu:Pixel 9a"</item>
+        <item>"comet:Pixel 9 Pro Fold"</item>
+        <item>"caiman:Pixel 9 Pro"</item>
+        <item>"komodo:Pixel 9 Pro XL"</item>
+        <item>"tokay:Pixel 9"</item>
+        <item>"akita:Pixel 8a"</item>
+        <item>"husky:Pixel 8 Pro"</item>
+        <item>"shiba:Pixel 8"</item>
+        <item>"felix:Pixel Fold"</item>
+        <item>"tangorpro:Pixel Tablet"</item>
+        <item>"lynx:Pixel 7a"</item>
+        <item>"cheetah:Pixel 7 Pro"</item>
+        <item>"panther:Pixel 7"</item>
+        <item>"bluejay:Pixel 6a"</item>
+        <item>"oriole:Pixel 6"</item>
+        <item>"raven:Pixel 6 Pro"</item>
     </array>
 
 </resources>

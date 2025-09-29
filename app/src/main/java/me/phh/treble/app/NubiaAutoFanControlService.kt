@@ -14,7 +14,6 @@ import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import android.preference.PreferenceManager
 
-
 class NubiaAutoFanControlService : Service() {
 
     private var powerConnectionChangedReceiver: BroadcastReceiver =

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android">
+	xmlns:app="http://schemas.android.com/apk/res/android">
 
 	<Preference
-	    android:title="Maintainer for my device"
-        android:key="key_mydevice_maintainer" />
+	    app:title="@string/device_maintainer"
+        app:key="key_mydevice_maintainer" />
 
 	<Preference
-	    android:title="Community telegram group for my device"
-        android:key="key_mydevice_telegram_group" />
+	    app:title="@string/device_community"
+        app:key="key_mydevice_telegram_group" />
 
 	<Preference
-	    android:title="Apply presets"
-        android:key="key_mydevice_apply_presets" />
+	    app:title="@string/apply_presets"
+        app:key="key_mydevice_apply_presets" />
 
 </PreferenceScreen>

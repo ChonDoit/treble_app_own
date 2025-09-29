@@ -8,7 +8,7 @@ import android.os.SystemProperties
 import android.os.Parcel
 import android.os.ServiceManager
 import android.os.UserHandle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import vendor.huawei.hardware.biometrics.fingerprint.V2_1.IExtBiometricsFingerprint
 import vendor.huawei.hardware.tp.V1_0.ITouchscreen
@@ -88,6 +88,7 @@ class Huawei: EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

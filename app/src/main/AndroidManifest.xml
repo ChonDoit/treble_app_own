@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +32,21 @@
 
         <service android:name=".EntryService" />
         <service android:name=".NubiaAutoFanControlService" />
+
+        <service
+            android:name=".SpoofTileService"
+            android:label="Spoof Play Store"
+            android:icon="@drawable/ps_tile"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:settingsActivity="me.phh.treble.app.SettingsActivity">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
 
         <service
             android:name=".NubiaGameModeTilesService"
@@ -101,7 +117,7 @@
 
         <activity
             android:name=".UpdaterActivity"
-            android:label="@string/title_activity_updater"
+            android:label="@string/ota_title"
             android:theme="@style/Theme.TrebleApp"
             android:launchMode="singleTop"
             android:exported="true">

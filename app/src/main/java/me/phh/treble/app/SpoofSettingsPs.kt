@@ -1,11 +1,15 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
-import android.preference.PreferenceFragment
+import androidx.preference.Preference
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import me.phh.treble.app.SpoofSettingsPs.stateMap
 
-object SpoofPsSettings : Settings {
+object SpoofSettingsPs : Settings {
+    val enable_ps = "key_spoof_enable_ps"
+    val enable_ps_sdk = "key_spoof_enable_ps_sdk"
+    val update_ps = "key_spoof_update_ps"
     val ps_hardware = "key_spoof_ps_hardware"
     val ps_product = "key_spoof_ps_product"
     val ps_device = "key_spoof_ps_device"
@@ -23,53 +27,61 @@ object SpoofPsSettings : Settings {
     val ps_sdk = "key_spoof_ps_sdk"
 
     val stateMap = mapOf(
-        "key_spoof_ps_hardware" to "persist.sys.spoof.ps_hardware",
-        "key_spoof_ps_product" to "persist.sys.spoof.ps_product",
-        "key_spoof_ps_device" to "persist.sys.spoof.ps_device",
-        "key_spoof_ps_manufacturer" to "persist.sys.spoof.ps_manufacturer",
-        "key_spoof_ps_brand" to "persist.sys.spoof.ps_brand",
-        "key_spoof_ps_model" to "persist.sys.spoof.ps_model",
-        "key_spoof_ps_fingerprint" to "persist.sys.spoof.ps_fingerprint",
-        "key_spoof_ps_securitypatch" to "persist.sys.spoof.ps_security_patch",
-        "key_spoof_ps_firstapilevel" to "persist.sys.spoof.ps_first_api_level",
-        "key_spoof_ps_id" to "persist.sys.spoof.ps_id",
-        "key_spoof_ps_type" to "persist.sys.spoof.ps_type",
-        "key_spoof_ps_tags" to "persist.sys.spoof.ps_tags",
-        "key_spoof_ps_incremental" to "persist.sys.spoof.ps_incremental",
-        "key_spoof_ps_release" to "persist.sys.spoof.ps_release",
-        "key_spoof_ps_sdk" to "persist.sys.spoof.ps_sdk",
+        "key_spoof_enable_ps" to "persist.sys.sp00f.ps.enabled",
+        "key_spoof_enable_ps_sdk" to "persist.sys.sp00f.ps_sdk.enabled",
+        "key_spoof_ps_hardware" to "persist.sys.sp00f.ps_hardware",
+        "key_spoof_ps_product" to "persist.sys.sp00f.ps_product",
+        "key_spoof_ps_device" to "persist.sys.sp00f.ps_device",
+        "key_spoof_ps_manufacturer" to "persist.sys.sp00f.ps_manufacturer",
+        "key_spoof_ps_brand" to "persist.sys.sp00f.ps_brand",
+        "key_spoof_ps_model" to "persist.sys.sp00f.ps_model",
+        "key_spoof_ps_fingerprint" to "persist.sys.sp00f.ps_fingerprint",
+        "key_spoof_ps_securitypatch" to "persist.sys.sp00f.ps_security_patch",
+        "key_spoof_ps_firstapilevel" to "persist.sys.sp00f.ps_first_api_level",
+        "key_spoof_ps_id" to "persist.sys.sp00f.ps_id",
+        "key_spoof_ps_type" to "persist.sys.sp00f.ps_type",
+        "key_spoof_ps_tags" to "persist.sys.sp00f.ps_tags",
+        "key_spoof_ps_incremental" to "persist.sys.sp00f.ps_incremental",
+        "key_spoof_ps_release" to "persist.sys.sp00f.ps_release",
+        "key_spoof_ps_sdk" to "persist.sys.sp00f.ps_sdk",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         return SpoofSettings.enabled(context)
     }
 }
 
-class SpoofPsSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_spoof_ps)
+class SpoofSettingsPsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_spoof_ps, rootKey)
 
-        Tools.updatePreferenceState(this, SpoofPsSettings.stateMap)
+        if (SpoofSettings.enabled(requireContext())) {
+            Log.d("PHH-SPOOF", "Loading SpoofPs fragment ${SpoofSettings.enabled(requireContext())}")
 
-        if (SpoofSettings.enabled(context)) {
-            Log.d("PHH-SPOOF", "Loading SpoofPs fragment ${SpoofSettings.enabled(context)}")
-
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_hardware)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_product)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_device)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_manufacturer)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_brand)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_model)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_fingerprint)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_securitypatch)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_firstapilevel)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_id)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_type)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_tags)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_incremental)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_release)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofPsSettings.ps_sdk)!!)
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, stateMap)
         }
+
+        val updatePsPref: Preference? = findPreference(SpoofSettingsPs.update_ps)
+        updatePsPref?.setOnPreferenceClickListener {
+            showUpdateDialog()
+            true
+        }
+    }
+    
+    private fun showUpdateDialog() {
+        val builder = MaterialAlertDialogBuilder(activity!!)
+        builder.setTitle(getString(R.string.updating_props))
+            .setMessage(getString(R.string.updating_props_summary))
+            .setPositiveButton(android.R.string.yes) { dialog, which ->
+                Log.d("PHH-SPOOF", "Running Play Store props update")
+                SpoofPropertyManager().fetchAndApply(
+                    requireContext(), 
+                    SpoofPropertyManager.ApplyMode.PLAY_STORE_ONLY
+                ) { success -> }
+            }
+            .setNegativeButton(android.R.string.no, null)
+    
+        builder.show()
     }
 }

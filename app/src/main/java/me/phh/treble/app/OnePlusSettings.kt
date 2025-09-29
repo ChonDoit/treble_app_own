@@ -1,8 +1,6 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
 
 object OnePlusSettings : Settings {
@@ -11,6 +9,11 @@ object OnePlusSettings : Settings {
     val usbOtgKey = "key_oneplus_usb_otg"
     val dt2w = "key_oneplus_double_tap_to_wake"
 
+    val stateMap = mapOf(
+        "key_oneplus_usb_otg" to "persist.sys.oem.otg_support",
+    )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
+
     override fun enabled(context: Context): Boolean {
         val isOnePlus = Tools.vendorFp.contains("OnePlus")
         Log.d("PHH", "OnePlusSettings enabled() called, isOnePlus = $isOnePlus")
@@ -18,13 +21,14 @@ object OnePlusSettings : Settings {
     }
 }
 
-class OnePlusSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_oneplus)
+class OnePlusSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_oneplus, rootKey)
 
-        if (OnePlusSettings.enabled(context)) {
-            Log.d("PHH", "Loading OnePlus fragment ${OnePlusSettings.enabled(context)}")
+        if (OnePlusSettings.enabled(requireContext())) {
+            Log.d("PHH", "Loading OnePlus fragment ${OnePlusSettings.enabled(requireContext())}")
+
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, OnePlusSettings.stateMap)
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(OnePlusSettings.displayModeKey)!!)
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(OnePlusSettings.highBrightnessModeKey)!!)
         }

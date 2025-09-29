@@ -1,152 +1,174 @@
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="SHOW YOUR LOVE &amp; SYSTEM UDPATES">
-        <Preference android:title="Sponsor phhusson"
-            android:icon="@drawable/user"
-            android:summary="A help to the pocket">
+    <PreferenceCategory app:title="@string/donate_ota_title">
+        <Preference app:title="@string/sponsor_title"
+            app:icon="@drawable/user"
+            app:summary="@string/sponsor_summary">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/sponsors/phhusson/" />
         </Preference>
-        <Preference android:title="System updates"
-            android:id="@+id/updater"
-            android:summary="OTA is here"
-            android:icon="@drawable/ota" >
+        <Preference app:title="@string/ota_title"
+            app:key="@+id/updater"
+            app:summary="@string/ota_summary"
+            app:icon="@drawable/ota" >
             <intent
                 android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
-                android:targetClass=".UpdaterActivity" />
+                android:targetClass="me.phh.treble.app.UpdaterActivity" />
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nDEVICE SPECIFIC">
+    <PreferenceCategory app:title="@string/device_specific_title">
         <Preference
-            android:key="asus_settings"
-            android:title="Asus settings"
-            android:icon="@drawable/devices" />
+            app:key="asus_settings"
+            app:title="@string/asus_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="mydevice_settings"
-            android:title="My device"
-            android:icon="@drawable/devices" />
+            app:key="mydevice_settings"
+            app:title="@string/my_device"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="mediatek_settings"
-            android:title="Mediatek settings"
-            android:icon="@drawable/devices" />
+            app:key="mediatek_settings"
+            app:title="@string/mediatek_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="qualcomm_settings"
-            android:title="Qualcomm settings"
-            android:icon="@drawable/devices" />
+            app:key="qualcomm_settings"
+            app:title="@string/qualcomm_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="oneplus_settings"
-            android:title="OnePlus settings"
-            android:icon="@drawable/devices" />
+            app:key="oneplus_settings"
+            app:title="@string/oneplus_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="nubia_settings"
-            android:title="Nubia settings"
-            android:icon="@drawable/devices" />
+            app:key="nubia_settings"
+            app:title="@string/nubia_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="vsmart_settings"
-            android:title="Vsmart settings"
-            android:icon="@drawable/devices" />
+            app:key="vsmart_settings"
+            app:title="@string/vsmart_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="huawei_settings"
-            android:title="Huawei settings"
-            android:icon="@drawable/devices" />
+            app:key="huawei_settings"
+            app:title="@string/huawei_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="samsung_settings"
-            android:title="Samsung settings"
-            android:icon="@drawable/devices" />
+            app:key="samsung_settings"
+            app:title="@string/samsung_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="transsion_settings"
-            android:title="Transsion settings"
-            android:icon="@drawable/devices" />
+            app:key="transsion_settings"
+            app:title="@string/transsion_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="lenovo_settings"
-            android:title="Lenovo settings"
-            android:icon="@drawable/devices" />
+            app:key="lenovo_settings"
+            app:title="@string/lenovo_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="xiaomi_settings"
-            android:title="Xiaomi settings"
-            android:icon="@drawable/devices" />
+            app:key="xiaomi_settings"
+            app:title="@string/xiaomi_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="oppo_settings"
-            android:title="Oppo settings"
-            android:icon="@drawable/devices" />
+            app:key="oppo_settings"
+            app:title="@string/oppo_settings"
+            app:icon="@drawable/devices" />
         <Preference
-            android:key="doze_settings"
-            android:title="Doze settings"
-            android:icon="@drawable/doze" />
+            app:key="doze_settings"
+            app:title="@string/doze_settings_title"
+            app:icon="@drawable/doze" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nDISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
         <Preference
-            android:key="display_settings"
-            android:title="Display settings"
-            android:summary="Backlight, refresh rate and more"
-            android:icon="@drawable/display"/>
+            app:key="display_settings"
+            app:title="@string/display_settings"
+            app:summary="@string/display_settings_summary"
+            app:icon="@drawable/display"/>
         <Preference
-            android:key="ui_settings"
-            android:title="User interface"
-            android:summary="Layouts, paddings, icons and others"
-            android:icon="@drawable/ui"/>
+            app:key="backlight_settings"
+            app:title="@string/backlight_settings"
+            app:summary="@string/backlight_settings_summary"
+            app:icon="@drawable/brightness"/>
+        <Preference
+            app:key="ui_settings"
+            app:title="@string/ui_settings"
+            app:summary="@string/ui_settings_summary"
+            app:icon="@drawable/ui"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nAUDIO">
+    <PreferenceCategory app:title="@string/audio_title">
         <Preference
-            android:key="audio_settings"
-            android:title="Audio settings"
-            android:summary="Bluetooth and general fixes"
-            android:icon="@drawable/audio" />
+            app:key="audio_settings"
+            app:title="@string/audio_settings"
+            app:summary="@string/audio_settings_summary"
+            app:icon="@drawable/audio" />
         <Preference
-            android:key="audiofx_settings"
-            android:title="Audio effects"
-            android:summary="Audio modifications pre-included by your vendor"
-            android:icon="@drawable/audiofx" />
+            app:key="bluetooth_settings"
+            app:title="@string/bluetooth_settings"
+            app:summary="@string/bluetooth_settings_summary"
+            app:icon="@drawable/bluetooth" />
+        <Preference
+            app:key="audiofx_settings"
+            app:title="@string/audio_effects_settings_title"
+            app:summary="@string/audio_effects_settings_summary"
+            app:icon="@drawable/audiofx" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nTELEPHONY">
+    <PreferenceCategory app:title="@string/telephony_title">
         <Preference
-            android:key="telephony_settings"
-            android:title="Telephony settings"
-            android:summary="Telephony, signal, ril and 5G options"
-            android:icon="@drawable/telephony" />
+            app:key="telephony_settings"
+            app:title="@string/telephony_settings"
+            app:summary="@string/telephony_settings_summary"
+            app:icon="@drawable/telephony" />
         <Preference
-            android:key="ims_settings"
-            android:title="IMS settings"
-            android:summary="VoLTE is here"
-            android:icon="@drawable/ims" />
+            app:key="ims_settings"
+            app:title="@string/ims_settings"
+            app:summary="@string/ims_settings_summary"
+            app:icon="@drawable/ims" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nCAMERA">
+    <PreferenceCategory app:title="@string/camera_title">
         <Preference
-            android:key="camera_settings"
-            android:title="Camera settings"
-            android:summary="Useful camera things"
-            android:icon="@drawable/camera" />
+            app:key="camera_settings"
+            app:title="@string/camera_settings"
+            app:summary="@string/camera_settings_summary"
+            app:icon="@drawable/camera" />
+    </PreferenceCategory>
+	
+	<PreferenceCategory app:title="@string/spoofing_title" app:key="spoof_category">
+        <Preference
+            app:key="spoof_settings"
+            app:title="@string/spoof_settings"
+            app:summary="@string/spoof_settings_summary"
+            app:icon="@drawable/spoof" />
+		<Preference
+            app:key="spoof_settings_gms"
+            app:title="@string/pi_settings"
+            app:summary="@string/pi_settings_summary"
+            app:icon="@drawable/play_integrity" />
+		<Preference
+            app:key="spoof_settings_ps"
+            app:title="@string/ps_settings"
+            app:summary="@string/ps_settings_summary"
+            app:icon="@drawable/ps" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nMISCELLANEOUS">
+    <PreferenceCategory app:title="@string/miscellaneous_title">
         <Preference
-            android:key="misc_settings"
-            android:title="Misc settings"
-            android:summary="Not so much useful options"
-            android:icon="@drawable/miscellaneous" />
+            app:key="misc_settings"
+            app:title="@string/misc_settings"
+            app:summary="@string/misc_settings_summary"
+            app:icon="@drawable/miscellaneous" />
         <Preference
-            android:key="spoof_settings"
-            android:title="Spoof settings"
-            android:summary="Helper to pass Play Integrity"
-            android:icon="@drawable/spoof" />
+            app:key="debug_settings"
+            app:title="@string/debug_settings"
+            app:summary="@string/debug_settings_summary"
+            app:icon="@drawable/debug" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nDEBUGGING">
-        <Preference
-            android:key="debug_settings"
-            android:title="Debug settings"
-            android:summary="Debug sensors, insecure adb remote access"
-            android:icon="@drawable/debug" />
-    </PreferenceCategory>
-
-    <Preference android:iconSpaceReserved="true" android:summary="This app has been developed by phhusson">
+    <Preference
+        app:summary="@string/credits" app:key="credits">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="https://github.com/phhusson/treble_app" />

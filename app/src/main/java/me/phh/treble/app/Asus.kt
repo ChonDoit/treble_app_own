@@ -2,7 +2,7 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import java.lang.Exception
 import android.os.SystemProperties
@@ -49,6 +49,7 @@ object Asus: EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

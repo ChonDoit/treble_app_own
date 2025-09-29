@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="FINGERPRINT">
+    <PreferenceCategory app:title="@string/fingerprint_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_huawei_fingerprint_gestures"
-            android:title="Enable Fingerprint gestures" />
+            app:defaultValue="false"
+            app:key="key_huawei_fingerprint_gestures"
+            app:title="@string/enable_fingerprint_gesture" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="AUDIO">
+    <PreferenceCategory app:title="@string/audio_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_huawei_headset_fix"
-            android:title="Force headset switch (Huawei default)" />
+            app:defaultValue="false"
+            app:key="key_huawei_headset_fix"
+            app:title="@string/force_headset_switch" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="DISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_huawei_touchscreen_glove_mode"
-            android:title="Enable touchscreen glove mode" />
+            app:defaultValue="false"
+            app:key="key_huawei_touchscreen_glove_mode"
+            app:title="@string/enable_glove_mode" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_huawei_no_hwcomposer"
-            android:title="Enable graphic issues workaround"
-            android:summary="recommended if ui is blurry"/>
+            app:defaultValue="false"
+            app:key="key_huawei_no_hwcomposer"
+            app:title="@string/enable_graphic_issue_workaround_title"
+            app:summary="@string/enable_graphic_issue_workaround_summary"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="MISCELLANEOUS">
+    <PreferenceCategory app:title="@string/miscellaneous_title">
 	    <ListPreference
-		    android:defaultValue="-1"
-		    android:entries="@array/pref_huawei_fast_charge"
-		    android:entryValues="@array/pref_huawei_fast_charge_values"
-		    android:key="key_huawei_fast_charge"
-		    android:title="Huawei fast charge" />
+		    app:defaultValue="-1"
+		    app:entries="@array/pref_huawei_fast_charge"
+		    app:entryValues="@array/pref_huawei_fast_charge_values"
+		    app:key="key_huawei_fast_charge"
+		    app:title="@string/huawei_fast_charge" />
     </PreferenceCategory>
 
 </PreferenceScreen>

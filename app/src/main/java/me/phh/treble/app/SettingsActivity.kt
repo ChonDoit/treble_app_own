@@ -1,17 +1,16 @@
 package me.phh.treble.app
 
-import android.app.Activity
-import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.os.UserHandle
-import android.preference.EditTextPreference
-import android.preference.ListPreference
-import android.preference.Preference
-import android.preference.PreferenceFragment
-import android.preference.PreferenceManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
+import androidx.preference.PreferenceFragmentCompat
 
-class SettingsActivity : Activity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applicationContext.startServiceAsUser(
@@ -19,12 +18,12 @@ class SettingsActivity : Activity() {
         )
 
         if (savedInstanceState == null) {
-            fragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction()
                 .replace(android.R.id.content, SettingsFragment())
                 .commit()
         }
 
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
@@ -37,23 +36,9 @@ class SettingsActivity : Activity() {
         }
     }
 
-    class SettingsFragment : PreferenceFragment() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            addPreferencesFromResource(R.xml.pref_headers)
-
-            // Check enabled status for each preference and remove if not enabled
-            val context = activity ?: return
-            val checkEnabled = EntryService.getEnabledPreferences(context)
-            checkEnabled.forEach { (key, isEnabled) ->
-                if (!isEnabled) {
-                    val preference = findPreference(key)
-                    preference?.let {
-                        val parent = preference.parent
-                        parent?.removePreference(preference)
-                    }
-                }
-            }
+    class SettingsFragment : BasePreferenceFragment() {
+        override fun loadPreferences(rootKey: String?) {
+            setPreferencesFromResource(R.xml.pref_headers, rootKey)
 
             // Define a map of preference keys to their corresponding fragment classes
             val setFragments = mapOf(
@@ -74,23 +59,29 @@ class SettingsActivity : Activity() {
                 "display_settings" to "me.phh.treble.app.DisplaySettingsFragment",
                 "audio_settings" to "me.phh.treble.app.AudioSettingsFragment",
                 "audiofx_settings" to "me.phh.treble.app.AudioEffectsFragment",
+				"bluetooth_settings" to "me.phh.treble.app.BluetoothSettingsFragment",
                 "telephony_settings" to "me.phh.treble.app.TelephonySettingsFragment",
                 "ims_settings" to "me.phh.treble.app.ImsSettingsFragment",
                 "camera_settings" to "me.phh.treble.app.CameraSettingsFragment",
                 "misc_settings" to "me.phh.treble.app.MiscSettingsFragment",
                 "spoof_settings" to "me.phh.treble.app.SpoofSettingsFragment",
+                "spoof_settings_gms" to "me.phh.treble.app.SpoofSettingsGmsFragment",
+                "spoof_settings_ps" to "me.phh.treble.app.SpoofSettingsPsFragment",
                 "ui_settings" to "me.phh.treble.app.UiSettingsFragment",
                 "debug_settings" to "me.phh.treble.app.DebugSettingsFragment",
+                "backlight_settings" to "me.phh.treble.app.BacklightSettingsFragment",
             )
 
-            // Setup click listeners for each fragment using the map
             for ((preferenceKey, fragmentClassName) in setFragments) {
-                findPreference(preferenceKey)?.setOnPreferenceClickListener {
-                    activity?.actionBar?.title = it.title
-                    val fragment = Fragment.instantiate(activity, fragmentClassName)
+                findPreference<Preference>(preferenceKey)?.setOnPreferenceClickListener {
+                    (activity as AppCompatActivity).supportActionBar?.title = it.title
+                    val fragment = requireActivity().supportFragmentManager.fragmentFactory.instantiate(
+                        requireActivity().classLoader,
+                        fragmentClassName
+                    )
                     fragment.arguments = it.extras
 
-                    fragmentManager.beginTransaction()
+                    requireActivity().supportFragmentManager.beginTransaction()
                         .replace(android.R.id.content, fragment)
                         .addToBackStack(null)
                         .commit()
@@ -101,7 +92,7 @@ class SettingsActivity : Activity() {
 
         override fun onResume() {
             super.onResume()
-            activity?.actionBar?.title = "Treble Settings"
+            (activity as AppCompatActivity).supportActionBar?.title = "Treble Settings"
         }
     }
 
@@ -111,26 +102,47 @@ class SettingsActivity : Activity() {
                 val stringValue = newValue.toString()
                 val defaultSummary = pref.summary
 
-                pref.summary = when (pref) {
+                when (pref) {
                     is ListPreference -> {
                         val index = pref.findIndexOfValue(stringValue)
-                        if (index >= 0) pref.entries[index] else defaultSummary
+                        pref.summary = if (index >= 0) pref.entries[index] else defaultSummary
                     }
                     is EditTextPreference -> {
-                        if (stringValue.isNotEmpty()) stringValue.toIntOrNull()?.toString() ?: stringValue else defaultSummary
+                        pref.summary = if (stringValue.isNotEmpty()) stringValue else defaultSummary
                     }
                     else -> {
-                        if (stringValue.isNotEmpty()) stringValue else defaultSummary
+                        // For other preference types (like SwitchPreference), don't change the summary
+                        return@OnPreferenceChangeListener true
                     }
                 }
                 true
             }
 
             val preferenceManager = PreferenceManager.getDefaultSharedPreferences(preference.context)
-            preference.onPreferenceChangeListener.onPreferenceChange(
-                preference,
-                preferenceManager.getString(preference.key, "")
-            )
+
+            // Handle different preference types when setting initial value
+            when (preference) {
+                is ListPreference, is EditTextPreference -> {
+                    // Only get string for preferences that actually store strings
+                    val value = preferenceManager.getString(preference.key, "")
+                    preference.onPreferenceChangeListener?.onPreferenceChange(preference, value)
+                }
+                else -> {
+                    // Do nothing for other preference types
+                }
+            }
+        }
+
+        fun bindPreferenceSummariesFromStateMap(fragment: PreferenceFragmentCompat, stateMap: Map<String, String>) {
+            stateMap.forEach { (preferenceKey, _) ->
+                val preference = fragment.findPreference<Preference>(preferenceKey)
+                preference?.let {
+                    // Only bind summaries to EditText and List preferences
+                    if (it is ListPreference || it is EditTextPreference) {
+                        bindPreferenceSummaryToValue(it)
+                    }
+                }
+            }
         }
     }
 }

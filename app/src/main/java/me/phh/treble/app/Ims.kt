@@ -9,7 +9,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.ServiceManager
 import android.os.SystemProperties
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import java.lang.ref.WeakReference
 
@@ -58,6 +58,7 @@ object Ims: EntryStartup {
                 Tools.safeSetprop("persist.sys.phh.allow_binder_thread_on_incoming_calls", if(value) "1" else "0")
             }
         }
+        PrefSync.notifyChange()
     }
 
     val mHidlService = android.hidl.manager.V1_0.IServiceManager.getService()

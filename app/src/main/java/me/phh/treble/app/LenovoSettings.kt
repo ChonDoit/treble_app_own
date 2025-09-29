@@ -1,14 +1,14 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
-import java.io.File
 
 object LenovoSettings : Settings {
     val dt2w = "lenovo_double_tap_to_wake"
     val support_pen = "lenovo_support_pen"
+
+    val stateMap: Map<String, String> = mapOf()
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         val isLenovo = Tools.vendorFp.contains("Lenovo")
@@ -17,13 +17,14 @@ object LenovoSettings : Settings {
     }
 }
 
-class LenovoSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_lenovo)
+class LenovoSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_lenovo, rootKey)
 
-        if (LenovoSettings.enabled(context)) {
-            Log.d("PHH", "Loading Lenovo fragment ${LenovoSettings.enabled(context)}")
+        if (LenovoSettings.enabled(requireContext())) {
+            Log.d("PHH", "Loading Lenovo fragment ${LenovoSettings.enabled(requireContext())}")
+
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, LenovoSettings.stateMap)
         }
     }
 }

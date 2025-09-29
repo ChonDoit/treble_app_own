@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/backlight_title">
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_force_hwc_brightness"
+            app:title="@string/force_hwc_bg_title"
+            app:summary="@string/requires_reboot" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_force_fallback_light_hal"
+            app:title="@string/force_fallback_light_hal_title"
+            app:summary="@string/requires_reboot" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_low_gamma_brightness"
+            app:title="@string/set_alternative_bg_curve_title"
+            app:summary="@string/requires_reboot" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_linear_brightness"
+            app:title="@string/set_linear_brightness_curve_titlle" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_backlight_scale"
+            app:title="@string/set_alternative_backlight_scale_title"
+            app:summary="@string/set_alternative_backlight_scale_summay" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_disable_buttons_backlight"
+            app:title="@string/disable_hw_buttons_backlight_title"
+            app:summary="@string/requires_reboot" />
+            
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_backlight_minimal_brightness"
+            app:title="@string/allow_lowest_brightness_title" 
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

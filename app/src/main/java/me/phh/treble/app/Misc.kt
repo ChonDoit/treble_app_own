@@ -45,7 +45,12 @@ object Misc: EntryStartup {
                     Log.d("PHH", "Setting agold touch mode failed", t)
                 }
             }
+            MiscSettings.virtualSensorsAreReal -> {
+                val value = sp.getBoolean(key, false)
+                SystemProperties.set("persist.sys.phh.virtual_sensors_are_real", if (value) "true" else "false")
+            }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

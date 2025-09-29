@@ -40,6 +40,7 @@ object Lenovo: EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     fun writeToFileNofail(path: String, content: String) {

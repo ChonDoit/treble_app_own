@@ -11,7 +11,6 @@ import android.preference.PreferenceManager
 import android.util.Log
 import java.io.File
 
-
 object Nubia : EntryStartup {
     fun writeToFileNofail(path: String, content: String) {
         try {
@@ -103,6 +102,7 @@ object Nubia : EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

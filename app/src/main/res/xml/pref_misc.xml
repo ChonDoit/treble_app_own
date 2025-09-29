@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="ROOT SOLUTIONS" android:key="key_misc_root_access">
+    <PreferenceCategory app:title="@string/root_title" app:key="key_misc_root_access">
         <SwitchPreference
-            android:defaultValue="0"
-            android:enabled="true"
-            android:key="key_misc_dynamic_superuser"
-            android:title="Dynamic Superuser"
-            android:summary="Dynamic root access. Disabling it requires a reboot" />
+            app:defaultValue="0"
+            app:enabled="true"
+            app:key="key_misc_dynamic_superuser"
+            app:title="@string/dynamic_superuser_title"
+            app:summary="@string/dynamic_superuser_summary" />
         <Preference
-            android:title="Securize"
-            android:key="key_misc_securize"
-            android:summary="Removes in-built root" />
+            app:key="key_misc_securize"
+            app:title="@string/securize_title"
+            app:summary="@string/securize_summary" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="GENERAL">
+    <PreferenceCategory app:title="@string/general_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_misc_biometricstrong"
-            android:title="Set BIOMETRIC_STRONG security level"
-            android:summaryOn="Required by some old broken devices" />
+            app:defaultValue="false"
+            app:key="key_misc_virtual_sensors_are_real"
+            app:title="@string/virtual_sensors_title"
+            app:summary="@string/requires_reboot" />
         <SwitchPreference
-            android:defaultValue="0"
-            android:key="key_misc_launcher3"
-            android:title="Set Launcher3 as recents provider"
-            android:summary="Requires a reboot" />
+            app:defaultValue="false"
+            app:key="key_misc_biometricstrong"
+            app:title="@string/virtual_sensors_summary"
+            app:summary="@string/requires_reboot" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_misc_disable_sae_upgrade"
-            android:title="Disable WPA3/SAE"
-            android:summary="For unsupported devices" />
+            app:defaultValue="0"
+            app:key="key_misc_launcher3"
+            app:title="@string/set_launcher3_title"
+            app:summary="@string/requires_reboot" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_misc_storage_fuse"
-            android:title="Disable FUSE storage layer"
-            android:summary="This can (de/in)crease storage speed\nRequires a reboot" />
+            app:defaultValue="false"
+            app:key="key_misc_disable_sae_upgrade"
+            app:title="@string/disable_wpa3_sae_title"
+            app:summary="@string/disable_wpa3_sae_summary" />
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_misc_storage_fuse"
+            app:title="@string/disable_fuse_storage_title"
+            app:summary="@string/disable_fuse_storage_summary" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="DISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_misc_unihertz_dt2w"
-            android:title="Enable Agold/Unihertz DT2W" />
-
+            app:defaultValue="false"
+            app:key="key_misc_unihertz_dt2w"
+            app:title="@string/enable_dt2w_agold_unihertz" />
     </PreferenceCategory>
 
 </PreferenceScreen>

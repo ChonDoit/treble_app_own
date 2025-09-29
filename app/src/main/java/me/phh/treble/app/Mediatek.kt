@@ -26,6 +26,7 @@ object Mediatek: EntryStartup {
                 SystemProperties.set("persist.sys.phh.radio.force_cognitive", if (value) "true" else "false")
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

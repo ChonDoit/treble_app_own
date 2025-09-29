@@ -3,7 +3,7 @@ package me.phh.treble.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.ServiceManager
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 
 import vendor.xiaomi.hw.touchfeature.ITouchFeature
@@ -25,6 +25,7 @@ object Xiaomi : EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

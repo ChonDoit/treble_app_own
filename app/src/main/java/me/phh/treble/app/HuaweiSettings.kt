@@ -2,8 +2,7 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.os.SystemProperties
-import android.os.Bundle
-import android.preference.PreferenceFragment
+
 import android.util.Log
 
 object HuaweiSettings : Settings {
@@ -12,6 +11,9 @@ object HuaweiSettings : Settings {
     val fastCharge = "key_huawei_fast_charge"
     val noHwcomposer = "key_huawei_no_hwcomposer"
     val headsetFix = "key_huawei_headset_fix"
+
+    val stateMap: Map<String, String> = mapOf()
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         val isHuawei = Tools.vendorFpLow.contains("huawei") ||
@@ -22,12 +24,11 @@ object HuaweiSettings : Settings {
     }
 }
 
-class HuaweiSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_huawei)
+class HuaweiSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_huawei, rootKey)
 
-        if (HuaweiSettings.enabled(context)) {
+        if (HuaweiSettings.enabled(requireContext())) {
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(HuaweiSettings.fastCharge)!!)
         }
     }

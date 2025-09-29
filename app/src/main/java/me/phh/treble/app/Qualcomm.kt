@@ -34,6 +34,7 @@ object Qualcomm: EntryStartup {
                 Tools.safeSetprop("persist.sys.phh.restart_qcrild", value)
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

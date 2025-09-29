@@ -1,16 +1,112 @@
 <resources>
+    <!-- PLACEBO -->
+    <string name="AAA">AAA</string>
+    
+    <!-- APP -->
     <string name="app_name">Treble Settings</string>
     <string name="title_activity_settings">Treble Settings</string>
-    <string name="title_activity_top_level">Treble Settings</string>
     <string name="desc_activity_top_level">Device specific settings</string>
-    <string name="continue_question">Continue?</string>
-    <string name="title_activity_updater">Updater</string>
+
+    <!-- GENERIC -->
+    <string name="default_string">Default</string>
+    <string name="error">Error</string>
+    <string name="continue_string">Continue?</string>
+    <string name="warning">Warning</string>
+    <string name="requires_reboot">Requires a reboot</string>
+    <string name="requires_root">Requires root access</string>
+    <string name="requires_systemui_restart">Requires SystemUI restart</string>
+    <string name="enable_dt2w">Enable double tap to wake</string>
+    <string name="enable_usb_otg">Enable USB OTG</string>
+    <string name="are_you_sure">Are you sure?</string>
+
+    <!-- HEADERS -->
+    <string name="credits">This app has been originally developed by phhusson</string>
+    <string name="sponsor_title">Sponsor phhusson</string>
+    <string name="sponsor_summary">A help to the pocket</string>
+    <string name="asus_settings">Asus settings</string>
+    <string name="my_device">My device</string>
+    <string name="mediatek_settings">Mediatek settings</string>
+    <string name="qualcomm_settings">Qualcomm settings</string>
+    <string name="oneplus_settings">OnePlus settings</string>
+    <string name="nubia_settings">Nubia settings</string>
+    <string name="vsmart_settings">Vsmart settings</string>
+    <string name="huawei_settings">Huawei settings</string>
+    <string name="samsung_settings">Samsung settings</string>
+    <string name="transsion_settings">Transsion settings</string>
+    <string name="lenovo_settings">Lenovo settings</string>
+    <string name="xiaomi_settings">Xiaomi settings</string>
+    <string name="oppo_settings">Oppo settings</string>
+    <string name="doze_settings_title">Doze settings</string>
+    <string name="display_settings">Display settings</string>
+    <string name="display_settings_summary">Refresh rate and more</string>
+    <string name="backlight_settings">Backlight settings</string>
+    <string name="backlight_settings_summary">Brightness related settings</string>
+    <string name="ui_settings">User interface</string>
+    <string name="ui_settings_summary">Layouts, paddings, icons and others</string>
+    <string name="audio_settings">Audio settings</string>
+    <string name="audio_settings_summary">Bluetooth and general fixes</string>
+    <string name="bluetooth_settings">Bluetooth settings</string>
+    <string name="bluetooth_settings_summary">Bluetooth fixes here</string>
+    <string name="audio_effects_settings_title">Audio effects</string>
+    <string name="audio_effects_settings_summary">Audio modifications pre-included by your vendor</string>
+    <string name="telephony_settings">Telephony settings</string>
+    <string name="telephony_settings_summary">Telephony, signal, ril and 5G options</string>
+    <string name="ims_settings">IMS settings</string>
+    <string name="ims_settings_summary">VoLTE is here</string>
+    <string name="camera_settings">Camera settings</string>
+    <string name="camera_settings_summary">Useful camera things</string>
+    <string name="spoof_settings">Spoof settings</string>
+    <string name="spoof_settings_summary">Helper to pass Play Integrity</string>
+    <string name="pi_settings">Play Integrity values</string>
+    <string name="pi_settings_summary">To pass play integrity old attestation</string>
+    <string name="ps_settings">Play Store values</string>
+    <string name="ps_settings_summary">To force Legacy SDK or new attestation</string>
+    <string name="misc_settings">Misc settings</string>
+    <string name="misc_settings_summary">Not so much useful options</string>
+    <string name="debug_settings">Debug settings</string>
+    <string name="debug_settings_summary">Debug sensors, insecure adb remote access</string>
+    
+    <!-- CATEGORIES -->
+    <string name="general_title">General</string>
+    <string name="donate_ota_title">Show Your Love &amp; System Udpates</string>
+    <string name="device_specific_title">Device Specific</string>
+    <string name="spoofing_title">Spoofing</string>
+    <string name="audio_policy_title">Audio policy</string>
+    <string name="display_title">Display</string>
+    <string name="refresh_rate_title">Refresh rate</string>
+    <string name="render_engine_title">Render engine</string>
+    <string name="workarounds_title">Workarounds</string>
+    <string name="miscellaneous_title">Miscellaneous</string>
+    <string name="motorola_title">Motorola</string>
+    <string name="audio_title">Audio</string>
+    <string name="telephony_title">Telephony</string>
+    <string name="camera_title">Camera</string>
+    <string name="fingerprint_title">Fingerprint</string>
+    <string name="requirements_title">Requirements</string>
+    <string name="root_title">Root solutions</string>
+    <string name="touchscreen_title">Touchscreen</string>
+    <string name="leds_title">Leds</string>
+    <string name="boosts_title">Boosts</string>
+    <string name="mobile_network_title">Mobile network</string>
+    <string name="system_wide_title">System wide</string>
+    <string name="json_title">JSON settings</string>
+    <string name="smsc_title">SMSC Settings</string>
+    <string name="sim_title">SIM Settings</string>
+    <string name="others_title">Others</string>
+    <string name="lock_screen_title">Lock screen</string>
+    <string name="tools_title">Tools</string>
+    <string name="device_rotation_title">Device rotation</string>
+    <string name="status_bar_title">Status Bar</string>
+    <string name="backlight_title">Backlight</string>
+    
+    <!-- OTA -->
+    <string name="ota_title">System updates</string>
+    <string name="ota_summary">OTA is here</string>
     <string name="update_not_found_title">Your system is up to date</string>
     <string name="update_found_title">System update available</string>
     <string name="checking_update_title">Checking for available update</string>
-    <string name="update_found_button">Download and install</string>
-    <string name="update_not_found_button">Check for update</string>
-    <string name="error_dialog_title">Error</string>
+    <string name="update_found_button">INSTALL UPDATE</string>
+    <string name="update_not_found_button">CHECK FOR UPDATES</string>
     <string name="dynamic_device_message">Your device does not support OTA updates!</string>
     <string name="update_error_message">An error has occurred during download!\nPlease, try again later.</string>
     <string name="success_install_message">New update installed successfully.\nPlease, reboot now.</string>
@@ -21,21 +117,275 @@
     <string name="applying_update_title">Applying system update</string>
     <string name="applied_update_title">Update applied successfully</string>
     <string name="prevent_exit_message">The update is still ongoing. Leaving the app now will stop it.\nDo you really want to exit now?</string>
-    <string name="warning_dialog_title">Warning</string>
     <string name="magisk_exists_message">Magisk was detected! If you proceed with the update you may lose Magisk or the installation may fail!</string>
     <string name="menu_delete_ota">Delete OTA files</string>
     <string name="delete_ota_message">Take in consideration that you may lose your userdata if you proceed!\nTo prevent this, cancel this dialog, reboot and flash the latest update on fastboot mode.\n\nDo you want to proceed anyway?</string>
+
+    <!-- OTA TOASTS -->
     <string name="toast_download_start">Downloading OTA package</string>
     <string name="toast_download_finished">OTA package downloaded</string>
     <string name="toast_download_fail">Failed downloading OTA package</string>
     <string name="toast_install_done">OTA image successfully installed</string>
     <string name="toast_install_fail">Failed installing OTA image</string>
+    <string name="toast_delete_ota">Deleted OTA files</string>
     <string name="toast_delete_cache">Packages cache deleted</string>
     <string name="toast_reboot">Reboot your device to apply changes</string>
+    
+    <!-- ASUS -->
+    <string name="enable_fp_wake">Enable fingerprint wake</string>
+    <string name="asus_usb_port_picker">USB port picker</string>
+    
+    <!-- AUDIO -->
+    <string name="use_alternate_audio_policy">Use alternate audio policy</string>
+    <string name="hide_audio_vendor_title">Hide extra vendor audio configs</string>
+    <string name="hide_audio_vendor_summary">May be required on CAF based devices</string>
+    <string name="alternate_headsets_title">Use alternate way to detect headsets</string>
+    <string name="alternate_headsets_summary">Standard fix for wired headphones recognition</string>
+    <string name="disable_audio_effects_title">Disable audio effects</string>
+    <string name="disable_audio_effects_summary">Disable all of thems on vendor side</string>
+    <string name="disable_fast_audio_title">Disable fast audio</string>
+    <string name="disable_fast_audio_summary">Should fix cracked/broken/stutter audio on devices which cannot handle it</string>
+    <string name="disable_voice_callin_title">Disable &quot;Voice Call In&quot; route</string>
+    <string name="disable_voice_callin_summary">May fix echo or non-working audio on calls\nRequires a reboot</string>
+    <string name="restart_audio_services">Restart audio services</string>
+    <string name="restarting_audio_services_title">Restarting Audio Services</string>
+    <string name="restarting_audio_services_summary">This can lead to a soft reboot on some devices, continue?</string>
+    
+    <!-- BACKLIGHT -->
+    <string name="force_hwc_bg_title">Force HWC brightness support</string>
+    <string name="force_fallback_light_hal_title">Force fallback to Light HAL</string>
+    <string name="set_alternative_bg_curve_title">Set alternative brightness curve</string>
+    <string name="set_linear_brightness_curve_titlle">Set linear brightness curve</string>
+    <string name="set_alternative_backlight_scale_title">Force alternative backlight scale</string>
+    <string name="set_alternative_backlight_scale_summay">Requires turn off/on screen</string>
+    <string name="disable_hw_buttons_backlight_title">Disable backlight of hardware buttons</string>
+    <string name="allow_lowest_brightness_title">Allows setting brightness to the lowest possible</string>
+    
+    <!-- BLUETOOTH -->
+    <string name="use_sysbt_hal">Use System Wide BT HAL</string>
+    <string name="max_bt_connected_devices">Set maximum connected bluetooth audio devices</string>
+    <string name="set_esco_size">Set eSCO transport unit size</string>
+    <string name="disable_leapcfe_title">Disable LE APCF Extended features</string>
+    <string name="disable_leapcfe_summary">Fix permanently crashing on some devices</string>
+    <string name="cap_le_vendor">Cap LE vendor version</string>
+    <string name="predefinded_worksrounds">Predefined workarounds</string>
+    <string name="set_unsupported_bt_commands">Set unsupported Bluetooth commands</string>
+    <string name="set_unsupported_bt_og">Set unsupported Bluetooth og features</string>
+    <string name="set_unsupported_bt_le">Set unsupported Bluetooth LE features</string>
+    <string name="set_unsupported_bt_states">Set unsupported Bluetooth states</string>
+    
+    <!-- CAMERA -->
+    <string name="expose_auxiliary_cameras">Expose Auxiliary cameras</string>
+    <string name="force_2api_hal3">Force Enable Camera2API HAL3</string>
+    <string name="force_timestamp_source">Force Timestamp Source</string>
+    
+    <!-- DEBUG -->
+    <string name="debug_sensors">Debug sensors</string>
+    <string name="kill_trebleapp_title">Kill TrebleApp</string>
+    <string name="kill_trebleapp_summary">To save a few taps</string>
+    <string name="set_debuggable_mode_title">Set debuggable mode</string>
+    <string name="set_debuggable_mode_summary">Toggle insecure adb and related</string>
+    
+    <!-- DISPLAY -->
+    <string name="force_refresh_rate">Force Refresh rate</string>
+    <string name="dynamic_refresh_rate_title">Dynamic Refresh rate</string>
+    <string name="dynamic_refresh_rate_summary">Adjust refresh rate based on screen content\nRequires reboot</string>
+    <string name="render_engine_backend">Render engine backend</string>
+    <string name="blu_algorithm">Blur algorithm</string>
+    <string name="enable_sfgl_backpressure_title">Enable SF GL backpressure</string>
+    <string name="enable_sfgl_backpressure_summary">Might improve rendering performance\nRequires reboot</string>
+    <string name="enable_sfhwc_backpressure_title">Enable SF HWC backpressure</string>
+    <string name="enable_sfhwc_backpressure_summary">Might improve rendering performance</string>
+    <string name="disable_hw_overlays_title">Disable HW overlays</string>
+    <string name="disable_hw_overlays_summary">Eats more CPU and battery</string>
+    <string name="force_allow_aod">Force allow Always-On Display</string>
+    
+    <!-- DOZE -->
+    <string name="enable_handwave_gesture">Enable Handwave gesture</string>
+    <string name="enable_out_of_pocket_gesture">Enable out-of-pocket gesture</string>
+    <string name="enable_chop_chop_gesture">Enable Chop Chop gesture</string>
+    
+    <!-- HUAWEI -->
+    <string name="enable_fingerprint_gesture">Enable Fingerprint gestures</string>
+    <string name="force_headset_switch">Force headset switch</string>
+    <string name="enable_glove_mode">Enable touchscreen glove mode</string>
+    <string name="enable_graphic_issue_workaround_title">Enable graphic issues workaround</string>
+    <string name="enable_graphic_issue_workaround_summary">Recommended if ui is blurry</string>
+    <string name="huawei_fast_charge">Huawei fast charge</string>
+    
+    <!-- IMS -->
+    <string name="create_ims_apn">Create IMS APN</string>
+    <string name="download_ims">Download and install IMS APK</string>
+    <string name="request_ims_network">Request IMS network</string>
+    <string name="force_presence_4g_calling">Force the presence of 4G Calling setting</string>
+    <string name="allow_binder_thread_title">Allow binder thread on incoming calls</string>
+    <string name="allow_binder_thread_summary">Workaround for 4G calling\nRequires a reboot</string>
+    
+    <!-- LENOVO -->
+    <string name="enable_stylus_pen_support">Enable Stylus Pen support</string>
+    
+    <!-- MEDIATEK -->
+    <string name="rotation_perf_hint_title">Rotation perf hint instead of touch</string>
+    <string name="rotation_perf_hint_summary">Swap touch boost behaviour</string>
+    <string name="mtk_ged_kpi_title">Mediatek GED KPI support</string>
+    <string name="mtk_ged_kpi_summary">Might improve GPU performance for Mediatek devices</string>
+    <string name="forward_support_forcecognitive_title">Forward-port support for forceCognitive</string>
+    <string name="forward_support_forcecognitive_summary">Required on somes mtk devices</string>
+
+    <!-- MISCELLANEOUS -->
+    <string name="dynamic_superuser_title">Dynamic Superuser</string>
+    <string name="dynamic_superuser_summary">Disabling it requires a reboot</string>
+    <string name="securize_title">Securize</string>
+    <string name="securize_summary">Removes in-built root</string>
+    <string name="securize_dialog_title">Removing Root</string>
+    <string name="securize_dialog_summary">Are you sure? This will remove in-built root access</string>
+    <string name="virtual_sensors_title">Treat virtual biometric sensors as real ones</string>
+    <string name="virtual_sensors_summary">Set BIOMETRIC_STRONG security level</string>
+    <string name="set_launcher3_title">Set Launcher3 as recents provider</string>
+    <string name="disable_wpa3_sae_title">Disable WPA3/SAE</string>
+    <string name="disable_wpa3_sae_summary">For unsupported devices</string>
+    <string name="disable_fuse_storage_title">Disable FUSE storage layer</string>
+    <string name="disable_fuse_storage_summary">This can (de/in)crease storage speed\nRequires a reboot</string>
+    <string name="enable_dt2w_agold_unihertz">Enable Agold/Unihertz DT2W</string>
+    
+    <!-- MY DEVICE -->
+    <string name="device_maintainer">Maintainer for my device</string>
+    <string name="device_community">Community telegram group for my device</string>
+    <string name="apply_presets">Apply presets</string>
+    
+    <!-- NUBIA -->
+    <string name="enable_high_touch_sample_rate_title">Enable high touch sample rate</string>
+    <string name="enable_high_touch_sample_rate_title_summary">Drain more battery</string>
+    <string name="enable_high_touch_title">Enable high touch sensitivity</string>
+    <string name="enable_high_touch_summary">While using gloves</string>
+    <string name="enable_game_mode_title">Enable game mode</string>
+    <string name="enable_game_mode_summary">Auto stop fan is disabled</string>
+    <string name="enable_shoulder_buttons_title">Enable shoulder buttons</string>
+    <string name="enable_shoulder_buttons_summary">Shoulder buttons/triggers</string>
+    <string name="enable_bypass_charger_title">Enable bypass charger</string>
+    <string name="enable_bypass_charger_summaryOff">Charger -> Battery -> Phone</string>
+    <string name="enable_bypass_charger_summaryOn">Charger -> Phone</string>
+    <string name="fan_speed_title">FAN speed</string>
+    <string name="fan_speed_summary">Support smart charging</string>
+    <string name="redmagic_logo_breath">Make Redmagic logo breath</string>
+    <string name="redmagic_rgb">REDMAGIC RGB</string>
+    <string name="boost_cpu">Boost CPU</string>
+    <string name="boost_caches">Boost caches</string>
+    <string name="boost_gpu">Boost GPU</string>
+    <string name="boost_ufs_title">Boost UFS</string>
+    <string name="boost_ufs_summary">Increase Read/Write speed</string>
+    
+    <!-- ONEPLUS -->
+    <string name="display_mode">Display Mode</string>
+    <string name="high_brightness_mode">High brightness mode</string>
+
+    <!-- OPPO -->
+    <string name="enable_dc_dimming">Enable DC Diming</string>
+    
+    <!-- QUALCOMM -->
+    <string name="use_añternate_camera_profile">Use alternate camera profile</string>
+    <string name="disable_soundvolume_effect_title">Disable soundvolume effect</string>
+    <string name="disable_soundvolume_effect_summary">May fix audio distorsion</string>
+    <string name="disable_voip_stereo_support_title">Disable VoIP stereo support</string>
+    <string name="disable_voip_stereo_support_summary">May fix high pitched audio. Requires a reboot</string>
+    <string name="define_voip_direct_output_title">Define VoIP as Direct Output</string>
+    <string name="define_voip_direct_output_summary">Should fix high pitched audio. Requires a reboot</string>
+    <string name="restart_qcril_on_boot_title">Restart qcrild on boot</string>
+    <string name="restart_qcril_on_boot_summary">Workaround for incoming SMS\nCan lead to no-audio on calls for some devices</string>
+    
+    <!-- SAMSUNG -->
+    <string name="enable_stereo_audio_mode">Enable stereo audio mode</string>
+    <string name="disable_built_backin_mic_title">Disable Built-In Back Mic</string>
+    <string name="disable_built_backin_mic_summary">May fix broken mic on video recording</string>
+    <string name="enable_extended_brightness">Enable extended brightness range</string>
+    <string name="enable_reversed_wireless_charging">Enable reversed wireless charging</string>
+    <string name="clicking_fp_turn_device_on">Clicking fingerprint turns device on</string>
+    <string name="enable_all_cameras_access_title">Enable access to all cameras</string>
+    <string name="enable_all_cameras_access_summary">Requires Q vendor</string>
+    <string name="set_flash_strength_title">Set flash strength</string>
+    <string name="set_flash_strength_summary">Usually values are integers between 1 and 5</string>
+    <string name="enable_extra_sensors">Enable extra sensors</string>
+    <string name="enable_workaround_whiteish_screen">Enable workaround for white-ish screen</string>
+    <string name="enable_worksround_broken_fp">Enable workaround for broken fingerprint</string>
+    <string name="set_backlight_scale">Set backlight scale/max backlight level</string>
+    
+    <!-- SPOOF -->
+    <string name="updating_props">Updating Props</string>
+    <string name="updating_props_summary">Will parse JSON from an URL, continue?</string>
+    
+    <string name="enable_spoof_methods_title">Enable spoof methods</string>
+    <string name="enable_spoof_methods_summary">Spoof everything, everywhere!</string>
+    <string name="bka_title">Block Key Attestation</string>
+    <string name="bka_summary">Who knows, may be required again someday</string>
+    <string name="enable_gphotos_spoof_title">Enable Google Photos spoof</string>
+    <string name="enable_gphotos_spoof_summary">To get unlimited storage and original quality backups</string>
+    <string name="run_json_on_boot_title">Run on system boot</string>
+    <string name="run_json_on_boot_summary">Parse JSON on system boot</string>
+    <string name="set_json_url_title">Set JSON URL</string>
+    <string name="set_json_url_summary">Set custom URL to own JSON file</string>
     <string name="update_props_on_boot">Updating spoof properties</string>
-    <string name="update_props">Updating Props</string>
-    <string name="props_summary">Will parse JSON from an URL, continue?</string>
-    <string name="restart_system_ui">Restarting System UI</string>
-    <string name="reset_simcount">Reset SIM Count</string>
-    <string name="reset_simcount_summary">Requires a reboot, continue?</string>
+    
+    <!-- SPOOF GMS -->
+    <string name="enable_pi_spoof_title">Enable Play Integrity spoof</string>
+    <string name="enable_pi_spoof_summary">Required to spoof legacy attestation</string>
+    <string name="enable_gms_spoof_title">Enable Play Services Spoof</string>
+    <string name="enable_gms_spoof_summary">Spoof Play Services with Play Integrity values</string>
+    <string name="update_pi_spoof_title">Update Play Integrity properties</string>
+    <string name="update_pi_spoof_summary">Parse from JSON url</string>
+    <string name="device_to_check_title">Devices to check</string>
+    <string name="device_to_check_summary">Check parsed device on JSON"</string>
+    <string name="device_to_set_title">Device to set</string>
+    <string name="device_to_set_summary">Replace parsed device on JSON</string>
+    
+    <!-- SPOOF PS -->
+    <string name="enable_ps_spoof_title">Enable Play Store Spoof</string>
+    <string name="enable_ps_spoof_summary">Required to spoof new attestation</string>
+    <string name="enable_ps_sdk_spoof_title">Enable Play Store SDK Spoof</string>
+    <string name="enable_ps_sdk_spoof_summary">To force legacy attestation on Play Integrity</string>
+    <string name="update_ps_spoof_title">Update Play Store properties</string>
+    <string name="update_ps_spoof_summary">Parse from JSON url</string>
+
+    <!-- TELEPHONY -->
+    <string name="smsc_workaround_title">SMSC Workaround</string>
+    <string name="smsc_workaround_summary">May requires be disabled on some devices to receive SMS</string>
+    <string name="restricted_networking_title">Restricted networking mode</string>
+    <string name="restricted_networking_summary">Requires be disabled for some devices</string>
+    <string name="force_5g_network_title">Force display 5G network</string>
+    <string name="force_5g_network_summary">Displays 5G as an option for the preferred network type\nRequires a reboot</string>
+    <string name="set_smsc1">Set SMSC for SIM 1</string>
+    <string name="set_smsc2">Set SMSC for SIM 2</string>
+    <string name="set_smsc3">Set SMSC for SIM 3</string>
+    <string name="set_smsc4">Set SMSC for SIM 4</string>
+    <string name="sim_count_title">SIM Count</string>
+    <string name="reset_simcount_title">Reset SIM Count</string>
+    <string name="reset_simcount_summary">Reset SIM count to default values \nRequires a Reboot</string>
+    <string name="reset_simcount_dialog_summary">Requires a reboot, continue?</string>
+    <string name="signal_meter_method">Signal meter method</string>
+    <string name="auto_restart_ril">Automatically restart RIL</string>
+    <string name="remove_telephony_subsystem_title">Remove Telephony Subsystem</string>
+    <string name="remove_telephony_subsystem_summary">For devices without simcard</string>
+    <string name="remove_telephony_subsystem_dialog_title">Removing Telephony</string>
+    <string name="remove_telephony_subsystem_dialog_summary">Are you sure? This will delete it forever</string>
+
+    <!-- USER INTERFACE -->
+    <string name="enable_two_pane_title">Two-Pane Layout</string>
+    <string name="enable_two_pane_summary">Enable tablet Layout. Requires restart apps</string>
+    <string name="force_navigation_bar">Force navigation bar disabled</string>
+    <string name="pointer_type">Pointer type</string>
+    <string name="fod_icon_color">FOD Icon color</string>
+    <string name="status_bar_padding_top">Set status bar top padding</string>
+    <string name="status_bar_padding_start">Set status bar start padding</string>
+    <string name="status_bar_padding_end">Set status bar end padding</string>
+    <string name="restart_system_ui">Restart SystemUI</string>
+    <string name="restarting_system_ui">Restarting System UI</string>
+    
+    <!-- TRANSSION -->
+    <string name="trassion">Transsion</string>
+
+    <!-- VSMART -->
+    <string name="vsmart">Vsmart</string>
+    
+    <!-- XIAOMI -->
+    <string name="xiaomi">Xiaomi</string>
+    
 </resources>

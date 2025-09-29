@@ -1,83 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="GMS MANUAL SETTINGS">
+    <PreferenceCategory app:title="@string/general_title">
+        <SwitchPreference
+            app:key="key_spoof_enable_pi"
+            app:defaultValue="true"
+            app:title="@string/enable_pi_spoof_title"
+            app:summary="@string/enable_pi_spoof_summary" />
+        <SwitchPreference
+            app:key="key_spoof_enable_gms"
+            app:defaultValue="false"
+            app:title="@string/enable_gms_spoof_title"
+            app:summary="@string/enable_gms_spoof_summary" />
+        <Preference
+            app:key="key_spoof_update_pi"
+            app:title="@string/update_pi_spoof_title"
+            app:summary="@string/update_pi_spoof_summary" />
+    </PreferenceCategory>
+
+    <me.phh.treble.app.ClickablePreferenceCategory
+        app:title="@string/device_rotation_title"
+        app:key="device_rotation_category">
+        <ListPreference
+            app:defaultValue=""
+            app:entries="@array/check_codename"
+            app:entryValues="@array/check_codename_values"
+            app:key="key_spoof_check_codename"
+            app:title="@string/device_to_check_title"
+            app:summary="@string/device_to_check_summary" />
+        <ListPreference
+            app:defaultValue=""
+            app:entries="@array/set_codename"
+            app:entryValues="@array/set_codename_values"
+            app:key="key_spoof_set_codename"
+            app:title="@string/device_to_set_title"
+            app:summary="@string/device_to_set_summary" />
+    </me.phh.treble.app.ClickablePreferenceCategory>
+    
+    <PreferenceCategory app:title="PLAY INTEGRITY VALUES">
         <EditTextPreference
-            android:key="key_spoof_gms_sdk"
-            android:title="SDK"
-            android:inputType="text"
-            android:summary="ro.build.version.sdk" />
+            app:key="key_spoof_gms_sdk"
+            app:title="SDK"
+            app:inputType="text"
+            app:summary="ro.build.version.sdk" />
         <EditTextPreference
-            android:key="key_spoof_gms_hardware"
-            android:title="Hardware"
-            android:inputType="text"
-            android:summary="ro.hardware" />
+            app:key="key_spoof_gms_hardware"
+            app:title="Hardware"
+            app:inputType="text"
+            app:summary="ro.hardware" />
         <EditTextPreference
-            android:key="key_spoof_gms_product"
-            android:title="Product"
-            android:inputType="text"
-            android:summary="ro.product.name" />
+            app:key="key_spoof_gms_product"
+            app:title="Product"
+            app:inputType="text"
+            app:summary="ro.product.name" />
         <EditTextPreference
-            android:key="key_spoof_gms_device"
-            android:title="Device"
-            android:inputType="text"
-            android:summary="ro.product.vendor.device" />
+            app:key="key_spoof_gms_device"
+            app:title="Device"
+            app:inputType="text"
+            app:summary="ro.product.vendor.device" />
         <EditTextPreference
-            android:key="key_spoof_gms_manufacturer"
-            android:title="Manufacturer"
-            android:inputType="text"
-            android:summary="ro.product.vendor.manufacturer" />
+            app:key="key_spoof_gms_manufacturer"
+            app:title="Manufacturer"
+            app:inputType="text"
+            app:summary="ro.product.vendor.manufacturer" />
         <EditTextPreference
-            android:key="key_spoof_gms_brand"
-            android:title="Brand"
-            android:inputType="text"
-            android:summary="ro.product.vendo.rbrand" />
+            app:key="key_spoof_gms_brand"
+            app:title="Brand"
+            app:inputType="text"
+            app:summary="ro.product.vendo.rbrand" />
         <EditTextPreference
-            android:key="key_spoof_gms_model"
-            android:title="Model"
-            android:inputType="text"
-            android:summary="ro.product.vendor.model" />
+            app:key="key_spoof_gms_model"
+            app:title="Model"
+            app:inputType="text"
+            app:summary="ro.product.vendor.model" />
         <EditTextPreference
-            android:key="key_spoof_gms_fingerprint"
-            android:title="Fingerprint"
-            android:inputType="text"
-            android:summary="ro.vendor.build.fingerprint" />
+            app:key="key_spoof_gms_fingerprint"
+            app:title="Fingerprint"
+            app:inputType="text"
+            app:summary="ro.vendor.build.fingerprint" />
         <EditTextPreference
-            android:key="key_spoof_gms_securitypatch"
-            android:title="Security Patch"
-            android:inputType="text"
-            android:summary="ro.build.version.security_patch" />
+            app:key="key_spoof_gms_securitypatch"
+            app:title="Security Patch"
+            app:inputType="text"
+            app:summary="ro.build.version.security_patch" />
         <EditTextPreference
-            android:key="key_spoof_gms_firstapilevel"
-            android:title="First API Level"
-            android:inputType="text"
-            android:summary="ro.product.first_api_level" />
+            app:key="key_spoof_gms_firstapilevel"
+            app:title="First API Level"
+            app:inputType="text"
+            app:summary="ro.product.first_api_level" />
         <EditTextPreference
-            android:key="key_spoof_gms_id"
-            android:title="ID"
-            android:inputType="text"
-            android:summary="ro.vendor.build.id" />
+            app:key="key_spoof_gms_id"
+            app:title="ID"
+            app:inputType="text"
+            app:summary="ro.vendor.build.id" />
         <EditTextPreference
-            android:key="key_spoof_gms_type"
-            android:title="Type"
-            android:inputType="text"
-            android:summary="ro.build.type" />
+            app:key="key_spoof_gms_type"
+            app:title="Type"
+            app:inputType="text"
+            app:summary="ro.build.type" />
         <EditTextPreference
-            android:key="key_spoof_gms_tags"
-            android:title="Tags"
-            android:inputType="text"
-            android:summary="ro.build.tags" />
+            app:key="key_spoof_gms_tags"
+            app:title="Tags"
+            app:inputType="text"
+            app:summary="ro.build.tags" />
         <EditTextPreference
-            android:key="key_spoof_gms_incremental"
-            android:title="Incremental"
-            android:inputType="text"
-            android:summary="ro.vendor.build.version.incremental" />
+            app:key="key_spoof_gms_incremental"
+            app:title="Incremental"
+            app:inputType="text"
+            app:summary="ro.vendor.build.version.incremental" />
         <EditTextPreference
-            android:key="key_spoof_gms_release"
-            android:title="Release"
-            android:inputType="text"
-            android:summary="ro.build.version.release" />
+            app:key="key_spoof_gms_release"
+            app:title="Release"
+            app:inputType="text"
+            app:summary="ro.build.version.release" />
     </PreferenceCategory>
 
 </PreferenceScreen>

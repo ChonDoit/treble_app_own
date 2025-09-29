@@ -2,10 +2,8 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.os.Process
-import android.preference.Preference
-import android.preference.PreferenceFragment
+import androidx.preference.Preference
 import android.util.Log
 
 object DebugSettings : Settings {
@@ -15,6 +13,7 @@ object DebugSettings : Settings {
     val stateMap = mapOf(
         "key_debug_debuggable_mode" to "persist.sys.phh.debuggable",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Debug settings")
@@ -22,12 +21,11 @@ object DebugSettings : Settings {
     }
 }
 
-class DebugSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_debug)
+class DebugSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_debug, rootKey)
 
-        Tools.updatePreferenceState(this, DebugSettings.stateMap)
+        SettingsActivity.bindPreferenceSummariesFromStateMap(this, DebugSettings.stateMap)
 
         val restartAppHandler: Preference? = findPreference(DebugSettings.restartApp)
         restartAppHandler?.setOnPreferenceClickListener {

@@ -1,0 +1,8 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="24dp"
+    android:insetRight="24dp">
+    <shape android:shape="rectangle">
+        <solid android:color="?attr/colorSurfaceContainer" />
+        <corners android:radius="32dp" />
+    </shape>
+</inset>

@@ -1,8 +1,6 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
 
 object SamsungSettings : Settings {
@@ -20,6 +18,18 @@ object SamsungSettings : Settings {
     val flashStrength = "key_samsung_flash_strength"
     val disableBackMic = "key_samsung_disable_back_mic"
 
+    val stateMap = mapOf(
+        "key_samsung_high_brightness" to "persist.sys.samsung.full_brightness",
+        "key_samsung_extra_sensors" to "persist.sys.phh.samsung_sensors",
+        "key_samsung_colorspace" to "persist.sys.phh.samsung_colorspace",
+        "key_samsung_broken_fingerprint" to "persist.sys.phh.samsung_fingerprint",
+        "key_samsung_backlight_multiplier" to "persist.sys.phh.samsung_backlight",
+        "key_samsung_camera_ids" to "persist.sys.phh.samsung.camera_ids",
+        "key_samsung_flash_strength" to "persist.sys.phh.flash_strength",
+        "key_samsung_disable_back_mic" to "persist.sys.phh.disable_back_mic",
+    )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
+
     override fun enabled(context: Context): Boolean {
         val isSamsung = Tools.vendorFpLow.startsWith("samsung/") ||
                 Tools.vendorFpLow.startsWith("kddi/scv41_")
@@ -28,15 +38,14 @@ object SamsungSettings : Settings {
     }
 }
 
-class SamsungSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_samsung)
+class SamsungSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_samsung, rootKey)
 
-        if (SamsungSettings.enabled(context)) {
-            Log.d("PHH", "Loading Samsung fragment ${SamsungSettings.enabled(context)}")
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SamsungSettings.flashStrength)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SamsungSettings.backlightMultiplier)!!)
+        if (SamsungSettings.enabled(requireContext())) {
+            Log.d("PHH", "Loading Samsung fragment ${SamsungSettings.enabled(requireContext())}")
+
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, SamsungSettings.stateMap)
         }
     }
 }

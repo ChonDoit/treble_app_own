@@ -2,7 +2,7 @@ package me.phh.treble.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 
 object Transsion: EntryStartup {
@@ -19,6 +19,7 @@ object Transsion: EntryStartup {
                 Tools.safeSetprop("persist.sys.phh.transsion.dt2w", value)
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

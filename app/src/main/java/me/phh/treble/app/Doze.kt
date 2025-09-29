@@ -16,7 +16,7 @@ import android.os.Looper
 import android.os.UserHandle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
@@ -231,6 +231,7 @@ object Doze: EntryStartup {
                 )
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

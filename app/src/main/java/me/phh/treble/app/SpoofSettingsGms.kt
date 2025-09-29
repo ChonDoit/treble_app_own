@@ -1,11 +1,17 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
-import android.preference.PreferenceFragment
+import androidx.preference.Preference
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import me.phh.treble.app.SpoofSettingsGms.stateMap
 
-object SpoofGmsSettings : Settings {
+object SpoofSettingsGms : Settings {
+    val enable_pi = "key_spoof_enable_pi"
+    val update_pi = "key_spoof_update_pi"
+    val enable_gms = "key_spoof_enable_gms"
+    val check_codename = "key_spoof_check_codename"
+    val set_codename = "key_spoof_set_codename"
     val gms_hardware = "key_spoof_gms_hardware"
     val gms_product = "key_spoof_gms_product"
     val gms_device = "key_spoof_gms_device"
@@ -23,53 +29,63 @@ object SpoofGmsSettings : Settings {
     val gms_sdk = "key_spoof_gms_sdk"
 
     val stateMap = mapOf(
-        "key_spoof_gms_hardware" to "persist.sys.spoof.gms_hardware",
-        "key_spoof_gms_product" to "persist.sys.spoof.gms_product",
-        "key_spoof_gms_device" to "persist.sys.spoof.gms_device",
-        "key_spoof_gms_manufacturer" to "persist.sys.spoof.gms_manufacturer",
-        "key_spoof_gms_brand" to "persist.sys.spoof.gms_brand",
-        "key_spoof_gms_model" to "persist.sys.spoof.gms_model",
-        "key_spoof_gms_fingerprint" to "persist.sys.spoof.gms_fingerprint",
-        "key_spoof_gms_securitypatch" to "persist.sys.spoof.gms_security_patch",
-        "key_spoof_gms_firstapilevel" to "persist.sys.spoof.gms_first_api_level",
-        "key_spoof_gms_id" to "persist.sys.spoof.gms_id",
-        "key_spoof_gms_type" to "persist.sys.spoof.gms_type",
-        "key_spoof_gms_tags" to "persist.sys.spoof.gms_tags",
-        "key_spoof_gms_incremental" to "persist.sys.spoof.gms_incremental",
-        "key_spoof_gms_release" to "persist.sys.spoof.gms_release",
-        "key_spoof_gms_sdk" to "persist.sys.spoof.gms_sdk",
+        "key_spoof_enable_gms" to "persist.sys.sp00f.pi.enabled",
+        "key_spoof_check_codename" to "persist.sys.sp00f.pi.check_codename",
+        "key_spoof_set_codename" to "persist.sys.sp00f.pi.set_codename",
+        "key_spoof_enable_gms" to "persist.sys.sp00f.gms.enabled",
+        "key_spoof_gms_hardware" to "persist.sys.sp00f.gms_hardware",
+        "key_spoof_gms_product" to "persist.sys.sp00f.gms_product",
+        "key_spoof_gms_device" to "persist.sys.sp00f.gms_device",
+        "key_spoof_gms_manufacturer" to "persist.sys.sp00f.gms_manufacturer",
+        "key_spoof_gms_brand" to "persist.sys.sp00f.gms_brand",
+        "key_spoof_gms_model" to "persist.sys.sp00f.gms_model",
+        "key_spoof_gms_fingerprint" to "persist.sys.sp00f.gms_fingerprint",
+        "key_spoof_gms_securitypatch" to "persist.sys.sp00f.gms_security_patch",
+        "key_spoof_gms_firstapilevel" to "persist.sys.sp00f.gms_first_api_level",
+        "key_spoof_gms_id" to "persist.sys.sp00f.gms_id",
+        "key_spoof_gms_type" to "persist.sys.sp00f.gms_type",
+        "key_spoof_gms_tags" to "persist.sys.sp00f.gms_tags",
+        "key_spoof_gms_incremental" to "persist.sys.sp00f.gms_incremental",
+        "key_spoof_gms_release" to "persist.sys.sp00f.gms_release",
+        "key_spoof_gms_sdk" to "persist.sys.sp00f.gms_sdk",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         return SpoofSettings.enabled(context)
     }
 }
 
-class SpoofGmsSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_spoof_gms)
+class SpoofSettingsGmsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_spoof_gms, rootKey)
 
-        Tools.updatePreferenceState(this, SpoofGmsSettings.stateMap)
+        if (SpoofSettings.enabled(requireContext())) {
+            Log.d("PHH-SPOOF", "Loading Spoof fragment ${SpoofSettings.enabled(requireContext())}")
 
-        if (SpoofSettings.enabled(context)) {
-            Log.d("PHH-SPOOF", "Loading Spoof fragment ${SpoofSettings.enabled(context)}")
-
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_hardware)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_product)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_device)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_manufacturer)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_brand)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_model)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_fingerprint)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_securitypatch)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_firstapilevel)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_id)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_type)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_tags)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_incremental)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_release)!!)
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SpoofGmsSettings.gms_sdk)!!)
+            SettingsActivity.bindPreferenceSummariesFromStateMap(this, stateMap)
         }
+
+        val updatePIPref: Preference? = findPreference(SpoofSettingsGms.update_pi)
+        updatePIPref?.setOnPreferenceClickListener {
+            showUpdateDialog()
+            true
+        }
+    }
+
+    private fun showUpdateDialog() {
+        val builder = MaterialAlertDialogBuilder(activity!!)
+        builder.setTitle(getString(R.string.updating_props))
+            .setMessage(getString(R.string.updating_props_summary))
+            .setPositiveButton(android.R.string.yes) { dialog, which ->
+                Log.d("PHH-SPOOF", "Running Play Services props update")
+                SpoofPropertyManager().fetchAndApply(
+                    requireContext(),
+                    SpoofPropertyManager.ApplyMode.GMS_ONLY
+                ) { success -> }
+            }
+            .setNegativeButton(android.R.string.no, null)
+
+        builder.show()
     }
 }

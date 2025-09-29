@@ -35,6 +35,7 @@ object Oppo: EntryStartup {
                 }
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

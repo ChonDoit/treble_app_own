@@ -45,6 +45,7 @@ object Camera: EntryStartup {
                 SystemProperties.set("persist.sys.phh.camera.force_timestampsource", value)
             }
         }
+        PrefSync.notifyChange()
     }
 
     override fun startup(ctxt: Context) {

@@ -1,100 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_audio_alternate_audiopolicy"
-        android:title="Use alternate audio policy" />
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_audio_headset_devinput"
-        android:title="Use alternate way to detect headsets"
-        android:summary="Standard fix for wired headphones recognition"/>
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_audio_disable_audio_effects"
-        android:title="Disable audio effects"
-        android:summary="Disable all of thems on vendor side"/>
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_audio_disable_fast_audio"
-        android:title="Disable fast audio"
-        android:summary="Should fix cracked/broken/stutter audio on devices which can't handle it"/>
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_audio_disable_voice_call_in"
-        android:title="Disable &quot;Voice Call In&quot; route"
-        android:summary="May fix echo or non-working audio on calls\nRequires a reboot" />
-
-    <PreferenceCategory android:title="\nBLUETOOTH">
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="key_bt_dynamic_sysbta"
-            android:title="Use System Wide BT HAL" />
-
-        <EditTextPreference
-            android:defaultValue="1"
-            android:key="key_bt_max_bluetooth_audio_devices"
-            android:title="Set maximum connected bluetooth audio devices"
-            android:inputType="number" />
-
+    <PreferenceCategory app:title="@string/audio_policy_title">
         <ListPreference
-            android:defaultValue="0"
-            android:key="key_bt_esco_transport_unit_size"
-            android:entries="@array/pref_audio_esco_transport_size"
-            android:entryValues="@array/pref_audio_esco_transport_size_values"
-            android:title="Set eSCO transport unit size" />
+            app:defaultValue="auto"
+            app:key="key_audio_alternate_audiopolicy"
+            app:entries="@array/pref_audio_alternate_audio_policy"
+            app:entryValues="@array/pref_audio_alternate_audio_policy_values"
+            app:title="@string/use_alternate_audio_policy" />
 
+        <Preference
+            app:defaultValue="auto"
+            app:key="key_audio_restart_audio_services"
+            app:title="@string/restart_audio_services" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nBLUETOOTH WORKAROUNDS">
+    <PreferenceCategory app:title="@string/general_title">
         <SwitchPreference
-            android:key="key_bt_disable_le_apcfe"
-            android:defaultValue="false"
-            android:title="Disable LE APCF Extended features"
-            android:summary="Fix crashing on some legacy devices" />
+            app:defaultValue="false"
+            app:key="key_audio_empty_mount_audio"
+            app:title="@string/hide_audio_vendor_title"
+            app:summary="@string/hide_audio_vendor_summary"/>
 
-        <EditTextPreference
-            android:key="key_bt_le_version_cap"
-            android:title="Cap LE vendor version"
-            android:inputType="number"
-            android:summary="Default" />
-
-        <ListPreference
-            android:defaultValue="none"
-            android:key="key_bt_workarounds"
-            android:entries="@array/pref_audio_bt_workarounds"
-            android:entryValues="@array/pref_audio_bt_workarounds_values"
-            android:title="Predefined workarounds" />
-
-        <EditTextPreference
-            android:key="key_bt_unsupported_commands"
-            android:title="Set unsupported Bluetooth commands"
-            android:inputType="text"
-            android:summary="Default" />
-
-        <EditTextPreference
-            android:key="key_bt_unsupported_og"
-            android:title="Set unsupported Bluetooth og features"
-            android:inputType="text"
-            android:summary="Default" />
-
-        <EditTextPreference
-            android:key="key_bt_unsupported_le"
-            android:title="Set unsupported Bluetooth LE features"
-            android:inputType="text"
-            android:summary="Default" />
-
-        <EditTextPreference
-            android:key="key_bt_unsupported_states"
-            android:title="Set unsupported Bluetooth states"
-            android:inputType="text"
-            android:summary="Default" />
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_audio_headset_devinput"
+            app:title="@string/alternate_headsets_title"
+            app:summary="@string/alternate_headsets_summary"/>
+    
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_audio_disable_audio_effects"
+            app:title="@string/disable_audio_effects_title"
+            app:summary="@string/disable_audio_effects_summary"/>
+    
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_audio_disable_fast_audio"
+            app:title="@string/disable_fast_audio_title"
+            app:summary="@string/disable_fast_audio_summary"/>
+    
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="key_audio_disable_voice_call_in"
+            app:title="@string/disable_voice_callin_title"
+            app:summary="@string/disable_voice_callin_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>

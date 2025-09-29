@@ -1,52 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="SYSTEM WIDE">
-        <ListPreference
-            android:key="key_spoof_enable"
-            android:defaultValue="manual"
-            android:entries="@array/pref_spoof_enabled_mode"
-            android:entryValues="@array/pref_spoof_enabled_mode_values"
-            android:title="Enable in-built spoof" />
+    <PreferenceCategory app:title="@string/system_wide_title">
         <SwitchPreference
-            android:key="key_spoof_enable_ps"
-            android:defaultValue="true"
-            android:title="Enable Play Store Spoof"
-            android:summary="Just in case" />
+            app:key="key_spoof_enabled"
+            app:defaultValue="true"
+            app:title="@string/enable_spoof_methods_title"
+            app:summary="@string/enable_spoof_methods_summary" />
         <SwitchPreference
-            android:key="key_spoof_enable_ps_sdk"
-            android:defaultValue="false"
-            android:title="Enable Play Store SDK Spoof"
-            android:summary="To force legacy check on Play Integrity" />
+            app:key="key_spoof_bka"
+            app:defaultValue="false"
+            app:title="@string/bka_title"
+            app:summary="@string/bka_summary" />
+        <SwitchPreference
+            app:key="key_spoof_photos"
+            app:defaultValue="true"
+            app:title="@string/enable_gphotos_spoof_title"
+            app:summary="@string/enable_gphotos_spoof_summary" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="JSON SETTINGS">
+    <PreferenceCategory app:title="@string/json_title">
         <SwitchPreference
-            android:key="key_spoof_run_on_boot"
-            android:defaultValue="true"
-            android:title="Run on boot"
-            android:summary="Parse JSON on system boot" />
-        <Preference
-            android:key="key_spoof_auto"
-            android:title="Update properties"
-            android:summary="Parse from JSON url" />
+            app:key="key_spoof_run_on_boot"
+            app:defaultValue="true"
+            app:title="@string/run_json_on_boot_title"
+            app:summary="@string/run_json_on_boot_summary" />
         <EditTextPreference
-            android:key="key_spoof_json_url"
-            android:title="Set JSON URL"
-            android:inputType="text"
-            android:summary="Set custom URL to own JSON file" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="MANUAL SETTINGS">
-        <Preference
-            android:key="key_spoof_gms"
-            android:title="GMS values"
-            android:summary="To pass play integrity" />
-        <Preference
-            android:key="key_spoof_ps"
-            android:title="Play Store values"
-            android:summary="To force Legacy SDK" />
+            app:key="key_spoof_json_url"
+            app:title="@string/set_json_url_title"
+            app:summary="@string/set_json_url_summary"
+            app:inputType="text" />
     </PreferenceCategory>
 
 </PreferenceScreen>

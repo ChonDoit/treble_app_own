@@ -1,13 +1,41 @@
 <resources>
-    <style name="Base.Theme.TrebleApp" parent="@android:style/Theme.DeviceDefault.Settings">
-        <item name="android:divider">@null</item>
-        <item name="android:listDivider">@null</item>
+
+    <style name="Base.Theme.TrebleApp" parent="Theme.Material3.DayNight">
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:selectableItemBackground">@android:color/transparent</item>
+        <item name="android:selectableItemBackgroundBorderless">@android:color/transparent</item>
+        <item name="android:switchStyle">@style/SwitchStyle</item>
+        <item name="alertDialogTheme">@style/MaterialPreferenceDialog</item>
     </style>
 
-    <style name="Theme.TrebleApp" parent="Base.Theme.TrebleApp">
+    <style name="Theme.TrebleApp" parent="Base.Theme.TrebleApp"></style>
+
+    <style name="SwitchStyle" parent="android:Widget.Material.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/thumb</item>
+        <item name="android:track">@drawable/track</item>
+        <item name="android:switchPadding">8dp</item>
     </style>
-    
-    <color name="ic_launcher_background">#ff17191A</color>
-    <color name="ic_launcher_foreground">#ffffffff</color>
-    <color name="categoryBackground">#10000000</color>
+
+    <style name="MaterialPreferenceDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:windowBackground">@drawable/bg_dialog</item>
+        <item name="dialogCornerRadius">32dp</item>
+        <item name="android:paddingTop">1dp</item>
+    </style>
+
+    <style name="TextAppearance.Material3.TitleSmall" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="TextAppearance.Material3.BodyMedium" parent="">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
 </resources>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="REQUIREMENTS">
+    <PreferenceCategory app:title="@string/requirements_title">
         <Preference
-            android:title="Create IMS APN"
-            android:key="key_ims_create_apn" />
+            app:title="@string/create_ims_apn"
+            app:key="key_ims_create_apn" />
         <Preference
-            android:title="Download and install IMS APK"
-            android:key="key_ims_install_apn" />
+            app:title="@string/download_ims"
+            app:key="key_ims_install_apn" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_ims_request_network"
-            android:title="Request IMS network" />
+            app:defaultValue="true"
+            app:key="key_ims_request_network"
+            app:title="@string/request_ims_network" />
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_ims_force_enable_setting"
-            android:title="Force the presence of 4G Calling setting" />
+            app:defaultValue="true"
+            app:key="key_ims_force_enable_setting"
+            app:title="@string/force_presence_4g_calling" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="WORKAROUND ISSUES">
+    <PreferenceCategory app:title="@string/workarounds_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_ims_allow_binder_thread_on_incoming_calls"
-            android:title="Allow binder thread on incoming calls"
-            android:summary="Workaround for 4G calling\nRequires a reboot" />
+            app:defaultValue="false"
+            app:key="key_ims_allow_binder_thread_on_incoming_calls"
+            app:title="@string/allow_binder_thread_title"
+            app:summary="@string/allow_binder_thread_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>

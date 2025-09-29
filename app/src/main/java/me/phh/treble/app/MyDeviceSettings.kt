@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.preference.Preference
 
-
 object MyDeviceSettings : Settings {
     val maintainer = "key_mydevice_maintainer"
     val tgGroup = "key_mydevice_telegram_group"

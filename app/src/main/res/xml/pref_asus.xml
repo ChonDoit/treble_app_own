@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="DISPLAY">
+    <PreferenceCategory app:title="@string/display_title">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_asus_glove_mode"
-            android:title="Enable glove mode" />
+            app:defaultValue="false"
+            app:key="key_asus_glove_mode"
+            app:title="@string/enable_glove_mode" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="key_asus_dt2w"
-            android:title="Enable double tap to wake" />
+            app:defaultValue="false"
+            app:key="key_asus_dt2w"
+            app:title="@string/enable_dt2w" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="\nMISCELLANEOUS">
+    <PreferenceCategory app:title="@string/miscellaneous_title">
         <SwitchPreference
-            android:defaultValue="true"
-            android:key="key_asus_fp_wake"
-            android:title="Enable fingerprint wake" />
+            app:defaultValue="true"
+            app:key="key_asus_fp_wake"
+            app:title="@string/enable_fp_wake" />
 
         <ListPreference
-            android:defaultValue="-1"
-            android:entries="@array/pref_asus_usb_port_picker"
-            android:entryValues="@array/pref_asus_usb_port_picker_values"
-            android:key="key_asus_usb_port_picker"
-            android:summary="Requires a reboot"
-            android:title="USB port picker" />
+            app:defaultValue="-1"
+            app:entries="@array/pref_asus_usb_port_picker"
+            app:entryValues="@array/pref_asus_usb_port_picker_values"
+            app:key="key_asus_usb_port_picker"
+            app:summary="Requires a reboot"
+            app:title="@string/asus_usb_port_picker" />
     </PreferenceCategory>
 
 </PreferenceScreen>

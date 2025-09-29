@@ -1,83 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="PLAY STORE MANUAL SETTINGS">
+    <PreferenceCategory app:title="@string/general_title">
+        <SwitchPreference
+            app:key="key_spoof_enable_ps"
+            app:defaultValue="true"
+            app:title="@string/enable_ps_spoof_title"
+            app:summary="@string/enable_ps_spoof_summary" />
+        <SwitchPreference
+            app:key="key_spoof_enable_ps_sdk"
+            app:defaultValue="false"
+            app:title="@string/enable_ps_sdk_spoof_title"
+            app:summary="@string/enable_ps_sdk_spoof_summary" />
+        <Preference
+            app:key="key_spoof_update_ps"
+            app:title="@string/update_ps_spoof_title"
+            app:summary="@string/update_ps_spoof_summary" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory app:title="PLAY STORE VALUES">
         <EditTextPreference
-            android:key="key_spoof_ps_sdk"
-            android:title="SDK"
-            android:inputType="text"
-            android:summary="Lower than 32 will force PI Legacy checks" />
+            app:key="key_spoof_ps_sdk"
+            app:title="SDK"
+            app:inputType="text"
+            app:summary="Lower than 32 will force PI Legacy checks" />
         <EditTextPreference
-            android:key="key_spoof_ps_hardware"
-            android:title="Hardware"
-            android:inputType="text"
-            android:summary="ro.hardware" />
+            app:key="key_spoof_ps_hardware"
+            app:title="Hardware"
+            app:inputType="text"
+            app:summary="ro.hardware" />
         <EditTextPreference
-            android:key="key_spoof_ps_product"
-            android:title="Product"
-            android:inputType="text"
-            android:summary="ro.product.name" />
+            app:key="key_spoof_ps_product"
+            app:title="Product"
+            app:inputType="text"
+            app:summary="ro.product.name" />
         <EditTextPreference
-            android:key="key_spoof_ps_device"
-            android:title="Device"
-            android:inputType="text"
-            android:summary="ro.product.vendor.device" />
+            app:key="key_spoof_ps_device"
+            app:title="Device"
+            app:inputType="text"
+            app:summary="ro.product.vendor.device" />
         <EditTextPreference
-            android:key="key_spoof_ps_manufacturer"
-            android:title="Manufacturer"
-            android:inputType="text"
-            android:summary="ro.product.vendor.manufacturer" />
+            app:key="key_spoof_ps_manufacturer"
+            app:title="Manufacturer"
+            app:inputType="text"
+            app:summary="ro.product.vendor.manufacturer" />
         <EditTextPreference
-            android:key="key_spoof_ps_brand"
-            android:title="Brand"
-            android:inputType="text"
-            android:summary="ro.product.vendor.brand" />
+            app:key="key_spoof_ps_brand"
+            app:title="Brand"
+            app:inputType="text"
+            app:summary="ro.product.vendor.brand" />
         <EditTextPreference
-            android:key="key_spoof_ps_model"
-            android:title="Model"
-            android:inputType="text"
-            android:summary="ro.product.vendor.model" />
+            app:key="key_spoof_ps_model"
+            app:title="Model"
+            app:inputType="text"
+            app:summary="ro.product.vendor.model" />
         <EditTextPreference
-            android:key="key_spoof_ps_fingerprint"
-            android:title="Fingerprint"
-            android:inputType="text"
-            android:summary="ro.vendor.build.fingerprint" />
+            app:key="key_spoof_ps_fingerprint"
+            app:title="Fingerprint"
+            app:inputType="text"
+            app:summary="ro.vendor.build.fingerprint" />
         <EditTextPreference
-            android:key="key_spoof_ps_securitypatch"
-            android:title="Security Patch"
-            android:inputType="text"
-            android:summary="ro.build.version.security_patch" />
+            app:key="key_spoof_ps_securitypatch"
+            app:title="Security Patch"
+            app:inputType="text"
+            app:summary="ro.build.version.security_patch" />
         <EditTextPreference
-            android:key="key_spoof_ps_firstapilevel"
-            android:title="First API Level"
-            android:inputType="text"
-            android:summary="ro.product.first_api_level" />
+            app:key="key_spoof_ps_firstapilevel"
+            app:title="First API Level"
+            app:inputType="text"
+            app:summary="ro.product.first_api_level" />
         <EditTextPreference
-            android:key="key_spoof_ps_id"
-            android:title="ID"
-            android:inputType="text"
-            android:summary="ro.vendor.build.id" />
+            app:key="key_spoof_ps_id"
+            app:title="ID"
+            app:inputType="text"
+            app:summary="ro.vendor.build.id" />
         <EditTextPreference
-            android:key="key_spoof_ps_type"
-            android:title="Type"
-            android:inputType="text"
-            android:summary="ro.build.type" />
+            app:key="key_spoof_ps_type"
+            app:title="Type"
+            app:inputType="text"
+            app:summary="ro.build.type" />
         <EditTextPreference
-            android:key="key_spoof_ps_tags"
-            android:title="Tags"
-            android:inputType="text"
-            android:summary="ro.build.tags" />
+            app:key="key_spoof_ps_tags"
+            app:title="Tags"
+            app:inputType="text"
+            app:summary="ro.build.tags" />
         <EditTextPreference
-            android:key="key_spoof_ps_incremental"
-            android:title="Incremental"
-            android:inputType="text"
-            android:summary="ro.vendor.build.version.incremental" />
+            app:key="key_spoof_ps_incremental"
+            app:title="Incremental"
+            app:inputType="text"
+            app:summary="ro.vendor.build.version.incremental" />
         <EditTextPreference
-            android:key="key_spoof_ps_release"
-            android:title="Release"
-            android:inputType="text"
-            android:summary="ro.build.version.release" />
+            app:key="key_spoof_ps_release"
+            app:title="Release"
+            app:inputType="text"
+            app:summary="ro.build.version.release" />
     </PreferenceCategory>
 
 </PreferenceScreen>

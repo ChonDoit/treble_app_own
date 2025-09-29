@@ -27,4 +27,16 @@
 	    <item>"32"</item>
      </array>
 
+	<array name="pref_audio_alternate_audio_policy">
+		<item>Auto</item>
+		<item>Enabled</item>
+		<item>Disabled</item>
+	</array>
+
+	<array name="pref_audio_alternate_audio_policy_values">
+		<item>auto</item>
+		<item>enabled</item>
+		<item>disabled</item>
+	</array>
+
 </resources>

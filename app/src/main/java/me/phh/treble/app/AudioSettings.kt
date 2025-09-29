@@ -1,9 +1,10 @@
 package me.phh.treble.app
 
 import android.content.Context
-import android.os.Bundle
-import android.preference.PreferenceFragment
+import android.os.SystemProperties
 import android.util.Log
+import androidx.preference.Preference
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object AudioSettings : Settings {
     val headsetDevinput = "key_audio_headset_devinput"
@@ -11,25 +12,17 @@ object AudioSettings : Settings {
     val disableFastAudio = "key_audio_disable_fast_audio"
     val disableVoiceCallIn = "key_audio_disable_voice_call_in"
     val alternateAudiopolicy = "key_audio_alternate_audiopolicy"
-    val sysbta = "key_bt_dynamic_sysbta"
-    val workarounds = "key_bt_workarounds"
-    val escoTransportUnitSize = "key_bt_esco_transport_unit_size"
-    val maxBTAudioDevices = "key_bt_max_bluetooth_audio_devices"
-    val unsupportedCommands = "key_bt_unsupported_commands"
-    val unsupportedOgFeatures = "key_bt_unsupported_og"
-    val unsupportedLeFeatures = "key_bt_unsupported_le"
-    val unsupportedStates = "key_bt_unsupported_states"
-    val leVersionCap = "key_bt_le_version_cap"
-    val disableLeApcfExtended = "key_bt_disable_le_apcfe"
-
+    val emptyMountAudio = "key_audio_empty_mount_audio"
+    val restartAudioServices = "key_audio_restart_audio_services"
 
     val stateMap = mapOf(
-        "key_bt_unsupported_commands" to "persist.sys.bt.unsupported.commands",
-        "key_bt_unsupported_og" to "persist.sys.bt.unsupported.ogfeatures",
-        "key_bt_unsupported_le" to "persist.sys.bt.unsupported.lefeatures",
-        "key_bt_unsupported_states" to "persist.sys.bt.unsupported.states",
-        "key_bt_le_version_cap" to "persist.sys.bt.max_vendor_cap",
+        "key_audio_headset_devinput" to "persist.sys.overlay.devinputjack",
+        "key_audio_disable_audio_effects" to "persist.sys.phh.disable_audio_effects",
+        "key_audio_disable_fast_audio" to "persist.sys.phh.disable_fast_audio",
+        "key_audio_disable_voice_call_in" to "persist.sys.phh.disable_voice_call_in",
+        "key_audio_empty_mount_audio" to "persist.sys.phh.empty_mount_audio",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Audio settings")
@@ -37,20 +30,30 @@ object AudioSettings : Settings {
     }
 }
 
-class AudioSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_audio)
+class AudioSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_audio, rootKey)
 
-        Tools.updatePreferenceState(this, AudioSettings.stateMap)
+        SettingsActivity.bindPreferenceSummariesFromStateMap(this, AudioSettings.stateMap)
+        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.alternateAudiopolicy)!!)
 
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.workarounds)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.escoTransportUnitSize)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.maxBTAudioDevices)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.unsupportedCommands)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.unsupportedOgFeatures)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.unsupportedLeFeatures)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.unsupportedStates)!!)
-        SettingsActivity.bindPreferenceSummaryToValue(findPreference(AudioSettings.leVersionCap)!!)
+        val restartAudioPref: Preference? = findPreference(AudioSettings.restartAudioServices)
+        restartAudioPref?.setOnPreferenceClickListener {
+            restartAudioDialog()
+            true
+        }
+    }
+
+    private fun restartAudioDialog() {
+        val builder = MaterialAlertDialogBuilder(activity!!)
+        builder.setTitle(getString(R.string.restarting_audio_services_title))
+            .setMessage(getString(R.string.restarting_audio_services_summary))
+            .setPositiveButton(android.R.string.yes) { dialog, which ->
+                Log.d("PHH-AUDIO", "Restarting Audio services")
+                SystemProperties.set("persist.sys.phh.restart_audio_server", "true")
+            }
+            .setNegativeButton(android.R.string.no, null)
+
+        builder.show()
     }
 }

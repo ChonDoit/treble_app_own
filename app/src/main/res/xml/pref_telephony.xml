@@ -1,52 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-            android:title="SMSC Workaround"
-            android:key="key_telephony_smsc_workaround"
-            android:defaultValue="true"
-            android:summary="May requires be disabled on some devices to receive SMS" />
+    <PreferenceCategory app:title="@string/workarounds_title">
+        <SwitchPreference
+            app:key="key_telephony_smsc_workaround"
+            app:defaultValue="true"
+            app:title="@string/smsc_workaround_title"
+            app:summary="@string/smsc_workaround_summary" />
+        <SwitchPreference
+            app:key="key_telephony_restricted_networking"
+            app:defaultValue="false"
+            app:title="@string/restricted_networking_title"
+            app:summary="@string/restricted_networking_summary" />
+        <SwitchPreference
+            app:key="key_telephony_force_display_5g"
+            app:defaultValue="false"
+            app:title="@string/force_5g_network_title"
+            app:summary="@string/force_5g_network_summary" />
+    </PreferenceCategory>
 
-    <ListPreference
-        android:defaultValue="default"
-        android:entries="@array/pref_telephony_simcount"
-        android:entryValues="@array/pref_telephony_simcount_values"
-        android:key="key_telephony_simcount"
-        android:title="SIM Count" />
+    <PreferenceCategory app:title="@string/smsc_title">
+        <EditTextPreference
+            app:key="key_telephony_smsc0"
+            app:title="@string/set_smsc1"
+            app:inputType="text"
+            app:summary="Default" />
+        <EditTextPreference
+            app:key="key_telephony_smsc1"
+            app:title="@string/set_smsc2"
+            app:inputType="text"
+            app:summary="Default" />
+        <EditTextPreference
+            app:key="key_telephony_smsc2"
+            app:title="@string/set_smsc3"
+            app:inputType="text"
+            app:summary="Default" />
+        <EditTextPreference
+            app:key="key_telephony_smsc3"
+            app:title="@string/set_smsc4"
+            app:inputType="text"
+            app:summary="Default" />
+    </PreferenceCategory>
 
-    <Preference
-        android:title="Reset SIM Count"
-        android:key="key_telephony_reset_simcount"
-        android:summary="Reset SIM count to default values \nRequires a Reboot" />
-
-    <ListPreference
-        android:defaultValue="default"
-        android:entries="@array/pref_telephony_mobile_signal"
-        android:entryValues="@array/pref_telephony_mobile_signal_values"
-        android:key="key_telephony_mobile_signal"
-        android:title="Signal meter method" />
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_telephony_restart_ril"
-        android:title="Automatically restart RIL" />
-
-    <Preference
-        android:title="Remove Telephony Subsystem"
-        android:key="key_telephony_removetelephony"
-        android:summary="For devices without simcard" />
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_telephony_force_display_5g"
-        android:title="Force display 5G network"
-        android:summary="Displays 5G as an option for the preferred network type\nRequires a reboot" />
-
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="key_telephony_restricted_networking"
-        android:title="Restricted networking mode"
-        android:summary="Requires be disabled for some devices" />
+    <PreferenceCategory app:title="@string/sim_title">
+        <ListPreference
+            app:key="key_telephony_simcount"
+            app:defaultValue="default"
+            app:entries="@array/pref_telephony_simcount"
+            app:entryValues="@array/pref_telephony_simcount_values"
+            app:title="@string/sim_count_title" />
+        <Preference
+            app:key="key_telephony_reset_simcount"
+            app:title="@string/reset_simcount_title"
+            app:summary="@string/reset_simcount_summary" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory app:title="@string/general_title">
+        <ListPreference
+            app:key="key_telephony_mobile_signal"
+            app:defaultValue="default"
+            app:entries="@array/pref_telephony_mobile_signal"
+            app:entryValues="@array/pref_telephony_mobile_signal_values"
+            app:title="@string/signal_meter_method" />
+        <SwitchPreference
+            app:key="key_telephony_restart_ril"
+            app:defaultValue="false"
+            app:title="@string/auto_restart_ril" />
+        <Preference
+            app:key="key_telephony_removetelephony"
+            app:title="@string/remove_telephony_subsystem_title"
+            app:summary="@string/remove_telephony_subsystem_summary" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

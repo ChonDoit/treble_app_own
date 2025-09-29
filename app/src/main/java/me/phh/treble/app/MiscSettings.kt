@@ -1,13 +1,10 @@
 package me.phh.treble.app
 
-import android.app.AlertDialog
 import android.content.Context
-import android.os.Bundle
-import android.os.SystemProperties
-import android.preference.Preference
-import android.preference.PreferenceFragment
+import androidx.preference.Preference
 import android.util.Log
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 
 object MiscSettings : Settings {
@@ -18,10 +15,12 @@ object MiscSettings : Settings {
     val securize = "key_misc_securize"
     val dynamicsuperuser = "key_misc_dynamic_superuser"
     val unihertzdt2w = "key_misc_unihertz_dt2w"
+    val virtualSensorsAreReal = "key_misc_virtual_sensors_are_real"
 
     val stateMap = mapOf(
         "key_misc_dynamic_superuser" to "persist.sys.phh.dynamic_superuser",
     )
+    init { PrefSync.registerSettingsStateMap(stateMap) }
 
     override fun enabled(context: Context): Boolean {
         Log.d("PHH", "Initializing Misc settings")
@@ -31,27 +30,13 @@ object MiscSettings : Settings {
     fun isRoot() = File(Tools.phhsu).exists()
 }
 
-class MiscSettingsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.pref_misc)
+class MiscSettingsFragment : BasePreferenceFragment() {
+    override fun loadPreferences(rootKey: String?) {
+        setPreferencesFromResource(R.xml.pref_misc, rootKey)
 
-        Tools.updatePreferenceState(this, MiscSettings.stateMap)
+        SettingsActivity.bindPreferenceSummariesFromStateMap(this, MiscSettings.stateMap)
 
-        // Check enabled status for each preference and remove if not enabled
-        val context = activity ?: return
-        val checkEnabled = EntryService.getEnabledPreferences(context)
-        checkEnabled.forEach { (key, isEnabled) ->
-            if (!isEnabled) {
-                val preference = findPreference(key)
-                preference?.let {
-                    val parent = preference.parent
-                    parent?.removePreference(preference)
-                }
-            }
-        }
-
-        val securizeHandler: Preference? = findPreference(MiscSettings.securize)
+        val securizeHandler = findPreference<Preference>(MiscSettings.securize)
         securizeHandler?.setOnPreferenceClickListener {
             securizeDialog()
             true
@@ -59,9 +44,9 @@ class MiscSettingsFragment : PreferenceFragment() {
     }
 
     private fun securizeDialog() {
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setTitle("Removing Root")
-            .setMessage("Are you sure? This will remove in-built root access")
+        val builder = MaterialAlertDialogBuilder(activity!!)
+        builder.setTitle(getString(R.string.securize_dialog_title))
+            .setMessage(getString(R.string.securize_dialog_summary))
             .setPositiveButton(android.R.string.yes) { dialog, which ->
                 try {
                     val process = Runtime.getRuntime().exec("su")

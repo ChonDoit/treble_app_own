@@ -1,0 +1,6 @@
+<resources>
+    <color name="ic_launcher_background">#ff17191A</color>
+    <color name="ic_launcher_foreground">#ffffffff</color>
+    <color name="categoryBackground">#08000000</color>
+    <color name="unchecked_track">?android:attr/textColorPrimaryInverse</color>
+</resources>
